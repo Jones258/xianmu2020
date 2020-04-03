@@ -1,0 +1,276 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <title>
+        仓储管理系统
+    </title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/css/x-admin.css" media="all">
+    @*<link href="~/css/x-admin.css" rel="stylesheet" />*@
+</head>
+<body>
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header header header-demo">
+            <div class="layui-main">
+                <a class="logo" href="./index.html">
+                    仓储管理系统
+                </a>
+                <ul class="layui-nav" lay-filter="">
+                    <li class="layui-nav-item"><img src="/images/logo.png" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">admin</a>
+                        <dl class="layui-nav-child">
+                            <!-- 二级菜单 -->
+                            <dd><a href="">个人信息</a></dd>
+                            <dd><a href="">切换帐号</a></dd>
+                            <dd><a href="./login.html">退出</a></dd>
+                        </dl>
+                    </li>
+                    <!-- <li class="layui-nav-item">
+                      <a href="" title="消息">
+                          <i class="layui-icon" style="top: 1px;">&#xe63a;</i>
+                      </a>
+                      </li> -->
+                    <li class="layui-nav-item x-index"><a href="/">前台首页</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-side layui-bg-black x-side">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
+                    <li class="layui-nav-item">
+                        <a class="javascript:;" href="javascript:;">
+                            <i class="layui-icon" style="top: 3px;">&#xe607;</i><cite>系统设置</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd class="">
+                                <a href="javascript:;" _href="./question-list.html">
+                                    <cite>员工管理</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./question-del.html">
+                                    <cite>角色管理</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./question-del.html">
+                                    <cite>部门管理</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./question-del.html">
+                                    <cite>菜单管理</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./question-del.html">
+                                    <cite>权限分配</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./question-del.html">
+                                    <cite>标识符管理</cite>
+                                </a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="javascript:;" href="javascript:;">
+                            <i class="layui-icon" style="top: 3px;">&#xe62d;</i><cite>基本资料</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd class="">
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>库位管理</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>供应商管理</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>客户管理</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>计量单位</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./category.html">
+                                    <cite>产品分类</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./category.html">
+                                    <cite>产品类别</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./category.html">
+                                    <cite>产品管理</cite>
+                                </a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="javascript:;" href="javascript:;">
+                            <i class="layui-icon" style="top: 3px;">&#xe634;</i><cite>仓库作业</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd class="">
+                                <a href="javascript:;" _href="./banner-list.html">
+                                    <cite>入库管理</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./banner-list.html">
+                                    <cite>出库管理</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./banner-list.html">
+                                    <cite>报损管理</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./banner-list.html">
+                                    <cite>移库管理</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./banner-list.html">
+                                    <cite>盘点管理</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./banner-list.html">
+                                    <cite>退货管理</cite>
+                                </a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="javascript:;" href="javascript:;">
+                            <i class="layui-icon" style="top: 3px;">&#xe642;</i><cite>报表管理</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>库存清单</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>货品统计</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>出入库报表</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>入库报表</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>出库报表</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>报损报表</cite>
+                                </a>
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>退货报表</cite>
+                                </a>
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>客户报表</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>供应商报表</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>台账记录</cite>
+                                </a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;" _href="./welcome.html">
+                                    <cite>自定义报表</cite>
+                                </a>
+                            </dd>
+                            
+                        </dl>
+                    </li>
+                   
+                    <li class="layui-nav-item">
+                        <a class="javascript:;" href="javascript:;">
+                            <i class="layui-icon" style="top: 3px;">&#xe612;</i><cite>退出系统</cite>
+                        </a>
+                    </li>
+                    
+                   
+                    <li class="layui-nav-item" style="height: 30px; text-align: center">
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true">
+            <div class="x-slide_left"></div>
+            <ul class="layui-tab-title">
+                <li class="layui-this">
+                    主页
+                    <i class="layui-icon layui-unselect layui-tab-close">ဆ</i>
+                </li>
+            </ul>
+            <div class="layui-tab-content site-demo site-demo-body">
+                <div class="layui-tab-item layui-show">
+                    <iframe frameborder="0" src="" class="x-iframe"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="site-mobile-shade">
+        </div>
+    </div>
+    <script src="/lib/layui/layui.js" charset="utf-8"></script>
+    <script src="/js/x-admin.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</body>
+</html>
