@@ -1,0 +1,120 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        #btn1 {
+            outline: none;
+        }
+    </style>
+
+    <title>QueryDelivery</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-top:10px; margin-left:-92px; width:1140px; border:0px solid black;background-color:#37435c;border-radius:2px;">
+            <div class="col-md-8">
+                @*<label class="control-label">入库管理</label>*@
+                <h5 style="font-size:15px;font-weight:bold;color:white">出库管理</h5>
+            </div>
+        </div>
+        <div class="row" style="margin-left:-92px;  border:0px solid black;width:1140px;background-color:#f5f8f8">
+            <div class="col-md-5 form-group form-inline" style="margin-top:15px; ">
+                <button type="button" id="btn1" class="btn btn-group">所有</button>
+                <button type="button" id="btn1" class="btn btn-group">待审核</button>
+                <button type="button" id="btn1" class="btn btn-group">审核通过</button>
+                <button type="button" id="btn1" class="btn btn-group">审核失败</button>
+            </div>
+            <div class="col-md-3 form-group form-inline" style="margin-top:15px;float:right;margin-right:-15px;">
+                <a href="@Url.Action("QueryAddSingle")" class="btn btn-primary">新增</a>
+                <button type="button" class="btn btn-danger">删除</button>
+                <button type="button" class="btn btn-info">导出</button>
+            </div>
+            <div class="row">
+                <div class="col-md-3 form-group form-inline " style="margin-top:60px;margin-left:-475px;">
+                    <input type="text" class="form-control" placeholder="请输入入库单号" />
+                </div>
+                <div class="col-md-7 form-group form-inline" style="margin-top:-3px;">
+                    <label class="control-label">时间</label> <input type="date" class="form-control" style="width:150px;" /> <input type="date" class="form-control" style="width:150px;" />&nbsp;&nbsp;<button type="button" class="btn btn-info">搜索</button>&nbsp;<button type="button" id="BtnGJ" class="btn btn-info">高级搜索</button>&nbsp;<button type="button" id="BtnSq" class="btn btn-info">收起</button>
+                </div>
+            </div>
+            <div id="div1" class="row" style="border:1px dotted black; width:1040px;height:90px;margin-top:8px;margin-left:15px;">
+                <div class="col-md-3 form-inline" style="margin-top:10px;">
+                    客户<input type="text" class="form-control" />
+                </div>
+                <div class="col-md-3  form-group" style="margin-top:10px;">
+                    单据类型 @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
+                </div>
+                <div class="col-md-2 form-inline" style="margin-top:29px;">
+                    <button type="button" class="btn btn-info">搜索</button>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:25px;">
+                <table class="table table-bordered table-hover table-responsive" style=" width:1043px;margin-left:28px; border:1px solid #e07a7a;">
+                    <thead>
+                        <tr style="font-weight:bold;">
+                            <td>出库单编号</td>
+                            <td>出库类型</td>
+                            <td>客户名称</td>
+                            <td>总数量</td>
+                            <td>总金额</td>
+                            <td>状态</td>
+                            <td>操作方式</td>
+                            <td>制单人</td>
+                            <td>创建时间</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0001</td>
+                            <td>生产产品入库</td>
+                            <td>北大青鸟ACCP</td>
+                            <td>90</td>
+                            <td>8098098.98元</td>
+                            <td>审核成功</td>
+                            <td>电脑</td>
+                            <td>adminserin</td>
+                            <td>2020-04-03</td>
+                            <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row form-inline form-group text-center" style="margin-top:30px;">
+                <button type="button" class="btn btn-primary form-group">首页</button>
+                <button type="button" class="btn btn-primary form-group">上一页</button>
+                <input type="text" class="form-control" style="width:80px;" />
+                <button type="button" class="btn btn-primary form-group">Go</button>
+                <button type="button" class="btn btn-primary form-group">下一页</button>
+                <button type="button" class="btn btn-primary form-group">尾页</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $(function () {
+            $("#div1").hide();
+
+                $("#BtnGJ").click(function () {
+                    $("#div1").show();
+                })
+
+                $("#BtnSq").click(function () {
+                    $("#div1").hide();
+                })
+        })
+    </script>
+
+>
+</body>
+</html>

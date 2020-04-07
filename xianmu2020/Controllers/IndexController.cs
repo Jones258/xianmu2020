@@ -59,6 +59,27 @@ namespace xianmu2020.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 出库管理页面视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryDelivery()
+        {
+            //测试 
+            ViewBag.Type = new SelectList("");
+            return View();
+        }
+
+        /// <summary>
+        /// 添加出库单and添加出库产品出库视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryAddSingle()
+        {
+            //测试 
+            ViewBag.Type = new SelectList("");
+            return View();
+        }
 
     }
 }
