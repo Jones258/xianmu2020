@@ -8,54 +8,34 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <title>QueryAddSingle</title>
+    <title>QueryBreakageAdd</title>
 </head>
 <body>
     <div class="container">
         <div class="row" style="margin-left:-89px; width:1130px; border:0px solid black;background-color:#37435c;border-radius:2px;">
             <div class="col-md-8">
-                <h5 style="font-size:15px;font-weight:bold;color:white;">新增出库单</h5>
+                <h5 style="font-size:15px;font-weight:bold;color:white;">新增报损单</h5>
             </div>
         </div>
         <div class="row" style="border:1px dotted black;width:1130px;height:600px; margin-left:-89px;">
-            <div style="border:0px solid black; width:1100px;margin:0px auto;height:170px;margin-top:15px;background-color:#f5f8f8;">
+            <div style="border:0px solid black; width:1100px;margin:0px auto;height:120px;margin-top:15px;background-color:#f5f8f8;">
                 <div class="row">
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:40px;">
-                        <label class="control-label">出库单编号</label><input type="tel" class="form-control" disabled="disabled" placeholder="可不填,自动生成" />
+                    <div class=" col-md-3 form-inline" style="margin-top:13px;margin-left:10px;">
+                        <label class="control-label">报损单编号</label><input type="text" class="form-control" disabled="disabled" placeholder="可不填,自动生成" />
                     </div>
                     <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">出库单类型</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
+                        <label class="control-label">报损类型</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:230px;" })
                     </div>
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">发货日期</label><input type="date" class="form-control" />
+                    <div class=" col-md-3 form-inline" style="margin-top:13px;margin-left:70px;">
+                        <label class="control-label">制单时间</label><input type="date" class="form-control" value="administrator" />
                     </div>
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">客户编号</label><input type="text" class="form-control" placeholder="输入关键字搜索或者双击选择" />
-                    </div>
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">客户名称</label><input type="text" class="form-control" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:40px;">
-                        <label class="control-label">客户地址</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
-                    </div>
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">客户联系方式</label><input type="text" class="form-control" />
-                    </div>
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">联系人</label><input type="text" class="form-control" />
-                    </div>
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                    <div class=" col-md-3 form-inline" style="margin-top:13px;margin-left:1px;">
                         <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" />
-                    </div>
-                    <div class=" col-md-3 form-inline" style="margin-top:13px;">
-                        <label class="control-label">备注</label><input type="text" class="form-control" />
                     </div>
                 </div>
             </div>
@@ -64,27 +44,23 @@
                 <table class="table table-bordered table-hover table-responsive" style=" width:1100px;margin:0px auto; border:1px solid #e07a7a">
                     <thead>
                         <tr style="font-weight:bold;">
+                            <td>产品编号</td>
                             <td>产品名称</td>
                             <td>产品条码</td>
-                            <td>产品编号</td>
                             <td>批次</td>
-                            <td>单价</td>
-                            <td>规格</td>
-                            <td>出库数</td>
                             <td>库位</td>
+                            <td>报损数量</td>
                             <td>操作</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>出库产品1</td>
-                            <td>098112</td>
-                            <td>0005</td>
+                            <td>产品编号1</td>
+                            <td>产品名称1</td>
+                            <td>产品条码1</td>
                             <td>批次1</td>
-                            <td>单价1</td>
-                            <td>规格1</td>
-                            <td>出库数1</td>
                             <td>库位1</td>
+                            <td>报损数量1</td>
                             <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
                         </tr>
                     </tbody>
@@ -94,31 +70,33 @@
                 <div class="col-md-5 form-group form-inline" style="margin-top:25px;">
                     <button id="btnAdd" type="button" class="btn btn-info">新增产品</button>
                     <button type="button" class="btn btn-info">保存</button>
-                    <a href="@Url.Action("QueryDelivery")" class="btn btn-danger">取消</a>
+                    <a href="@Url.Action("QueryBreakagePage")" class="btn btn-danger">取消</a>
                 </div>
             </div>
         </div>
     </div>
 
+
     <script type="text/javascript">
-    $("#btnAdd").click(function () {
-        $("#myModals").modal();
-    })
+        $("#btnAdd").click(function () {
+            $("#myModals").modal();
+        })
     </script>
 
 
 
+    @*出库产品模态图*@
     <!-- Modal -->
     <div class="modal fade" id="myModals" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document" style="margin:0px auto; width:800px;height:300px;">
             <div class="modal-content">
-                <div class="modal-header" style="border:0px solid black ;height:50px;color:white;background-color:#37435c;">
+                <div class="modal-header" style="border:0px solid black ;height:50px;background-color:#37435c;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">出库产品</h4>
+                    <h4 class="modal-title" id="myModalLabel" style="color:white;">报损产品</h4>
                 </div>
                 <div class="modal-body" id="cnt" style="border:1px solid pink;height:55px;  ">
                     <div class="row form-group form-inline" style="margin-top:-5px;">
-                        <div class="col-md-2">
+                        <div class="col-md-2" style="margin-left:-6px;">
                             <label class="control-label">产品编号</label>
                         </div>
                         <div class="col-md-4" style="margin-left:-60px;margin-top:-6px;">
@@ -136,17 +114,21 @@
                                 <td><input type="checkbox" /></td>
                                 <td>产品名称</td>
                                 <td>产品条码</td>
+                                <td>库位</td>
                                 <td>批次</td>
-                                <td>出库数</td>
+                                <td>现有库存</td>
+                                <td>报损数量</td>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><input type="checkbox" /></td>
-                                <td>啦啦啦</td>
-                                <td>01010</td>
-                                <td>10</td>
-                                <td>100</td>
+                                <td>产品名称1</td>
+                                <td>产品条码1</td>
+                                <td>库位1</td>
+                                <td>批次1</td>
+                                <td>现有库存1</td>
+                                <td>报损数量1</td>
                             </tr>
                         </tbody>
                     </table>

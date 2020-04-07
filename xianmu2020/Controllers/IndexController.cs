@@ -81,5 +81,26 @@ namespace xianmu2020.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 报损管理页面视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryBreakagePage() {
+            //测试 
+            ViewBag.Type = new SelectList("");
+            return View();
+        }
+
+        /// <summary>
+        /// 添加报损单and添加报损产品视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryBreakageAdd()
+        {
+            //测试 
+            ViewBag.Type = new SelectList("");
+            return View();
+        }
+
     }
 }

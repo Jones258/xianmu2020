@@ -177,6 +177,8 @@
     <Content Include="Views\Index\QueryStorageAdd.cshtml" />
     <Content Include="Views\Index\QueryDelivery.cshtml" />
     <Content Include="Views\Index\QueryAddSingle.cshtml" />
+    <Content Include="Views\Index\QueryBreakagePage.cshtml" />
+    <Content Include="Views\Index\QueryBreakageAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
