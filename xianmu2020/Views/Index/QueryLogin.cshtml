@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <title>QueryLogin</title>
+</head>
+<body>
+    <form action="@Url.Action("")" method="post">
+        <div class="container">
+            <div style="border:0px solid pink;background-color: lightskyblue ;width:500px;height:300px;margin:0px auto;margin-top:130px;border-radius:15px; ">
+                <h2 style="font-weight:bold; color:darkslategray;margin-left:155px;">仓库管理系统</h2>
+                <div class="row">
+                    <div class="col-md-2" style="margin-top:40px;margin-left:85px;">
+                        <img style="width:30px;height:30px;" src="~/images/dl.png" />
+                    </div>
+                    <div class="col-md-6" style="margin-left:-40px;margin-top:40px; ">
+                        <input type="text" name="UserName" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2" style="margin-top:30px;margin-left:85px;">
+                        <img style="width:30px;height:30px;" src="~/images/mm.png" />
+                    </div>
+                    <div class="col-md-6 text-center" style="margin-left:132px;margin-top:-30px; ">
+                        <input type="password" name="Passworld" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 text-center" style="margin-left:115px;margin-top:35px; ">
+                        <button style="width:233px;margin-left:17px;margin-top:-6px;" class="btn btn-primary">登录</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</body>
+</html>

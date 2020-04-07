@@ -1,0 +1,145 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <title>QueryStorageAdd</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-left:-89px; width:1130px; border:0px solid black;background-color:#37435c;border-radius:2px;">
+            <div class="col-md-8">
+                <h5 style="font-size:15px;font-weight:bold;color:white;">新增入库单</h5>
+            </div>
+        </div>
+        <div class="row" style="border:1px dotted black;width:1130px;height:600px; margin-left:-89px;">
+            <div style="border:0px solid black; width:1100px;margin:0px auto;height:170px;margin-top:15px;background-color:#f5f8f8;">
+                <div class="row">
+                    <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:90px;">
+                        <label class="control-label">入库单编号</label><input type="tel" class="form-control" disabled="disabled" placeholder="可不填,自动生成" />
+                    </div>
+                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                        <label class="control-label">入库单类型</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
+                    </div>
+                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                        <label class="control-label">制单人</label><input type="tel" class="form-control" value="administrator" />
+                    </div>
+                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                        <label class="control-label">供应商编号</label><input type="tel" class="form-control" placeholder="输入关键字搜索或者双击选择" />
+                    </div>
+                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                        <label class="control-label">供应商名称</label><input type="tel" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:90px;">
+                        <label class="control-label">供应商联系人</label><input type="tel" class="form-control" />
+                    </div>
+                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                        <label class="control-label">供应商联系方式</label><input type="tel" class="form-control" />
+                    </div>
+                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                        <label class="control-label">制单时间</label><input type="tel" class="form-control" />
+                    </div>
+                    <div class=" col-md-4 form-inline" style="margin-top:13px;">
+                        <label class="control-label">备注</label><input type="tel" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:22px;">
+                <table class="table table-bordered table-hover table-responsive" style=" width:1100px;margin:0px auto; border:1px solid #e07a7a">
+                    <thead>
+                        <tr style="font-weight:bold;">
+                            <td>产品名称</td>
+                            <td>产品条码</td>
+                            <td>规格</td>
+                            <td>批次</td>
+                            <td>单价</td>
+                            <td>入库数</td>
+                            <td>库位</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>挖土机</td>
+                            <td>0019</td>
+                            <td>规格1</td>
+                            <td>90</td>
+                            <td>800</td>
+                            <td>100</td>
+                            <td>哪个库位</td>
+                            <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" style="border:0px solid black;width:1100px;height:90px; margin-left:14px;margin-top:20px;background-color:#f5f8f8;">
+                <div class="col-md-5 form-group form-inline" style="margin-top:25px;">
+                    <button id="btnAdd" type="button" class="btn btn-info">新增产品</button>
+                    <button type="button" class="btn btn-info">保存</button>
+                    <button type="button" class="btn btn-danger">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    $("#btnAdd").click(function () {
+        $("#myModal").modal();
+    })
+    </script>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">入库产品</h4>
+                </div>
+                <div class="modal-body" id="cnt">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="control-label">产品编号</label><input type="text" class="form-control" placeholder="输入关键字搜索或双击选择" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">产品名称</label><input type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">产品规格</label><input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:20px;">
+                        <div class="col-md-4">
+                            <label class="control-label">产品单价</label><input type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">入库库位</label><input type="text" class="form-control" placeholder="请双击选择库位" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">入库数量</label><input type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

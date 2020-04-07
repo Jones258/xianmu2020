@@ -19,5 +19,46 @@ namespace xianmu2020.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 首页
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Homes()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 登录页面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryLogin()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 入库管理页面视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryStorage()
+        {
+            //测试 
+            ViewBag.Type = new SelectList("");
+            return View();
+        }
+
+        /// <summary>
+        /// 新增入库单and入库产品视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryStorageAdd()
+        {
+            //测试 
+            ViewBag.Type = new SelectList("");
+            return View();
+        }
+
+
     }
 }
