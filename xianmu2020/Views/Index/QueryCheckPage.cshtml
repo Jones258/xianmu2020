@@ -8,27 +8,24 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <meta name="viewport" content="width=device-width" />
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <title>QueryBreakagePage</title>
-
+    <title>QueryCheckPage</title>
     <style>
         #btn1 {
             outline: none;
         }
     </style>
-
 </head>
 <body>
-    <div class="container">
+    <div class="container" >
         <div class="row" style="margin-top:10px; margin-left:-92px; width:1126px; border:0px solid black;background-color:#37435c;border-radius:2px;">
             <div class="col-md-8">
                 @*<label class="control-label">入库管理</label>*@
-                <h5 style="font-size:15px;font-weight:bold;color:white">报损管理</h5>
+                <h5 style="font-size:15px;font-weight:bold;color:white">盘点单管理</h5>
             </div>
         </div>
-        <div class="row" style="margin-left:-92px;  border:0px solid black;width:1126px;background-color:#f5f8f8">
+        <div class="row" style="margin-left:-92px;  border:0px solid black;width:1126px;background-color:#f5f8f8;">
             <div class="col-md-5 form-group form-inline" style="margin-top:15px; ">
                 <button type="button" id="btn1" class="btn btn-group">所有</button>
                 <button type="button" id="btn1" class="btn btn-group">待审核</button>
@@ -36,13 +33,13 @@
                 <button type="button" id="btn1" class="btn btn-group">审核失败</button>
             </div>
             <div class="col-md-3 form-group form-inline" style="margin-top:15px;float:right;margin-right:-15px;">
-                <a href="@Url.Action("QueryBreakageAdd")" class="btn btn-primary">新增</a>
+                <a href="@Url.Action("QueryCheckDanCheckMbAdd")" class="btn btn-primary">新增</a>
                 <button type="button" class="btn btn-danger">删除</button>
                 <button type="button" class="btn btn-info">导出</button>
             </div>
             <div class="row">
                 <div class="col-md-3 form-group form-inline " style="margin-top:83px;margin-left:-475px;">
-                    <input type="text" class="form-control" placeholder="请输入报损单号" />
+                    <input type="text" class="form-control" placeholder="请输入盘点单号" />
                 </div>
                 <div class="col-md-7 form-group form-inline" style="margin-top:19px;">
                     <label class="control-label" style="margin-left:-20px;">时间</label> &nbsp;<input type="date" class="form-control" style="width:150px;" />&nbsp;-&nbsp;<input type="date" class="form-control" style="width:150px;" />&nbsp;&nbsp;<button type="button" class="btn btn-info">搜索</button>
@@ -53,24 +50,22 @@
                 <table class="table table-bordered table-hover table-responsive" style=" width:1043px;margin-left:28px; border:1px solid #e07a7a;">
                     <thead>
                         <tr style="font-weight:bold;">
-                            <td>单据编号</td>
-                            <td>报损类型</td>
-                            <td>客户名称</td>
-                            <td>报损数量</td>
+                            <td><input type="checkbox" /></td>
+                            <td>盘点编号</td>
+                            <td>盘点类型</td>
                             <td>状态</td>
-                            <td>创建人</td>
+                            <td>制单人</td>
                             <td>创建时间</td>
                             <td>操作</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>单据编号1</td>
-                            <td>报损类型1</td>
-                            <td>客户名称1</td>
-                            <td>报损数量1</td>
+                            <td><input type="checkbox" /></td>
+                            <td>盘点编号1</td>
+                            <td>盘点类型1</td>
                             <td>状态1</td>
-                            <td>创建人1</td>
+                            <td>制单人1</td>
                             <td>创建时间1</td>
                             <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
                         </tr>

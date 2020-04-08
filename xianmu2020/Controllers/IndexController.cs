@@ -102,5 +102,44 @@ namespace xianmu2020.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 盘点管理页面视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryCheckPage() {
+
+            return View();
+        }
+
+        /// <summary>
+        /// 新增盘点and盘点目标页面视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryCheckDanCheckMbAdd() {
+            //测试 
+            ViewBag.Type = new SelectList("");
+            return View();
+        }
+
+        /// <summary>
+        /// 退货管理页面视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryRefundPage() {
+
+            return View();
+        }
+
+        /// <summary>
+        /// 新增产品退货页面视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryRefundThAdd() {
+
+            //测试 
+            ViewBag.Type = new SelectList("");
+            return View();
+        }
+
     }
 }

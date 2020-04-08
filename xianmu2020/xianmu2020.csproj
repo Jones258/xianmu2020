@@ -179,6 +179,10 @@
     <Content Include="Views\Index\QueryAddSingle.cshtml" />
     <Content Include="Views\Index\QueryBreakagePage.cshtml" />
     <Content Include="Views\Index\QueryBreakageAdd.cshtml" />
+    <Content Include="Views\Index\QueryCheckPage.cshtml" />
+    <Content Include="Views\Index\QueryCheckDanCheckMbAdd.cshtml" />
+    <Content Include="Views\Index\QueryRefundPage.cshtml" />
+    <Content Include="Views\Index\QueryRefundThAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

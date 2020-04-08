@@ -26,7 +26,7 @@
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header header header-demo">
             <div class="layui-main">
-                <a class="logo" href="./index.html">
+                <a style="margin-left:-5px;" class="logo" href="./index.html">
                     仓储管理系统
                 </a>
                 <ul class="layui-nav" lay-filter="">
@@ -152,18 +152,18 @@
                                     <cite>报损管理</cite>
                                 </a>
                             </dd>
-                            <dd class="">
+                            @*<dd class="">
                                 <a href="javascript:;" _href="./banner-list.html">
                                     <cite>移库管理</cite>
                                 </a>
-                            </dd>
+                            </dd>*@
                             <dd class="">
-                                <a href="javascript:;" _href="./banner-list.html">
+                                <a href="javascript:;" _href="@Url.Action("QueryCheckPage")">
                                     <cite>盘点管理</cite>
                                 </a>
                             </dd>
                             <dd class="">
-                                <a href="javascript:;" _href="./banner-list.html">
+                                <a href="javascript:;" _href=@Url.Action("QueryRefundPage")>
                                     <cite>退货管理</cite>
                                 </a>
                             </dd>
