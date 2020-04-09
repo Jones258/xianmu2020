@@ -37,6 +37,53 @@ namespace xianmu2020.Controllers
             return View();
         }
 
+        #region 系统设置
+        /// <summary>
+        /// 员工管理页面视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryEmployeesPage()
+        {
+            //测试 
+            ViewBag.Type = new SelectList("");
+            return View();
+        }
+
+        /// <summary>
+        /// 角色管理页面视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryRolePage()
+        {
+
+            return View();
+        }
+
+        /// <summary>
+        /// 部门管理页面视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QuerySectionPage()
+        {
+
+            return View();
+        }
+
+        /// <summary>
+        /// 菜单管理页面视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryMenuPage()
+        {
+
+            //测试 
+            ViewBag.Type = new SelectList("");
+            return View();
+        }
+        #endregion
+
+
+        #region 仓库作业
         /// <summary>
         /// 入库管理页面视图
         /// </summary>
@@ -85,7 +132,8 @@ namespace xianmu2020.Controllers
         /// 报损管理页面视图
         /// </summary>
         /// <returns></returns>
-        public ActionResult QueryBreakagePage() {
+        public ActionResult QueryBreakagePage()
+        {
             //测试 
             ViewBag.Type = new SelectList("");
             return View();
@@ -106,7 +154,8 @@ namespace xianmu2020.Controllers
         /// 盘点管理页面视图
         /// </summary>
         /// <returns></returns>
-        public ActionResult QueryCheckPage() {
+        public ActionResult QueryCheckPage()
+        {
 
             return View();
         }
@@ -115,7 +164,8 @@ namespace xianmu2020.Controllers
         /// 新增盘点and盘点目标页面视图
         /// </summary>
         /// <returns></returns>
-        public ActionResult QueryCheckDanCheckMbAdd() {
+        public ActionResult QueryCheckDanCheckMbAdd()
+        {
             //测试 
             ViewBag.Type = new SelectList("");
             return View();
@@ -125,7 +175,8 @@ namespace xianmu2020.Controllers
         /// 退货管理页面视图
         /// </summary>
         /// <returns></returns>
-        public ActionResult QueryRefundPage() {
+        public ActionResult QueryRefundPage()
+        {
 
             return View();
         }
@@ -134,12 +185,15 @@ namespace xianmu2020.Controllers
         /// 新增产品退货页面视图
         /// </summary>
         /// <returns></returns>
-        public ActionResult QueryRefundThAdd() {
+        public ActionResult QueryRefundThAdd()
+        {
 
             //测试 
             ViewBag.Type = new SelectList("");
             return View();
         }
+        #endregion
+
 
     }
 }

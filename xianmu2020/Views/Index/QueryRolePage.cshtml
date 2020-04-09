@@ -1,0 +1,126 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <title>QueryRolePage</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-top:10px; margin-left:-92px; width:1111px; border:0px solid black;background-color:#37435c;border-radius:2px;">
+            <div class="col-md-8">
+                @*<label class="control-label">入库管理</label>*@
+                <h5 style="font-size:15px;font-weight:bold;color:white">角色管理</h5>
+            </div>
+        </div>
+        <div class="row" style="margin-left:-92px;  border:0px solid black;width:1111px;background-color:#f5f8f8">
+
+            <div class="row">
+                <div class="col-md-3 form-group form-inline " style="margin-top:18px;margin-left:14px;">
+                    <input type="text" class="form-control" placeholder="请输入角色编号或者角色名称" />
+                </div>
+                <div class="col-md-7 form-group form-inline" style="margin-top:18px;">
+                    <button type="button" class="btn btn-info">搜索</button>
+                </div>
+            </div>
+
+            <div class="col-md-3 form-group form-inline" style="margin-top:-50px;float:right;margin-right:-11px;">
+                <button id="btnAdd" type="button" class="btn btn-info">新增角色</button>
+                <button type="button" class="btn btn-danger">删除</button>
+                <button type="button" class="btn btn-info">导出</button>
+            </div>
+
+            <div class="row" style="margin-top:25px;">
+                <table class="table table-bordered table-hover table-responsive" style=" width:1043px;margin-left:28px; border:1px solid #e07a7a;">
+                    <thead>
+                        <tr style="font-weight:bold;">
+                            <td>序号</td>
+                            <td>角色编号</td>
+                            <td>角色名</td>
+                            <td>创建时间</td>
+                            <td>备注</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>序号1</td>
+                            <td>角色编号1</td>
+                            <td>角色名1</td>
+                            <td>创建时间1</td>
+                            <td>备注1</td>
+                            <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row form-inline form-group text-center" style="margin-top:30px;margin-right:30px;">
+                <button type="button" class="btn btn-primary form-group">首页</button>
+                <button type="button" class="btn btn-primary form-group">上一页</button>
+                <input type="text" class="form-control" style="width:80px;" />
+                <button type="button" class="btn btn-primary form-group">Go</button>
+                <button type="button" class="btn btn-primary form-group">下一页</button>
+                <button type="button" class="btn btn-primary form-group">尾页</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="width:400px;">
+            <div class="modal-content">
+                <div class="modal-header" style="color:white; background-color:#37435c;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">添加角色</h4>
+                </div>
+                <div class="modal-body" id="cnt">   
+                    <div class="row form-inline form-group" style="margin-top:10px;">
+                        <div class="col-md-4">
+                            <label class="control-label">用户编号</label>
+                        </div>
+                        <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
+                            <input type="text" class="form-control" disabled="disabled" placeholder="自动生成，可不填" />
+                        </div>                     
+                    </div>
+                    <div class="row form-inline form-group" style="margin-top:10px;">
+                        <div class="col-md-4">
+                            <label class="control-label">角色名称</label>
+                        </div>
+                        <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
+                            <input type="text" class="form-control"  placeholder="请输入角色名称" />
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group" style="margin-top:10px;">
+                        <div class="col-md-4">
+                            <label class="control-label">备注</label>
+                        </div>
+                        <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
+                            <input type="text" class="form-control"  />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        $(function () {
+            //打开添加对话框
+                $("#btnAdd").click(function () {
+                    $("#myModal1").modal();
+                })
+        })
+    </script>
+</body>
+</html>

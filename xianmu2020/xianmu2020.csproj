@@ -183,6 +183,10 @@
     <Content Include="Views\Index\QueryCheckDanCheckMbAdd.cshtml" />
     <Content Include="Views\Index\QueryRefundPage.cshtml" />
     <Content Include="Views\Index\QueryRefundThAdd.cshtml" />
+    <Content Include="Views\Index\QueryEmployeesPage.cshtml" />
+    <Content Include="Views\Index\QueryRolePage.cshtml" />
+    <Content Include="Views\Index\QuerySectionPage.cshtml" />
+    <Content Include="Views\Index\QueryMenuPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
