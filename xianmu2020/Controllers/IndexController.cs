@@ -177,7 +177,8 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryRefundPage()
         {
-
+            //测试 
+            ViewBag.Type = new SelectList("");
             return View();
         }
 
@@ -187,7 +188,6 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryRefundThAdd()
         {
-
             //测试 
             ViewBag.Type = new SelectList("");
             return View();

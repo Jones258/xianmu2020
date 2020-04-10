@@ -35,7 +35,7 @@
                         <label class="control-label">发货日期</label><input type="date" class="form-control" />
                     </div>
                     <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">客户编号</label><input type="text" class="form-control" placeholder="输入关键字搜索或者双击选择" />
+                        <label class="control-label">客户编号</label><input type="text" ondblclick="Kehu()" class="form-control" placeholder="输入关键字搜索或者双击选择" />
                     </div>
                     <div class=" col-md-2 form-inline" style="margin-top:13px;">
                         <label class="control-label">客户名称</label><input type="text" class="form-control" />
@@ -85,7 +85,7 @@
                             <td>规格1</td>
                             <td>出库数1</td>
                             <td>库位1</td>
-                            <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                            <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -104,6 +104,10 @@
     $("#btnAdd").click(function () {
         $("#myModals").modal();
     })
+
+    function Kehu() {
+        $("#myModal3").modal();
+    }
     </script>
 
 
@@ -162,5 +166,59 @@
             </div>
         </div>
     </div>
+
+    @*客户*@
+    <div class="modal fade" id="myModal3" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="margin:0px auto; width:800px;height:300px;">
+            <div class="modal-content">
+                <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">选择客户</h4>
+                </div>
+                <div class="modal-body" id="cnt" style="border:1px solid pink;height:55px;  ">
+                    <div class="row form-group form-inline" style="margin-top:-5px;">
+                        <div class="col-md-3" style="margin-left:-7px;">
+                            <label class="control-label">客户编号/名称：</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-70px;margin-top:-6px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-5" style="margin-top:-6px;">
+                            <button class="btn btn-info">搜索</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="width:778px;margin:0px auto;height:200px;">
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                            <tr style="font-weight:bold;">
+                                <td><input type="checkbox" style="width:15px;height:15px;" /></td>
+                                <td>客户编号</td>
+                                <td>客户名称</td>
+                                <td>联系方式</td>
+                                <td>Email</td>
+                                <td>传真</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox" style="width:15px;height:15px;" /></td>
+                                <td>客户编号1</td>
+                                <td>客户名称1</td>
+                                <td>联系方式1</td>
+                                <td>Email1</td>
+                                <td>传真1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

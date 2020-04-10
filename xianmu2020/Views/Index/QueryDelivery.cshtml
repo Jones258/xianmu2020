@@ -9,6 +9,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <style>
         #btn1 {
@@ -85,7 +86,8 @@
                             <td>电脑</td>
                             <td>adminserin</td>
                             <td>2020-04-03</td>
-                            <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                            <td><a id="UpdateChuKu" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;
+                            <a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-hand-right"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -112,9 +114,105 @@
                 $("#BtnSq").click(function () {
                     $("#div1").hide();
                 })
+                $("#UpdateChuKu").click(function () {
+                    $("#myModal").modal();
+                })
         })
+
     </script>
 
->
+   @*修改*@
+    <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
+            <div class="modal-content">
+                <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">编辑出库单</h4>
+                </div>
+                <div class="container" style="height:300px;">
+
+                    <div style="border:1px solid #d4cdcd;width:855px;height:230px;margin:0px auto;margin-top:5px;border-radius:10px;">
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-3">
+                                <label class="control-label">出库单编号</label><input type="text" class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">出库单类型</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">发货日期</label><input type="date" class="form-control" value="administrator" />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">客户编号</label><input type="text" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-3">
+                                <label class="control-label">客户名称</label><input type="text" class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">客户地址</label>@Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">客户联系方式</label><input type="text" class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">联系人</label><input type="text" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-3">
+                                <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">备注</label><input type="text" class="form-control" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:3px;">
+                        <table class="table table-bordered table-hover table-responsive">
+                            <thead>
+                                <tr style="font-weight:bold;">
+                                    <td>产品名称</td>
+                                    <td>产品条码</td>
+                                    <td>产品编号</td>
+                                    <td>批次</td>
+                                    <td>单价</td>
+                                    <td>规格</td>
+                                    <td>出库数</td>
+                                    <td>库位</td>
+                                    <td>操作</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>产品名称1</td>
+                                    <td>产品条码1</td>
+                                    <td>产品编号1</td>
+                                    <td>批次1</td>
+                                    <td>单价1</td>
+                                    <td>规格1</td>
+                                    <td>出库数1</td>
+                                    <td>库位1</td>
+                                    <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+
+
 </body>
 </html>
