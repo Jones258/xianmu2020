@@ -1,0 +1,88 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Qx</title>
+    <link href="~/Theme/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/css/style-responsive.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/css/themes/default.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/plugins/jbox-v2.3/jBox/Skins/Gray/jbox.css" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/plugins/bootstrap-tree/bootstrap-tree/css/bootstrap-tree.css" rel="stylesheet" />
+</head>
+<body>
+    <div> 
+        <div id="page">
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="widget">
+                        <div class="widget-title">
+                            <h4><i class="icon-sitemap"></i>未分配的权限</h4>
+                        </div>
+                        <div class="widget-body">
+                            <ul class="tree">
+                                <li>
+                                    <a id="linkLeft" data-value="Bootstrap_Tree" data-toggle="branch" class="tree-toggle" data-role="branch" href="javascript:void(0);">系统模块</a>
+                                    <ul id="tree_1" class="branch in"></ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="span6">
+                    <div class="widget">
+                        <div class="widget-title">
+                            <h4><i class="icon-cloud-download"></i>已分配的权限</h4>
+                            <div class="actions">
+                                <a class="btn btn-small" id="tree_2_expand" href="javascript:void(0);" onclick="UITree.Save()">保存</a>
+                                <input type="hidden" id="hdRoleNum" name="hdRoleNum" value="DR_0000">
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <ul class="tree">
+                                <li>
+                                    <a id="linkRight" data-value="Bootstrap_Tree" data-toggle="branch" class="tree-toggle" data-role="branch" href="javascript:void(0)">系统模块</a>
+                                    <ul id="tree_2" class="branch in"><li><a class="tree-toggle" href="javascript:void(0);" data-resnum="Sys_1000" data-parentnum="">系统设置</a><ul class="branch in"><a href="javascript:void(0);" data-resnum="Sys_2000" data-parentnum="Sys_1000"><i class="icon-arrow-left"></i>员工管理</a><a href="javascript:void(0);" data-resnum="Sys_2001" data-parentnum="Sys_1000"><i class="icon-arrow-left"></i>角色管理</a><a href="javascript:void(0);" data-resnum="Sys_2002" data-parentnum="Sys_1000"><i class="icon-arrow-left"></i>部门管理</a><a href="javascript:void(0);" data-resnum="Sys_2003" data-parentnum="Sys_1000"><i class="icon-arrow-left"></i>菜单管理</a><a href="javascript:void(0);" data-resnum="Sys_2004" data-parentnum="Sys_1000"><i class="icon-arrow-left"></i>权限分配</a><a href="javascript:void(0);" data-resnum="Sys_2007" data-parentnum="Sys_1000"><i class="icon-arrow-left"></i>标识符管理</a></ul></li><li><a class="tree-toggle" href="javascript:void(0);" data-resnum="Base_1000" data-parentnum="">基本资料</a><ul class="branch in"><a href="javascript:void(0);" data-resnum="Base_2001" data-parentnum="Base_1000"><i class="icon-arrow-left"></i>库位管理</a><a href="javascript:void(0);" data-resnum="Base_2003" data-parentnum="Base_1000"><i class="icon-arrow-left"></i>供应商管理</a><a href="javascript:void(0);" data-resnum="Base_2004" data-parentnum="Base_1000"><i class="icon-arrow-left"></i>客户管理</a><a href="javascript:void(0);" data-resnum="Base_2005" data-parentnum="Base_1000"><i class="icon-arrow-left"></i>计量单位</a><a href="javascript:void(0);" data-resnum="Base_2006" data-parentnum="Base_1000"><i class="icon-arrow-left"></i>产品类别</a><a href="javascript:void(0);" data-resnum="Base_2007" data-parentnum="Base_1000"><i class="icon-arrow-left"></i>产品管理</a></ul></li><li><a class="tree-toggle" href="javascript:void(0);" data-resnum="Storage_1000" data-parentnum="">仓库作业</a><ul class="branch in"><a class="tree-toggle" href="javascript:void(0);" data-resnum="Storage_2000" data-parentnum="Storage_1000">入库管理</a><ul class="branch in"><li><a href="javascript:void(0);" data-resnum="Storage_3000" data-parentnum="Storage_2000"><i class="icon-arrow-left"></i>新增入库</a></li></ul><a class="tree-toggle" href="javascript:void(0);" data-resnum="Storage_2001" data-parentnum="Storage_1000">出库管理</a><ul class="branch in"><li><a href="javascript:void(0);" data-resnum="Storage_3100" data-parentnum="Storage_2001"><i class="icon-arrow-left"></i>新增出库</a></li></ul><a class="tree-toggle" href="javascript:void(0);" data-resnum="Storage_2002" data-parentnum="Storage_1000">报损管理</a><ul class="branch in"><li><a href="javascript:void(0);" data-resnum="Storage_3200" data-parentnum="Storage_2002"><i class="icon-arrow-left"></i>新增报损</a></li></ul><a class="tree-toggle" href="javascript:void(0);" data-resnum="Storage_2003" data-parentnum="Storage_1000">移库管理</a><ul class="branch in"><li><a href="javascript:void(0);" data-resnum="Storage_3300" data-parentnum="Storage_2003"><i class="icon-arrow-left"></i>新增移库</a></li></ul><a class="tree-toggle" href="javascript:void(0);" data-resnum="Storage_2004" data-parentnum="Storage_1000">盘点管理</a><ul class="branch in"><li><a href="javascript:void(0);" data-resnum="Storage_3400" data-parentnum="Storage_2004"><i class="icon-arrow-left"></i>新增盘点</a></li></ul><a class="tree-toggle" href="javascript:void(0);" data-resnum="Storage_2005" data-parentnum="Storage_1000">退货管理</a><ul class="branch in"><li><a href="javascript:void(0);" data-resnum="Storage_3500" data-parentnum="Storage_2005"><i class="icon-arrow-left"></i>新增退货</a></li></ul></ul></li><li><a class="tree-toggle" href="javascript:void(0);" data-resnum="Report_1000" data-parentnum="">报表管理</a><ul class="branch in"><a href="javascript:void(0);" data-resnum="Report_2000" data-parentnum="Report_1000"><i class="icon-arrow-left"></i>库存清单</a><a href="javascript:void(0);" data-resnum="Report_2001" data-parentnum="Report_1000"><i class="icon-arrow-left"></i>货品统计</a><a href="javascript:void(0);" data-resnum="Report_2002" data-parentnum="Report_1000"><i class="icon-arrow-left"></i>出入库报表</a><a href="javascript:void(0);" data-resnum="Report_2003" data-parentnum="Report_1000"><i class="icon-arrow-left"></i>入库报表</a><a href="javascript:void(0);" data-resnum="Report_2004" data-parentnum="Report_1000"><i class="icon-arrow-left"></i>出库报表</a><a href="javascript:void(0);" data-resnum="Report_2005" data-parentnum="Report_1000"><i class="icon-arrow-left"></i>报损报表</a><a href="javascript:void(0);" data-resnum="Report_2006" data-parentnum="Report_1000"><i class="icon-arrow-left"></i>退货报表</a><a href="javascript:void(0);" data-resnum="Report_2007" data-parentnum="Report_1000"><i class="icon-arrow-left"></i>客户报表</a><a href="javascript:void(0);" data-resnum="Report_2008" data-parentnum="Report_1000"><i class="icon-arrow-left"></i>供应商报表</a><a href="javascript:void(0);" data-resnum="Report_2009" data-parentnum="Report_1000"><i class="icon-arrow-left"></i>台账记录</a><a class="tree-toggle" href="javascript:void(0);" data-resnum="Report_2010" data-parentnum="Report_1000">自定义报表</a><ul class="branch in"><li><a href="javascript:void(0);" data-resnum="Report_31000" data-parentnum="Report_2010"><i class="icon-arrow-left"></i>新增报表</a></li></ul></ul></li></ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript" src="~/Theme/plugins/jquery-1.8.3.min.js?t=51d54aca-91ff-434c-a3b6-4bb7a7f2f592"></script>
+<script type="text/javascript" src="~/Theme/plugins/bootstrap/js/bootstrap.min.js?t=4183bb04-181e-4dd3-b4b1-30bbcaf99032"></script>
+<script type="text/javascript" src="~/Theme/plugins/jbox-v2.3/jBox/jquery.jBox-2.3.min.js?t=52578a54-b6cd-4827-a56d-012ba3a1ffb6"></script>
+<script type="text/javascript" src="~/Common/Js?t=f7649ca3-b6c0-4df1-9ddd-93572140f9c6"></script>
+<script type="text/javascript" src="~/Theme/customer/Git.Framework.Common.js?t=c965ab8c-e2f0-42a3-911c-0eac3f5889ee"></script>
+<script type="text/javascript" src="~/Theme/customer/Git.Framework.UICommon.js?t=19ed6921-c900-424b-b226-48bf7e92c319"></script>
+<script type="text/javascript" src="~/Theme/customer/User/Git.Storage.Menu.js?t=66c00d8b-7498-4773-8ed3-fd29c7191a1d"></script>
+
+
+
+
+<script src="~/Theme/scripts/ui-tree.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            UITree.init();
+        });
+</script>
+
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Chrome","requestId":"8e5bc87dc3fa4c6d9f6cdb946c3722e5"}
+</script>
+<script type="text/javascript" src="http://localhost:7513/a6d8ec7316884bd6bc725ca6ae556c32/browserLink" async="async"></script>
+

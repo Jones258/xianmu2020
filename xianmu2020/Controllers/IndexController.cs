@@ -263,7 +263,9 @@ namespace xianmu2020.Controllers
             return View();
         }
         #endregion
-
-
+        //权限
+        public ActionResult Qx() {
+            return View();
+        }
     }
 }
