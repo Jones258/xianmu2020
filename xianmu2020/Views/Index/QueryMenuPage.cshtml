@@ -33,7 +33,7 @@
             </div>
 
             <div class="col-md-3 form-group form-inline" style="margin-top:-50px;margin-left:959px;">
-                <button id="btnAdd" type="button" class="btn btn-info">新增菜单</button>
+                <button id="btnAdd" type="button" class="btn btn-primary">新增菜单</button>
             </div>
 
             <div class="row" style="margin-top:25px;">
@@ -57,7 +57,7 @@
                             <td>1</td>
                             <td>路径1</td>
                             <td>创建时间1</td>
-                            <td><a id="UpdateRuKu" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
+                            <td><a id="UpdateMenu" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
                         </tr>
                         <tr>
                             <td>02</td>
@@ -66,7 +66,7 @@
                             <td>2</td>
                             <td>路径2</td>
                             <td>创建时间2</td>
-                            <td><a href="#"><span  class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
+                            <td><a id="UpdateMenu" href="#"><span  class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -82,7 +82,7 @@
         </div>
     </div>
 
-
+    @*添加菜单*@
     <div class="modal fade" id="myModal1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document" style="width:400px;">
             <div class="modal-content">
@@ -140,12 +140,74 @@
         </div>
     </div>
 
+    @*修改菜单*@
+    <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="width:400px;">
+            <div class="modal-content">
+                <div class="modal-header" style="color:white; background-color:#37435c;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">编辑菜单</h4>
+                </div>
+                <div class="modal-body" id="cnt">
+                    <div class="row form-inline form-group" style="margin-top:30px;">
+                        <div class="col-md-4">
+                            <label class="control-label">菜单名称</label>
+                        </div>
+                        <div class="col-md-8" style="margin-left:-40px;margin-top:-10px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-4">
+                            <label class="control-label">父级菜单</label>
+                        </div>
+                        <div class="col-md-8" style="margin-left:-40px;margin-top:-10px;">
+                            @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:215px;" })
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-4">
+                            <label class="control-label">排序</label>
+                        </div>
+                        <div class="col-md-8" style="margin-left:-40px;margin-top:-10px;">
+                            <input type="text" class="form-control" value="0" />
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-4">
+                            <label class="control-label">链接地址</label>
+                        </div>
+                        <div class="col-md-8" style="margin-left:-40px;margin-top:-10px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-4">
+                            <label class="control-label">样式</label>
+                        </div>
+                        <div class="col-md-8" style="margin-left:-40px;margin-top:-10px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript">
 
         $(function () {
             //打开添加对话框
                 $("#btnAdd").click(function () {
                     $("#myModal1").modal();
+                })
+            //修改菜单度对话框
+                $("#UpdateMenu").click(function () {
+                    $("#myModal2").modal();
                 })
         })
     </script>

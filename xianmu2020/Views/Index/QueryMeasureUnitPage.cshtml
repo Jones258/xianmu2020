@@ -10,31 +10,31 @@
     <meta name="viewport" content="width=device-width" />
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <title>QueryRolePage</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <title>QueryMeasureUnitPage</title>
 </head>
 <body>
     <div class="container">
-        <div class="row" style="margin-top:10px; margin-left:-92px; width:1111px; border:0px solid black;background-color:#37435c;border-radius:2px;">
+        <div class="row" style="margin-top:10px; margin-left:-92px; width:1126px; border:0px solid black;background-color:#37435c;border-radius:2px;">
             <div class="col-md-8">
                 @*<label class="control-label">入库管理</label>*@
-                <h5 style="font-size:15px;font-weight:bold;color:white">角色管理</h5>
+                <h5 style="font-size:15px;font-weight:bold;color:white">计量单位</h5>
             </div>
         </div>
-        <div class="row" style="margin-left:-92px;  border:0px solid black;width:1111px;background-color:#f5f8f8">
+        <div class="row" style="margin-left:-92px;  border:0px solid black;width:1126px;background-color:#f5f8f8">
 
-            <div class="row">
-                <div class="col-md-3 form-group form-inline " style="margin-top:18px;margin-left:14px;">
-                    <input type="text" class="form-control" placeholder="请输入角色编号或者角色名称" />
-                </div>
-                <div class="col-md-7 form-group form-inline" style="margin-top:18px;">
-                    <button type="button" class="btn btn-info">搜索</button>
-                </div>
-            </div>
-
-            <div class="col-md-3 form-group form-inline" style="margin-top:-50px;float:right;margin-right:-68px;">
-                <button id="btnAdd" type="button" class="btn btn-primary">新增角色</button>
+            <div class="col-md-3 form-group form-inline" style="margin-top:13px;float:right;margin-right:-30px;">
+                <button id="BtnAddJLDW" type="button" class="btn btn-primary">新增计量单位</button>
                 <button type="button" class="btn btn-info">导出</button>
+            </div>
+            <div class="row">
+                <div class="col-md-3" style="margin-top:15px;margin-left:13px;">
+                    <input type="text" class="form-control" placeholder="请输入单位编号或名称" />
+                </div>
+                <div class="col-md-1" style="margin-top:15px;margin-left:-21px;">
+                    <button type="button" class="btn btn-primary">搜索</button>
+                </div>
+
             </div>
 
             <div class="row" style="margin-top:25px;">
@@ -42,21 +42,20 @@
                     <thead>
                         <tr style="font-weight:bold;">
                             <td>序号</td>
-                            <td>角色编号</td>
-                            <td>角色名</td>
-                            <td>创建时间</td>
-                            <td>备注</td>
+                            <td>单位编号</td>
+                            <td>单位名称</td>
                             <td>操作</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>序号1</td>
-                            <td>角色编号1</td>
-                            <td>角色名1</td>
-                            <td>创建时间1</td>
-                            <td>备注1</td>
-                            <td><a id="UpdateRole" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span  class="glyphicon glyphicon-new-window"></span></a></td>
+                            <td>单位编号1</td>
+                            <td>单位名称1</td>
+                            <td>
+                                <a id="UpdateJLDW" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;
+                                <a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -72,39 +71,32 @@
         </div>
     </div>
 
-    @*添加角色*@
+    @*添加计量单位对话框*@
     <div class="modal fade" id="myModal1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document" style="width:400px;">
             <div class="modal-content">
                 <div class="modal-header" style="color:white; background-color:#37435c;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">添加角色</h4>
+                    <h4 class="modal-title" id="myModalLabel">新增计量单位</h4>
                 </div>
-                <div class="modal-body" id="cnt">   
+                <div class="modal-body" id="cnt">
                     <div class="row form-inline form-group" style="margin-top:10px;">
                         <div class="col-md-4">
-                            <label class="control-label">用户编号</label>
+                            <label class="control-label">编号</label>
                         </div>
                         <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
                             <input type="text" class="form-control" disabled="disabled" placeholder="自动生成，可不填" />
-                        </div>                     
-                    </div>
-                    <div class="row form-inline form-group" style="margin-top:10px;">
-                        <div class="col-md-4">
-                            <label class="control-label">角色名称</label>
-                        </div>
-                        <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
-                            <input type="text" class="form-control"  placeholder="请输入角色名称" />
                         </div>
                     </div>
                     <div class="row form-inline form-group" style="margin-top:10px;">
                         <div class="col-md-4">
-                            <label class="control-label">备注</label>
+                            <label class="control-label">名称</label>
                         </div>
                         <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
-                            <input type="text" class="form-control"  />
+                            <input type="text" class="form-control" placeholder="请输入计量单名称" />
                         </div>
                     </div>
+                   
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">确定</button>
@@ -113,40 +105,32 @@
             </div>
         </div>
     </div>
-
-    @*修改角色*@
+    @*修改计量单位*@
     <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document" style="width:400px;">
             <div class="modal-content">
                 <div class="modal-header" style="color:white; background-color:#37435c;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">编辑角色</h4>
+                    <h4 class="modal-title" id="myModalLabel">编辑计量单位</h4>
                 </div>
                 <div class="modal-body" id="cnt">
                     <div class="row form-inline form-group" style="margin-top:10px;">
                         <div class="col-md-4">
-                            <label class="control-label">角色编号</label>
+                            <label class="control-label">编号</label>
                         </div>
                         <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
-                            <input type="text" class="form-control" disabled="disabled" />
+                            <input type="text" class="form-control" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="row form-inline form-group" style="margin-top:10px;">
                         <div class="col-md-4">
-                            <label class="control-label">角色名称</label>
-                        </div>
-                        <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
-                            <input type="text" class="form-control"  />
-                        </div>
-                    </div>
-                    <div class="row form-inline form-group" style="margin-top:10px;">
-                        <div class="col-md-4">
-                            <label class="control-label">备注</label>
+                            <label class="control-label">名称</label>
                         </div>
                         <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
                             <input type="text" class="form-control" />
                         </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">确定</button>
@@ -156,17 +140,18 @@
         </div>
     </div>
 
-    <script type="text/javascript">
 
-        $(function () {
-            //打开添加对话框
-                $("#btnAdd").click(function () {
-                    $("#myModal1").modal();
-                })
-                $("#UpdateRole").click(function () {
-                    $("#myModal2").modal();
-                })
+
+    <script type="text/javascript">
+        //打开添加单位对话框
+        $("#BtnAddJLDW").click(function () {
+            $("#myModal1").modal();
+        })
+        //打开修改对话框
+        $("#UpdateJLDW").click(function () {
+            $("#myModal2").modal();
         })
     </script>
+
 </body>
 </html>

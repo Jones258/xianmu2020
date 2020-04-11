@@ -1,0 +1,216 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <title>QuerySeatingPage</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-top:10px; margin-left:-92px; width:1126px; border:0px solid black;background-color:#37435c;border-radius:2px;">
+            <div class="col-md-8">
+                @*<label class="control-label">入库管理</label>*@
+                <h5 style="font-size:15px;font-weight:bold;color:white">库位管理</h5>
+            </div>
+        </div>
+        <div class="row" style="margin-left:-92px;  border:0px solid black;width:1126px;background-color:#f5f8f8">
+
+            <div class="col-md-3 form-group form-inline" style="margin-top:13px;float:right;margin-right:-57px;">
+                <button id="BtnAddKW" type="button" class="btn btn-primary">新增库位</button>
+                <button type="button" class="btn btn-info">导出</button>
+            </div>
+            <div class="row">
+                <div class="col-md-1" style="margin-top:23px;margin-left:15px;">
+                    <label class="control-label">仓库</label> 
+                </div>
+                <div class="col-md-2"  style="margin-top:15px;margin-left:-53px;">
+                    @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
+                </div>
+                <div class="col-md-1" style="margin-top:23px;margin-left:-16px;">
+                    <label class="control-label">库位类型</label>
+                </div>
+                <div class="col-md-2" style="margin-top:15px;margin-left:-30px;">
+                    @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
+                </div>
+                <div class="col-md-1" style="margin-top:23px;margin-left:-19px;">
+                    <label class="control-label">库位名</label>
+                </div>
+                <div class="col-md-2" style="margin-top:15px;margin-left:-40px;">
+                   <input type="text" class="form-control" />
+                </div>
+                <div class="col-md-1" style="margin-top:15px;margin-left:-21px;">
+                    <button type="button" class="btn btn-primary">搜索</button>
+                </div>
+
+            </div>
+
+            <div class="row" style="margin-top:25px;">
+                <table class="table table-bordered table-hover table-responsive" style=" width:1043px;margin-left:28px; border:1px solid #e07a7a;">
+                    <thead>
+                        <tr style="font-weight:bold;">
+                            <td>序号</td>
+                            <td>库位编号</td>
+                            <td>库位名</td>
+                            <td>所在仓库</td>
+                            <td>库位类型</td>
+                            <td>是否禁用</td>
+                            <td>是否默认</td>
+                            <td>创建时间</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>序号1</td>
+                            <td>库位编号1</td>
+                            <td>库位名1</td>
+                            <td>所在仓库1</td>
+                            <td>库位类型1</td>
+                            <td>是否禁用1</td>
+                            <td>是否默认1</td>
+                            <td>创建时间1</td>
+                            <td>
+                                <a id="UpdateKuWei" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;
+                                <a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row form-inline form-group text-center" style="margin-top:30px;margin-right:30px;">
+                <button type="button" class="btn btn-primary form-group">首页</button>
+                <button type="button" class="btn btn-primary form-group">上一页</button>
+                <input type="text" class="form-control" style="width:80px;" />
+                <button type="button" class="btn btn-primary form-group">Go</button>
+                <button type="button" class="btn btn-primary form-group">下一页</button>
+                <button type="button" class="btn btn-primary form-group">尾页</button>
+            </div>
+        </div>
+    </div>
+
+    @*添加库位*@
+    <div class="modal fade" id="myModal1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="color:white; background-color:#37435c;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">添加库位</h4>
+                </div>
+                <div class="modal-body" id="cnt">
+                    <div class="row form-inline form-group" style="margin-top:10px;">
+                        <div class="col-md-2">
+                            <label class="control-label">库位编号</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            <input type="text" class="form-control" disabled="disabled" placeholder="自动生成，可不填" />
+                        </div>
+                        <div class="col-md-2" style="margin-left:30px;">
+                            <label class="control-label">库位名称</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-25px;margin-top:-11px;">
+                            <input type="text" class="form-control" placeholder="请输入库位名" />
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">库位类型</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:159px;" })
+                        </div>
+                        <div class="col-md-2" style="margin-left:30px;">
+                            <label class="control-label">仓库</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-25px;margin-top:-11px;">
+                            @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:159px;" })
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">是否默认</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:159px;" })
+                        </div>                     
+                    </div>                                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*修改库位*@
+    <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="color:white; background-color:#37435c;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">编辑库位</h4>
+                </div>
+                <div class="modal-body" id="cnt">
+                    <div class="row form-inline form-group" style="margin-top:10px;">
+                        <div class="col-md-2">
+                            <label class="control-label">库位编号</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            <input type="text" class="form-control" disabled="disabled" />
+                        </div>
+                        <div class="col-md-2" style="margin-left:30px;">
+                            <label class="control-label">库位名称</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-25px;margin-top:-11px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">库位类型</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:159px;" })
+                        </div>
+                        <div class="col-md-2" style="margin-left:30px;">
+                            <label class="control-label">仓库</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-25px;margin-top:-11px;">
+                            @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:159px;" })
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">是否默认</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:159px;" })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $("#BtnAddKW").click(function () {
+            $("#myModal1").modal();
+        })
+        $("#UpdateKuWei").click(function () {
+            $("#myModal2").modal();
+        })
+    </script>
+
+</body>
+</html>

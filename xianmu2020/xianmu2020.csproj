@@ -187,6 +187,11 @@
     <Content Include="Views\Index\QueryRolePage.cshtml" />
     <Content Include="Views\Index\QuerySectionPage.cshtml" />
     <Content Include="Views\Index\QueryMenuPage.cshtml" />
+    <Content Include="Views\Index\QuerySeatingPage.cshtml" />
+    <Content Include="Views\Index\QueryClientPage.cshtml" />
+    <Content Include="Views\Index\QueryMeasureUnitPage.cshtml" />
+    <Content Include="Views\Index\QueryProductSortPage.cshtml" />
+    <Content Include="Views\Index\QueryProductGLPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

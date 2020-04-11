@@ -83,6 +83,75 @@ namespace xianmu2020.Controllers
         #endregion
 
 
+        #region 基本资料
+
+        /// <summary>
+        /// 库位管理
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QuerySeatingPage() {
+            //测试 
+            ViewBag.Type = new SelectList("");
+            return View();
+        }
+
+        /// <summary>
+        /// 供应商管理
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QuerySupplierPage() {
+
+            //测试 
+            ViewBag.Type = new SelectList("");
+            return View();
+        }
+
+        /// <summary>
+        /// 客户管理
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryClientPage() {
+
+            return View();
+        }
+
+        /// <summary>
+        /// 计量单位
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryMeasureUnitPage() {
+
+            return View();
+        }
+
+        /// <summary>
+        /// 产品类别
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryProductSortPage()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 产品管理
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryProductGLPage()
+        {
+            //测试 
+            ViewBag.Type = new SelectList("");
+            return View();
+        }
+
+
+
+
+
+
+        #endregion
+
+
         #region 仓库作业
         /// <summary>
         /// 入库管理页面视图
@@ -156,7 +225,8 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryCheckPage()
         {
-
+            //测试 
+            ViewBag.Type = new SelectList("");
             return View();
         }
 
