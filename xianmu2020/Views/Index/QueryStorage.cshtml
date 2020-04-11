@@ -83,7 +83,7 @@
                             <td>审核成功</td>
                             <td>adminserin</td>
                             <td>2020-04-03</td>
-                            <td><a id="UpdateRuKu"   href="#"><span  class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
+                            <td><a id="UpdateRuKu"   href="#"><span  class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a id="SelectRK" href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -114,9 +114,15 @@
                 $("#UpdateRuKu").click(function () {
                     $("#myModal").modal();
                 })
+
+                $("#SelectRK").click(function () {
+                    $("#myModal2").modal();
+                })
+                 
         })
     </script>
 
+    @*修改入库单*@
     <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
             <div class="modal-content">
@@ -126,7 +132,7 @@
                 </div>
                     <div class="container" style="height:300px;">
 
-                        <div style="border:1px solid #d4cdcd;width:855px;height:230px;margin:0px auto;margin-top:5px;border-radius:10px;">
+                        <div style="border:0px solid #d4cdcd;width:855px;height:230px;margin:0px auto;margin-top:5px;border-radius:10px;">
                             <div class="row" style="margin-top:10px;">
                                 <div class="col-md-3">
                                     <label class="control-label">入库单编号</label><input type="text" class="form-control" />
@@ -192,6 +198,86 @@
                         </div>
                        
                     </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @*查看入库详情*@
+    <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
+            <div class="modal-content">
+                <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">入库单详细</h4>
+                </div>
+                <div class="container" style="height:300px;">
+                    @*入库单*@
+                    <div class="row" style="margin-top:10px;">
+                        <table class="table table-bordered table-hover table-responsive">
+                            <thead>
+                                <tr style="font-weight:bold;">
+                                    <td>入库单号</td>
+                                    <td>类型</td>
+                                    <td>状态</td>
+                                    <td>供应商编号</td>
+                                    <td>供应商名称</td>
+                                    <td>供应商联系人</td>
+                                    <td>创建人</td>
+                                    <td>创建时间</td>
+                                    <td>备注</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>入库单号1</td>
+                                    <td>类型1</td>
+                                    <td>状态1</td>
+                                    <td>供应商编号1</td>
+                                    <td>供应商名称1</td>
+                                    <td>供应商联系人1</td>
+                                    <td>创建人1</td>
+                                    <td>创建时间1</td>
+                                    <td>备注1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @*入库的产品*@
+                    <div class="row" style="margin-top:20px;">
+                        <label class="control-label" style="margin-left:5px;">入库单下的产品</label>
+                        <table class="table table-bordered table-hover table-responsive">
+                            <thead>
+                                <tr style="font-weight:bold;">
+                                    <td>产品名称</td>
+                                    <td>产品条码</td>
+                                    <td>规格</td>
+                                    <td>批次</td>
+                                    <td>单价</td>
+                                    <td>入库数</td>
+                                    <td>库位</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>产品名称1</td>
+                                    <td>产品条码1</td>
+                                    <td>规格1</td>
+                                    <td>批次1</td>
+                                    <td>单价1</td>
+                                    <td>入库数1</td>
+                                    <td>库位1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">确定</button>

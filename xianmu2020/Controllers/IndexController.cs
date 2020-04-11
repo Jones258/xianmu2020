@@ -80,6 +80,11 @@ namespace xianmu2020.Controllers
             ViewBag.Type = new SelectList("");
             return View();
         }
+        //权限
+        public ActionResult Qx()
+        {
+            return View();
+        }
         #endregion
 
 
@@ -263,9 +268,6 @@ namespace xianmu2020.Controllers
             return View();
         }
         #endregion
-        //权限
-        public ActionResult Qx() {
-            return View();
-        }
+       
     }
 }

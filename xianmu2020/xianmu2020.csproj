@@ -1560,6 +1560,7 @@
     <Content Include="Theme\plugins\select2\select2.jquery.json" />
     <Content Include="Theme\plugins\select2\select2_locale_en.js.template" />
     <Content Include="Theme\plugins\uniform\README.textile" />
+    <Content Include="Views\Index\QuerySupplierPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

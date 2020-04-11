@@ -1,0 +1,260 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <title>QuerySupplierPage</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-top:10px; margin-left:-92px; width:1126px; border:0px solid black;background-color:#37435c;border-radius:2px;">
+            <div class="col-md-8">
+                @*<label class="control-label">入库管理</label>*@
+                <h5 style="font-size:15px;font-weight:bold;color:white">供应商管理</h5>
+            </div>
+        </div>
+        <div class="row" style="margin-left:-92px;  border:0px solid black;width:1126px;background-color:#f5f8f8">
+
+            <div class="col-md-3 form-group form-inline" style="margin-top:13px;float:right;margin-right:-43px;">
+                <button id="BtnAddGYS" type="button" class="btn btn-primary">新增供应商</button>
+                <button type="button" class="btn btn-info">导出</button>
+            </div>
+            <div class="row">
+                <div class="col-md-3" style="margin-top:15px;margin-left:13px;">
+                    <input type="text" class="form-control" placeholder="请输入供应商编号或名称" />
+                </div>
+                <div class="col-md-1" style="margin-top:15px;margin-left:-21px;">
+                    <button type="button" class="btn btn-primary">搜索</button>
+                </div>
+
+            </div>
+
+            <div class="row" style="margin-top:25px;">
+                <table class="table table-bordered table-hover table-responsive" style=" width:1043px;margin-left:28px; border:1px solid #e07a7a;">
+                    <thead>
+                        <tr style="font-weight:bold;">
+                            <td>供应商编号</td>
+                            <td>供应商类型</td>
+                            <td>电话</td>
+                            <td>传真</td>
+                            <td>Emial</td>
+                            <td>联系人</td>
+                            <td>地址</td>
+                            <td>描述</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>供应商编号1</td>
+                            <td>供应商类型1</td>
+                            <td>电话1</td>
+                            <td>传真1</td>
+                            <td>Emial1</td>
+                            <td>联系人1</td>
+                            <td>地址1</td>
+                            <td>描述1</td>
+                            <td>
+                                <a id="UpdateGYS" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;
+                                <a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row form-inline form-group text-center" style="margin-top:30px;margin-right:30px;">
+                <button type="button" class="btn btn-primary form-group">首页</button>
+                <button type="button" class="btn btn-primary form-group">上一页</button>
+                <input type="text" class="form-control" style="width:80px;" />
+                <button type="button" class="btn btn-primary form-group">Go</button>
+                <button type="button" class="btn btn-primary form-group">下一页</button>
+                <button type="button" class="btn btn-primary form-group">尾页</button>
+            </div>
+        </div>
+    </div>
+
+    @*添加供应商*@
+    <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="color:white; background-color:#37435c;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">添加供应商</h4>
+                </div>
+                <div class="modal-body" id="cnt" style="height:220px;">
+                    <div class="row form-inline form-group" style="margin-top:10px;">
+                        <div class="col-md-2">
+                            <label class="control-label">供应商号</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            <input type="text" class="form-control" disabled="disabled" placeholder="自动生成，可不填" />
+                        </div>
+                        <div class="col-md-2" style="margin-left:30px;">
+                            <label class="control-label">供应商名</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-25px;margin-top:-11px;">
+                            <input type="text" class="form-control" placeholder="请输入库位名" />
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">传真</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-2" style="margin-left:30px;">
+                            <label class="control-label">Email</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-25px;margin-top:-11px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">电话</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-2"  style="margin-left:30px;">
+                            <label class="control-label">联系人</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-25px;margin-top:-11px;">
+                            <input type="text" class="form-control" />                         
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">地址</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-2"  style="margin-left:30px;">
+                            <label class="control-label">描述</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-25px;margin-top:-11px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">供应商类型</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:159px;" })
+                        </div>                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*修改供应商*@
+    <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="color:white; background-color:#37435c;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">编辑供应商</h4>
+                </div>
+                <div class="modal-body" id="cnt" style="height:220px;">
+                    <div class="row form-inline form-group" style="margin-top:10px;">
+                        <div class="col-md-2">
+                            <label class="control-label">供应商号</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            <input type="text" class="form-control" disabled="disabled" />
+                        </div>
+                        <div class="col-md-2" style="margin-left:30px;">
+                            <label class="control-label">供应商名</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-25px;margin-top:-11px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">传真</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-2" style="margin-left:30px;">
+                            <label class="control-label">Email</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-25px;margin-top:-11px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">电话</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-2" style="margin-left:30px;">
+                            <label class="control-label">联系人</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-25px;margin-top:-11px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">地址</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-2" style="margin-left:30px;">
+                            <label class="control-label">描述</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-25px;margin-top:-11px;">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row form-inline form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">供应商类型</label>
+                        </div>
+                        <div class="col-md-4" style="margin-left:-20px;margin-top:-10px;">
+                            @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:159px;" })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    //打开添加供应商对话框
+        $("#BtnAddGYS").click(function () {
+            $("#myModal").modal();
+        })
+        //打开修改供应商对话框
+        $("#UpdateGYS").click(function () {
+            $("#myModal2").modal();
+        })
+    </script>
+
+</body>
+</html>
