@@ -16,7 +16,7 @@ namespace xianmu2020
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Index", action = "Homes", id = UrlParameter.Optional }
+                defaults: new { controller = "Index", action = "QueryLogin", id = UrlParameter.Optional }
             );
         }
     }
