@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Linq.Expressions;
+using Mods;
+using Service;
 
 namespace xianmu2020.Controllers
 {
@@ -164,7 +167,11 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryStorage()
         {
-            //测试 
+            var StStorageDJTypeService = new StStorageDJTypeService();
+            var model = StStorageDJTypeService.GetAll();
+            model.Insert(0, new ChuBaoPanTuiTypes() {CBPTTid=0,DaBillTYpeName="请选择入库单类型" });
+            ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
+
             ViewBag.Type = new SelectList("");
             return View();
         }

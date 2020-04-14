@@ -1,0 +1,1350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WarehouseSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Passworld" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Audit">
+          <Key>
+            <PropertyRef Name="Aid" />
+          </Key>
+          <Property Name="Aid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AuditState" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="BreakageGL">
+          <Key>
+            <PropertyRef Name="BGLid" />
+            <PropertyRef Name="BreakageType" />
+          </Key>
+          <Property Name="BGLid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BreakageType" Type="int" Nullable="false" />
+          <Property Name="PreparedMan" Type="nvarchar" MaxLength="50" />
+          <Property Name="PreparedCount" Type="int" />
+          <Property Name="BreakageGLAduitState" Type="int" />
+          <Property Name="CreationMan" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreationTime" Type="datetime" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CChuRuBaosunProduct">
+          <Key>
+            <PropertyRef Name="CRBTPid" />
+            <PropertyRef Name="BorrowedId" />
+          </Key>
+          <Property Name="CRBTPid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BorrowedId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BorrowedName" Type="nvarchar" MaxLength="50" />
+          <Property Name="BorrowedBarcode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Specifications" Type="nvarchar" MaxLength="50" />
+          <Property Name="Batch" Type="nvarchar" MaxLength="50" />
+          <Property Name="SinglePrice" Type="money" />
+          <Property Name="StorageCount" Type="int" />
+          <Property Name="DeliveryCount" Type="int" />
+          <Property Name="RefundCount" Type="int" />
+          <Property Name="BreakageCount" Type="int" />
+          <Property Name="StorageNumber" Type="int" />
+          <Property Name="DistinctionState" Type="int" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ChuBaoPanTuiTypes">
+          <Key>
+            <PropertyRef Name="CBPTTid" />
+          </Key>
+          <Property Name="CBPTTid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DaBillTYpeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="int" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Cid" />
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="Cid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClientName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreationTime" Type="datetime" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ClientSite">
+          <Key>
+            <PropertyRef Name="CSid" />
+            <PropertyRef Name="ClientSiteId" />
+          </Key>
+          <Property Name="CSid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClientSiteId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contacts" Type="nvarchar" MaxLength="50" />
+          <Property Name="Site" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreationTime" Type="datetime" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="Did" />
+            <PropertyRef Name="DeliveryId" />
+          </Key>
+          <Property Name="Did" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeliveryId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DeliveryTYpe" Type="int" />
+          <Property Name="ClientNames" Type="nvarchar" MaxLength="50" />
+          <Property Name="TotalCount" Type="int" />
+          <Property Name="TotalMoney" Type="money" />
+          <Property Name="DeliveryAuditState" Type="int" />
+          <Property Name="OperatingMode" Type="nvarchar" MaxLength="50" />
+          <Property Name="PreparedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="DispatchTime" Type="datetime" />
+          <Property Name="ClientId" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClientName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClientContactWay" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactMan" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreationTime" Type="datetime" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="Eid" />
+            <PropertyRef Name="EmployeesId" />
+          </Key>
+          <Property Name="Eid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeesId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="AffirmPassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="TrueName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="SectionType" Type="datetime" />
+          <Property Name="RoleType" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactWaycao" Type="nvarchar" MaxLength="50" />
+          <Property Name="OperatingMode" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Ineventory">
+          <Key>
+            <PropertyRef Name="Iid" />
+            <PropertyRef Name="CheckId" />
+          </Key>
+          <Property Name="Iid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CheckId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CheckType" Type="int" />
+          <Property Name="PreparedTime" Type="datetime" />
+          <Property Name="PreparedMan" Type="nvarchar" MaxLength="50" />
+          <Property Name="CheckAuditState" Type="int" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreationTime" Type="datetime" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MeasureUnit">
+          <Key>
+            <PropertyRef Name="MUid" />
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="MUid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnitId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UnitName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreationTime" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="Mid" />
+            <PropertyRef Name="NodeId" />
+          </Key>
+          <Property Name="Mid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NodeId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ShowName" Type="nvarchar" MaxLength="50" />
+          <Property Name="NodeSite" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShowOrder" Type="nvarchar" MaxLength="50" />
+          <Property Name="ParentNodelId" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ProductGL">
+          <Key>
+            <PropertyRef Name="PGLid" />
+            <PropertyRef Name="ProductGLId" />
+          </Key>
+          <Property Name="PGLid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductGLId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductBarcode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductSortType" Type="nvarchar" MaxLength="50" />
+          <Property Name="EarlyShangxian" Type="nvarchar" MaxLength="50" />
+          <Property Name="EarlyXiaxian" Type="nvarchar" MaxLength="50" />
+          <Property Name="Specification" Type="nvarchar" MaxLength="50" />
+          <Property Name="UnitType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Price" Type="money" />
+          <Property Name="ClientType" Type="nvarchar" MaxLength="50" />
+          <Property Name="DefaultWarehouse" Type="int" />
+          <Property Name="DefaultSeating" Type="nvarchar" MaxLength="50" />
+          <Property Name="Describe" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreationTime" Type="datetime" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ProductSort">
+          <Key>
+            <PropertyRef Name="PSid" />
+            <PropertyRef Name="ProductSortId" />
+          </Key>
+          <Property Name="PSid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductSortId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductSortName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreationMen" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreationTime" Type="datetime" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="QuanXianFP">
+          <Key>
+            <PropertyRef Name="QxFpid" />
+          </Key>
+          <Property Name="QxFpid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SysFunctionId" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleType" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Refund">
+          <Key>
+            <PropertyRef Name="Rid" />
+            <PropertyRef Name="RefundId" />
+          </Key>
+          <Property Name="Rid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RefundId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RefundCount" Type="int" />
+          <Property Name="ClientId" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClientName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClientSite" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClientContactWay" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactMan" Type="nvarchar" MaxLength="50" />
+          <Property Name="PreparedMan" Type="nvarchar" MaxLength="50" />
+          <Property Name="RefundAuditState" Type="int" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="50" />
+          <Property Name="PreparedTime" Type="datetime" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Rid" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="Rid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreationTime" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark" Type="datetime" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Seating">
+          <Key>
+            <PropertyRef Name="Kwid" />
+            <PropertyRef Name="SeatingId" />
+          </Key>
+          <Property Name="Kwid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SeatingId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SeatingName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PlaceWarehouseType" Type="int" />
+          <Property Name="SeatingType" Type="int" />
+          <Property Name="IfForbidden" Type="char" MaxLength="4" />
+          <Property Name="IfDefault" Type="char" MaxLength="4" />
+          <Property Name="CreationTime" Type="datetime" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SeatingTypes">
+          <Key>
+            <PropertyRef Name="KwLxid" />
+          </Key>
+          <Property Name="KwLxid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SeatingName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="Sid" />
+            <PropertyRef Name="SectionId" />
+          </Key>
+          <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SectionId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SectionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreationTime" Type="datetime" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="StStorage">
+          <Key>
+            <PropertyRef Name="Stoid" />
+            <PropertyRef Name="StoOrderId" />
+          </Key>
+          <Property Name="Stoid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoOrderId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StoType" Type="int" />
+          <Property Name="SuppliersType" Type="nvarchar" MaxLength="50" />
+          <Property Name="GoodsTotal" Type="int" />
+          <Property Name="TotalMoney" Type="money" />
+          <Property Name="StStorageState" Type="int" />
+          <Property Name="MakingSingle" Type="nvarchar" MaxLength="50" />
+          <Property Name="SuppliersId" Type="nvarchar" MaxLength="50" />
+          <Property Name="SuppliersName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SuppliersPeople" Type="nvarchar" MaxLength="50" />
+          <Property Name="SuppliersContact" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrdersTime" Type="datetime" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Sid" />
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SupplierType" Type="nvarchar" MaxLength="50" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Contacts" Type="nvarchar" MaxLength="50" />
+          <Property Name="Site" Type="nvarchar" MaxLength="50" />
+          <Property Name="Describe" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="int" />
+          <Property Name="Standby3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SupplierTypes">
+          <Key>
+            <PropertyRef Name="STid" />
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="STid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SupplierTypeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="int" />
+        </EntityType>
+        <EntityType Name="SysFunction">
+          <Key>
+            <PropertyRef Name="SFid" />
+            <PropertyRef Name="SysId" />
+          </Key>
+          <Property Name="SFid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SysId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SysFunctionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="int" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="WarehouseType">
+          <Key>
+            <PropertyRef Name="WTid" />
+          </Key>
+          <Property Name="WTid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WarehouseName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Standby1" Type="int" />
+          <Property Name="Standby2" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="int" />
+        </EntityType>
+        <EntityContainer Name="WarehouseSystemModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Audit" EntityType="Self.Audit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BreakageGL" EntityType="Self.BreakageGL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CChuRuBaosunProduct" EntityType="Self.CChuRuBaosunProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChuBaoPanTuiTypes" EntityType="Self.ChuBaoPanTuiTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientSite" EntityType="Self.ClientSite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ineventory" EntityType="Self.Ineventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeasureUnit" EntityType="Self.MeasureUnit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductGL" EntityType="Self.ProductGL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSort" EntityType="Self.ProductSort" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuanXianFP" EntityType="Self.QuanXianFP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Refund" EntityType="Self.Refund" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seating" EntityType="Self.Seating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeatingTypes" EntityType="Self.SeatingTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StStorage" EntityType="Self.StStorage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplierTypes" EntityType="Self.SupplierTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SysFunction" EntityType="Self.SysFunction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WarehouseType" EntityType="Self.WarehouseType" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WarehouseSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Passworld" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Audit">
+          <Key>
+            <PropertyRef Name="Aid" />
+          </Key>
+          <Property Name="Aid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuditState" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BreakageGL">
+          <Key>
+            <PropertyRef Name="BGLid" />
+            <PropertyRef Name="BreakageType" />
+          </Key>
+          <Property Name="BGLid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BreakageType" Type="Int32" Nullable="false" />
+          <Property Name="PreparedMan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PreparedCount" Type="Int32" />
+          <Property Name="BreakageGLAduitState" Type="Int32" />
+          <Property Name="CreationMan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationTime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CChuRuBaosunProduct">
+          <Key>
+            <PropertyRef Name="CRBTPid" />
+            <PropertyRef Name="BorrowedId" />
+          </Key>
+          <Property Name="CRBTPid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BorrowedId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BorrowedName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BorrowedBarcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Specifications" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Batch" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SinglePrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="StorageCount" Type="Int32" />
+          <Property Name="DeliveryCount" Type="Int32" />
+          <Property Name="RefundCount" Type="Int32" />
+          <Property Name="BreakageCount" Type="Int32" />
+          <Property Name="StorageNumber" Type="Int32" />
+          <Property Name="DistinctionState" Type="Int32" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ChuBaoPanTuiTypes">
+          <Key>
+            <PropertyRef Name="CBPTTid" />
+          </Key>
+          <Property Name="CBPTTid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DaBillTYpeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Cid" />
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="Cid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationTime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ClientSite">
+          <Key>
+            <PropertyRef Name="CSid" />
+            <PropertyRef Name="ClientSiteId" />
+          </Key>
+          <Property Name="CSid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientSiteId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Contacts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Site" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationTime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="Did" />
+            <PropertyRef Name="DeliveryId" />
+          </Key>
+          <Property Name="Did" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeliveryId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DeliveryTYpe" Type="Int32" />
+          <Property Name="ClientNames" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalCount" Type="Int32" />
+          <Property Name="TotalMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DeliveryAuditState" Type="Int32" />
+          <Property Name="OperatingMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PreparedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DispatchTime" Type="DateTime" Precision="3" />
+          <Property Name="ClientId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientContactWay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactMan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationTime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="Eid" />
+            <PropertyRef Name="EmployeesId" />
+          </Key>
+          <Property Name="Eid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeesId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AffirmPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TrueName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SectionType" Type="DateTime" Precision="3" />
+          <Property Name="RoleType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactWaycao" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OperatingMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Ineventory">
+          <Key>
+            <PropertyRef Name="Iid" />
+            <PropertyRef Name="CheckId" />
+          </Key>
+          <Property Name="Iid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CheckId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CheckType" Type="Int32" />
+          <Property Name="PreparedTime" Type="DateTime" Precision="3" />
+          <Property Name="PreparedMan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CheckAuditState" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationTime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MeasureUnit">
+          <Key>
+            <PropertyRef Name="MUid" />
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="MUid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UnitName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="Mid" />
+            <PropertyRef Name="NodeId" />
+          </Key>
+          <Property Name="Mid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NodeId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ShowName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NodeSite" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShowOrder" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ParentNodelId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ProductGL">
+          <Key>
+            <PropertyRef Name="PGLid" />
+            <PropertyRef Name="ProductGLId" />
+          </Key>
+          <Property Name="PGLid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductGLId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductBarcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductSortType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EarlyShangxian" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EarlyXiaxian" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Specification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UnitType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ClientType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultWarehouse" Type="Int32" />
+          <Property Name="DefaultSeating" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationTime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ProductSort">
+          <Key>
+            <PropertyRef Name="PSid" />
+            <PropertyRef Name="ProductSortId" />
+          </Key>
+          <Property Name="PSid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductSortId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductSortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationMen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationTime" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="QuanXianFP">
+          <Key>
+            <PropertyRef Name="QxFpid" />
+          </Key>
+          <Property Name="QxFpid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SysFunctionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Refund">
+          <Key>
+            <PropertyRef Name="Rid" />
+            <PropertyRef Name="RefundId" />
+          </Key>
+          <Property Name="Rid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RefundId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RefundCount" Type="Int32" />
+          <Property Name="ClientId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientSite" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClientContactWay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactMan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PreparedMan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RefundAuditState" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PreparedTime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Rid" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="Rid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Seating">
+          <Key>
+            <PropertyRef Name="Kwid" />
+            <PropertyRef Name="SeatingId" />
+          </Key>
+          <Property Name="Kwid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SeatingId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SeatingName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PlaceWarehouseType" Type="Int32" />
+          <Property Name="SeatingType" Type="Int32" />
+          <Property Name="IfForbidden" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="IfDefault" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="CreationTime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SeatingTypes">
+          <Key>
+            <PropertyRef Name="KwLxid" />
+          </Key>
+          <Property Name="KwLxid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SeatingName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="Sid" />
+            <PropertyRef Name="SectionId" />
+          </Key>
+          <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SectionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SectionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationTime" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="StStorage">
+          <Key>
+            <PropertyRef Name="Stoid" />
+            <PropertyRef Name="StoOrderId" />
+          </Key>
+          <Property Name="Stoid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoOrderId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StoType" Type="Int32" />
+          <Property Name="SuppliersType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GoodsTotal" Type="Int32" />
+          <Property Name="TotalMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="StStorageState" Type="Int32" />
+          <Property Name="MakingSingle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SuppliersId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SuppliersName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SuppliersPeople" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SuppliersContact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrdersTime" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Sid" />
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SupplierType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contacts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Site" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="Int32" />
+          <Property Name="Standby3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SupplierTypes">
+          <Key>
+            <PropertyRef Name="STid" />
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="STid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SupplierTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SysFunction">
+          <Key>
+            <PropertyRef Name="SFid" />
+            <PropertyRef Name="SysId" />
+          </Key>
+          <Property Name="SFid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SysId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SysFunctionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="WarehouseType">
+          <Key>
+            <PropertyRef Name="WTid" />
+          </Key>
+          <Property Name="WTid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WarehouseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Standby1" Type="Int32" />
+          <Property Name="Standby2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="WarehouseSystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admin" EntityType="Self.Admin" />
+          <EntitySet Name="Audit" EntityType="Self.Audit" />
+          <EntitySet Name="BreakageGL" EntityType="Self.BreakageGL" />
+          <EntitySet Name="CChuRuBaosunProduct" EntityType="Self.CChuRuBaosunProduct" />
+          <EntitySet Name="ChuBaoPanTuiTypes" EntityType="Self.ChuBaoPanTuiTypes" />
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="ClientSite" EntityType="Self.ClientSite" />
+          <EntitySet Name="Delivery" EntityType="Self.Delivery" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" />
+          <EntitySet Name="Ineventory" EntityType="Self.Ineventory" />
+          <EntitySet Name="MeasureUnit" EntityType="Self.MeasureUnit" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" />
+          <EntitySet Name="ProductGL" EntityType="Self.ProductGL" />
+          <EntitySet Name="ProductSort" EntityType="Self.ProductSort" />
+          <EntitySet Name="QuanXianFP" EntityType="Self.QuanXianFP" />
+          <EntitySet Name="Refund" EntityType="Self.Refund" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Seating" EntityType="Self.Seating" />
+          <EntitySet Name="SeatingTypes" EntityType="Self.SeatingTypes" />
+          <EntitySet Name="Section" EntityType="Self.Section" />
+          <EntitySet Name="StStorage" EntityType="Self.StStorage" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" />
+          <EntitySet Name="SupplierTypes" EntityType="Self.SupplierTypes" />
+          <EntitySet Name="SysFunction" EntityType="Self.SysFunction" />
+          <EntitySet Name="WarehouseType" EntityType="Self.WarehouseType" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WarehouseSystemModelStoreContainer" CdmEntityContainer="WarehouseSystemEntities">
+          <EntitySetMapping Name="Admin">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Passworld" ColumnName="Passworld" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Audit">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.Audit">
+              <MappingFragment StoreEntitySet="Audit">
+                <ScalarProperty Name="Aid" ColumnName="Aid" />
+                <ScalarProperty Name="AuditState" ColumnName="AuditState" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BreakageGL">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.BreakageGL">
+              <MappingFragment StoreEntitySet="BreakageGL">
+                <ScalarProperty Name="BGLid" ColumnName="BGLid" />
+                <ScalarProperty Name="BreakageType" ColumnName="BreakageType" />
+                <ScalarProperty Name="PreparedMan" ColumnName="PreparedMan" />
+                <ScalarProperty Name="PreparedCount" ColumnName="PreparedCount" />
+                <ScalarProperty Name="BreakageGLAduitState" ColumnName="BreakageGLAduitState" />
+                <ScalarProperty Name="CreationMan" ColumnName="CreationMan" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CChuRuBaosunProduct">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.CChuRuBaosunProduct">
+              <MappingFragment StoreEntitySet="CChuRuBaosunProduct">
+                <ScalarProperty Name="CRBTPid" ColumnName="CRBTPid" />
+                <ScalarProperty Name="BorrowedId" ColumnName="BorrowedId" />
+                <ScalarProperty Name="BorrowedName" ColumnName="BorrowedName" />
+                <ScalarProperty Name="BorrowedBarcode" ColumnName="BorrowedBarcode" />
+                <ScalarProperty Name="Specifications" ColumnName="Specifications" />
+                <ScalarProperty Name="Batch" ColumnName="Batch" />
+                <ScalarProperty Name="SinglePrice" ColumnName="SinglePrice" />
+                <ScalarProperty Name="StorageCount" ColumnName="StorageCount" />
+                <ScalarProperty Name="DeliveryCount" ColumnName="DeliveryCount" />
+                <ScalarProperty Name="RefundCount" ColumnName="RefundCount" />
+                <ScalarProperty Name="BreakageCount" ColumnName="BreakageCount" />
+                <ScalarProperty Name="StorageNumber" ColumnName="StorageNumber" />
+                <ScalarProperty Name="DistinctionState" ColumnName="DistinctionState" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChuBaoPanTuiTypes">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.ChuBaoPanTuiTypes">
+              <MappingFragment StoreEntitySet="ChuBaoPanTuiTypes">
+                <ScalarProperty Name="CBPTTid" ColumnName="CBPTTid" />
+                <ScalarProperty Name="DaBillTYpeName" ColumnName="DaBillTYpeName" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Cid" ColumnName="Cid" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientSite">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.ClientSite">
+              <MappingFragment StoreEntitySet="ClientSite">
+                <ScalarProperty Name="CSid" ColumnName="CSid" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ClientSiteId" ColumnName="ClientSiteId" />
+                <ScalarProperty Name="Contacts" ColumnName="Contacts" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Delivery">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.Delivery">
+              <MappingFragment StoreEntitySet="Delivery">
+                <ScalarProperty Name="Did" ColumnName="Did" />
+                <ScalarProperty Name="DeliveryId" ColumnName="DeliveryId" />
+                <ScalarProperty Name="DeliveryTYpe" ColumnName="DeliveryTYpe" />
+                <ScalarProperty Name="ClientNames" ColumnName="ClientNames" />
+                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
+                <ScalarProperty Name="TotalMoney" ColumnName="TotalMoney" />
+                <ScalarProperty Name="DeliveryAuditState" ColumnName="DeliveryAuditState" />
+                <ScalarProperty Name="OperatingMode" ColumnName="OperatingMode" />
+                <ScalarProperty Name="PreparedBy" ColumnName="PreparedBy" />
+                <ScalarProperty Name="DispatchTime" ColumnName="DispatchTime" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientContactWay" ColumnName="ClientContactWay" />
+                <ScalarProperty Name="ContactMan" ColumnName="ContactMan" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="Eid" ColumnName="Eid" />
+                <ScalarProperty Name="EmployeesId" ColumnName="EmployeesId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="AffirmPassword" ColumnName="AffirmPassword" />
+                <ScalarProperty Name="TrueName" ColumnName="TrueName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="SectionType" ColumnName="SectionType" />
+                <ScalarProperty Name="RoleType" ColumnName="RoleType" />
+                <ScalarProperty Name="ContactWaycao" ColumnName="ContactWaycao" />
+                <ScalarProperty Name="OperatingMode" ColumnName="OperatingMode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ineventory">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.Ineventory">
+              <MappingFragment StoreEntitySet="Ineventory">
+                <ScalarProperty Name="Iid" ColumnName="Iid" />
+                <ScalarProperty Name="CheckId" ColumnName="CheckId" />
+                <ScalarProperty Name="CheckType" ColumnName="CheckType" />
+                <ScalarProperty Name="PreparedTime" ColumnName="PreparedTime" />
+                <ScalarProperty Name="PreparedMan" ColumnName="PreparedMan" />
+                <ScalarProperty Name="CheckAuditState" ColumnName="CheckAuditState" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeasureUnit">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.MeasureUnit">
+              <MappingFragment StoreEntitySet="MeasureUnit">
+                <ScalarProperty Name="MUid" ColumnName="MUid" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menu">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="Mid" ColumnName="Mid" />
+                <ScalarProperty Name="NodeId" ColumnName="NodeId" />
+                <ScalarProperty Name="ShowName" ColumnName="ShowName" />
+                <ScalarProperty Name="NodeSite" ColumnName="NodeSite" />
+                <ScalarProperty Name="ShowOrder" ColumnName="ShowOrder" />
+                <ScalarProperty Name="ParentNodelId" ColumnName="ParentNodelId" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductGL">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.ProductGL">
+              <MappingFragment StoreEntitySet="ProductGL">
+                <ScalarProperty Name="PGLid" ColumnName="PGLid" />
+                <ScalarProperty Name="ProductGLId" ColumnName="ProductGLId" />
+                <ScalarProperty Name="ProductBarcode" ColumnName="ProductBarcode" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductSortType" ColumnName="ProductSortType" />
+                <ScalarProperty Name="EarlyShangxian" ColumnName="EarlyShangxian" />
+                <ScalarProperty Name="EarlyXiaxian" ColumnName="EarlyXiaxian" />
+                <ScalarProperty Name="Specification" ColumnName="Specification" />
+                <ScalarProperty Name="UnitType" ColumnName="UnitType" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ClientType" ColumnName="ClientType" />
+                <ScalarProperty Name="DefaultWarehouse" ColumnName="DefaultWarehouse" />
+                <ScalarProperty Name="DefaultSeating" ColumnName="DefaultSeating" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSort">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.ProductSort">
+              <MappingFragment StoreEntitySet="ProductSort">
+                <ScalarProperty Name="PSid" ColumnName="PSid" />
+                <ScalarProperty Name="ProductSortId" ColumnName="ProductSortId" />
+                <ScalarProperty Name="ProductSortName" ColumnName="ProductSortName" />
+                <ScalarProperty Name="CreationMen" ColumnName="CreationMen" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuanXianFP">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.QuanXianFP">
+              <MappingFragment StoreEntitySet="QuanXianFP">
+                <ScalarProperty Name="QxFpid" ColumnName="QxFpid" />
+                <ScalarProperty Name="SysFunctionId" ColumnName="SysFunctionId" />
+                <ScalarProperty Name="RoleType" ColumnName="RoleType" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Refund">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.Refund">
+              <MappingFragment StoreEntitySet="Refund">
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+                <ScalarProperty Name="RefundId" ColumnName="RefundId" />
+                <ScalarProperty Name="RefundCount" ColumnName="RefundCount" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientSite" ColumnName="ClientSite" />
+                <ScalarProperty Name="ClientContactWay" ColumnName="ClientContactWay" />
+                <ScalarProperty Name="ContactMan" ColumnName="ContactMan" />
+                <ScalarProperty Name="PreparedMan" ColumnName="PreparedMan" />
+                <ScalarProperty Name="RefundAuditState" ColumnName="RefundAuditState" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="PreparedTime" ColumnName="PreparedTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seating">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.Seating">
+              <MappingFragment StoreEntitySet="Seating">
+                <ScalarProperty Name="Kwid" ColumnName="Kwid" />
+                <ScalarProperty Name="SeatingId" ColumnName="SeatingId" />
+                <ScalarProperty Name="SeatingName" ColumnName="SeatingName" />
+                <ScalarProperty Name="PlaceWarehouseType" ColumnName="PlaceWarehouseType" />
+                <ScalarProperty Name="SeatingType" ColumnName="SeatingType" />
+                <ScalarProperty Name="IfForbidden" ColumnName="IfForbidden" />
+                <ScalarProperty Name="IfDefault" ColumnName="IfDefault" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeatingTypes">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.SeatingTypes">
+              <MappingFragment StoreEntitySet="SeatingTypes">
+                <ScalarProperty Name="KwLxid" ColumnName="KwLxid" />
+                <ScalarProperty Name="SeatingName" ColumnName="SeatingName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Section">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.Section">
+              <MappingFragment StoreEntitySet="Section">
+                <ScalarProperty Name="Sid" ColumnName="Sid" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StStorage">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.StStorage">
+              <MappingFragment StoreEntitySet="StStorage">
+                <ScalarProperty Name="Stoid" ColumnName="Stoid" />
+                <ScalarProperty Name="StoOrderId" ColumnName="StoOrderId" />
+                <ScalarProperty Name="StoType" ColumnName="StoType" />
+                <ScalarProperty Name="SuppliersType" ColumnName="SuppliersType" />
+                <ScalarProperty Name="GoodsTotal" ColumnName="GoodsTotal" />
+                <ScalarProperty Name="TotalMoney" ColumnName="TotalMoney" />
+                <ScalarProperty Name="StStorageState" ColumnName="StStorageState" />
+                <ScalarProperty Name="MakingSingle" ColumnName="MakingSingle" />
+                <ScalarProperty Name="SuppliersId" ColumnName="SuppliersId" />
+                <ScalarProperty Name="SuppliersName" ColumnName="SuppliersName" />
+                <ScalarProperty Name="SuppliersPeople" ColumnName="SuppliersPeople" />
+                <ScalarProperty Name="SuppliersContact" ColumnName="SuppliersContact" />
+                <ScalarProperty Name="OrdersTime" ColumnName="OrdersTime" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supplier">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="Sid" ColumnName="Sid" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="SupplierType" ColumnName="SupplierType" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Contacts" ColumnName="Contacts" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="Standby3" ColumnName="Standby3" />
+                <ScalarProperty Name="Standby4" ColumnName="Standby4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierTypes">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.SupplierTypes">
+              <MappingFragment StoreEntitySet="SupplierTypes">
+                <ScalarProperty Name="STid" ColumnName="STid" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="SupplierTypeName" ColumnName="SupplierTypeName" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SysFunction">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.SysFunction">
+              <MappingFragment StoreEntitySet="SysFunction">
+                <ScalarProperty Name="SFid" ColumnName="SFid" />
+                <ScalarProperty Name="SysId" ColumnName="SysId" />
+                <ScalarProperty Name="SysFunctionName" ColumnName="SysFunctionName" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WarehouseType">
+            <EntityTypeMapping TypeName="WarehouseSystemModel.WarehouseType">
+              <MappingFragment StoreEntitySet="WarehouseType">
+                <ScalarProperty Name="WTid" ColumnName="WTid" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="Standby1" ColumnName="Standby1" />
+                <ScalarProperty Name="Standby2" ColumnName="Standby2" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

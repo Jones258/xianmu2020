@@ -30,8 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,7 +51,125 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Audit.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BreakageGL.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CangKuModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CangKuModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CangKuModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CangKuModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CangKuModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="CChuRuBaosunProduct.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ChuBaoPanTuiTypes.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Client.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClientSite.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Delivery.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Employees.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ineventory.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MeasureUnit.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Menu.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductGL.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductSort.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuanXianFP.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Refund.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Seating.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SeatingTypes.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Section.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StStorage.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Supplier.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SupplierTypes.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SysFunction.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WarehouseType.cs">
+      <DependentUpon>CangKuModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="CangKuModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CangKuModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="CangKuModel.edmx.diagram">
+      <DependentUpon>CangKuModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CangKuModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CangKuModel.edmx</DependentUpon>
+      <LastGenOutput>CangKuModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="CangKuModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CangKuModel.edmx</DependentUpon>
+      <LastGenOutput>CangKuModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

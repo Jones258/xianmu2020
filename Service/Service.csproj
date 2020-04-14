@@ -40,7 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StStorageDJTypeService.cs" />
+    <Compile Include="StStorageService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mods\Mods.csproj">
