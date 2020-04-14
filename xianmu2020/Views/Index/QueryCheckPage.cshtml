@@ -67,7 +67,7 @@
                             <td>状态1</td>
                             <td>制单人1</td>
                             <td>创建时间1</td>
-                            <td><a id="UpdatePD" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
+                            <td><a id="UpdatePD" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a id="PCD" href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -149,10 +149,84 @@
             </div>
         </div>
     </div>
+    @*查看报损单详情*@
+    <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
+            <div class="modal-content">
+                <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">盘差详细</h4>
+                </div>
+                <div class="container" style="height:300px;">
+                    @*盘差单*@
+                    <div class="row" style="margin-top:10px;border:0px solid black;width:875px;height:100px;background-color:#f5f8f8">
+                        <div class="row form-group form-inline" style="margin-top:10px;margin-left:3px;">
+                            <div class="col-md-3">
+                                <label>盘点单据号：</label><span>00009</span>
+                            </div>
+                            <div class="col-md-3">
+                                <label>盘点类型：</label><span>产品盘点</span>
+                            </div>
+                            <div class="col-md-3">
+                                <label>制单人：</label><span>administrator</span>
+                            </div>
+                            <div class="col-md-3">
+                                <label>状态：</label><span style="color:red;">等待审核</span>
+                            </div>
+                        </div>
+                        <div class="row form-group form-inline" style="margin-top:10px;margin-left:3px;">
+                            <div class="col-md-3">
+                                <label>备注：</label><span>风云人物666</span>
+                            </div>
+                        </div>                     
+                    </div>
+
+                    @*报损单下的产品*@ 
+                    <div class="row" style="margin-top:20px;">
+                        <table class="table table-bordered table-hover table-responsive">
+                            <thead>
+                                <tr style="font-weight:bold;">
+                                    <td>产品编号</td>
+                                    <td>产品名称</td>
+                                    <td>产品条码</td>
+                                    <td>库位</td>
+                                    <td>批次</td>
+                                    <td>库存数</td>
+                                    <td>盘点数</td>
+                                    <td>盘差数</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>产品编号1</td>
+                                    <td>产品名称1</td>
+                                    <td>产品条码1</td>
+                                    <td>库位1</td>
+                                    <td>批次1</td>
+                                    <td>×</td>
+                                    <td>×</td>
+                                    <td>×</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
    <script type="text/javascript">
        $("#UpdatePD").click(function () {
            $("#myModal").modal();
+       })
+       //打开盘差单详细
+       $("#PCD").click(function () {
+           $("#myModal2").modal();
        })
    </script>
 

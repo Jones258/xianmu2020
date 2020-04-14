@@ -74,7 +74,7 @@
                             <td>
                                 <a id="UpdateBaoSun" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;
                             <a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;
-                            <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
+                            <a id="BSD" href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -154,9 +154,80 @@
         </div>
     </div>
 
+    @*查看报损单详情*@
+    <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
+            <div class="modal-content">
+                <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">报损单详细</h4>
+                </div>
+                <div class="container" style="height:300px;">
+                    @*报损单*@
+                    <div class="row" style="margin-top:10px;">
+                        <table class="table table-bordered table-hover table-responsive">
+                            <thead>
+                                <tr style="font-weight:bold;">
+                                    <td>报损单编号</td>
+                                    <td>报损人</td>
+                                    <td>状态</td>
+                                    <td>创建时间</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>报损单编号1</td>
+                                    <td>报损人1</td>
+                                    <td>状态1</td>
+                                    <td>创建时间1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @*报损单下的产品*@
+                    <div class="row" style="margin-top:20px;">
+                        <label class="control-label" style="margin-left:5px;">报损单下的产品</label>
+                        <table class="table table-bordered table-hover table-responsive">
+                            <thead>
+                                <tr style="font-weight:bold;">
+                                    <td>产品编号</td>
+                                    <td>产品名称</td>
+                                    <td>产品条码</td>
+                                    <td>批次</td>
+                                    <td>报损库位</td>
+                                    <td>报损数量</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>产品编号1</td>
+                                    <td>产品名称1</td>
+                                    <td>产品条码1</td>
+                                    <td>批次1</td>
+                                    <td>报损库位1</td>
+                                    <td>报损数量1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script type="text/javascript">
         $("#UpdateBaoSun").click(function () {
             $("#myModal").modal();
+        })
+        //打开报损单详情
+        $("#BSD").click(function () {
+            $("#myModal2").modal();
         })
     </script>
 
