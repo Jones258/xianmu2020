@@ -40,10 +40,10 @@
             </div>
             <div class="row">
                 <div class="col-md-3 form-group form-inline " style="margin-top:83px;margin-left:-470px;">
-                    <input type="text" class="form-control" placeholder="请输入入库单号" />
+                    <input type="text" class="form-control"name="StoOrderId" placeholder="请输入入库单号" />
                 </div>
                 <div class="col-md-7 form-group form-inline" style="margin-top:19px;">
-                    <label class="control-label" style="margin-left:-20px;">时间</label> &nbsp;<input type="date" class="form-control" style="width:150px;" />&nbsp;-&nbsp;<input type="date" class="form-control" style="width:150px;" />&nbsp;&nbsp;<button type="button" class="btn btn-info">搜索</button>&nbsp;<button type="button" id="BtnGJ" class="btn btn-info">高级搜索</button>&nbsp;<button type="button" id="BtnSq" class="btn btn-info">收起</button>
+                    <label class="control-label" style="margin-left:-20px;">时间</label> &nbsp;<input name="Start" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" type="date" class="form-control" style="width:150px;" />&nbsp;-&nbsp;<input name="End" value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" type="date" class="form-control" style="width:150px;" />&nbsp;&nbsp;<button id="BtnSelect" type="button" class="btn btn-info">搜索</button>&nbsp;<button type="button" id="BtnGJ" class="btn btn-info">高级搜索</button>&nbsp;<button type="button" id="BtnSq" class="btn btn-info">收起</button>
                 </div>
             </div>
             <div id="div1" class="row" style="border:1px dotted black; width:1040px;height:90px;margin-top:8px;margin-left:15px;">
@@ -74,7 +74,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        @*<tr>
                             <td>0001</td>
                             <td>生产产品入库</td>
                             <td>北大青鸟ACCP</td>
@@ -84,7 +84,7 @@
                             <td>adminserin</td>
                             <td>2020-04-03</td>
                             <td><a id="UpdateRuKu"   href="#"><span  class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a id="SelectRK" href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
-                        </tr>
+                        </tr>*@
                     </tbody>
                 </table>
             </div>
@@ -101,25 +101,55 @@
     <script type="text/javascript">
 
         $(function () {
+          
             $("#div1").hide();
-
                 $("#BtnGJ").click(function () {
                     $("#div1").show();
                 })
-
                 $("#BtnSq").click(function () {
                     $("#div1").hide();
                 })
-
                 $("#UpdateRuKu").click(function () {
                     $("#myModal").modal();
                 })
-
                 $("#SelectRK").click(function () {
                     $("#myModal2").modal();
                 })
-                 
+                $("#BtnSelect").click(BingStorageData);
+             BingStorageData();
+            
         })
+        //入库单加载数据
+        function BingStorageData() {
+            //取值
+            var StoOrderIdValue = $("[name=StoOrderId]").val();
+            var StartValue = $("[name=Start]").val();
+            var EndValue = $("[name=End]").val();
+
+            $.ajax({
+                url:"@Url.Action("GetStorage")",
+                data: { StoOrderId: StoOrderIdValue, Start: StartValue, End: EndValue },
+                dataType:"json",
+                type:"get",
+                success: function (result) {
+                    $("table tr:gt(0)").remove();
+                    $.each(result.Storage, function (index,value) {
+                        var str = "<tr>";
+                        str += "<td>" + value.StoOrderId + "</td>";
+                        str += "<td>" + value.StoType + "</td>";
+                        str += "<td>" + value.SuppliersType + "</td>";
+                        str += "<td>" + value.GoodsTotal + "</td>";
+                        str += "<td>" + value.TotalMoney + "</td>";
+                        str += "<td>" + value.StStorageState + "</td>";
+                        str += "<td>" + value.MakingSingle + "</td>";
+                        str += "<td>" + value.CreateTime + "</td>";
+                        str += "<td><a id=\"UpdateRuKu\"  href=\"#\"><span  class=\"glyphicon glyphicon-edi\"></span></a>&nbsp;&nbsp;&nbsp;<a id=\"SelectRK\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                        str += "</tr>";
+                        $("table tbody").append(str);
+                    })
+                }
+           })
+       }
     </script>
 
     @*修改入库单*@

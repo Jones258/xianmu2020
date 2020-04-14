@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Linq.Expressions;
 using Mods;
 using Service;
+using xianmu2020.Model;
 
 namespace xianmu2020.Controllers
 {
@@ -174,6 +175,34 @@ namespace xianmu2020.Controllers
 
             ViewBag.Type = new SelectList("");
             return View();
+        }
+
+        //加载数据方法1
+        public ActionResult GetStorage(RequestDto re) {
+            Expression<Func<StStorage, bool>> where = item => item.State==1;
+            if (!string.IsNullOrEmpty(re.StoOrderId))
+            {
+                where = where.And(item=>item.StoOrderId.IndexOf(re.StoOrderId)!=-1);
+            }
+            if (re.Start!=null)
+            {
+                where = where.And(item => item.CreateTime >= re.Start);
+            }
+            if (re.End!=null)
+            {
+                where = where.And(item=>item.CreateTime<= re.End);
+            }
+
+            var StorageService = new StStorageService();
+            var StorageList = StorageService.GetByWhere(where);
+            var newform = StorageList.Select(item => new {
+                StoOrderId = item.StoOrderId,StoType = item.StoType,SuppliersType = item.SuppliersType,GoodsTotal=item.GoodsTotal,
+                TotalMoney = item.TotalMoney,StStorageState = item.StStorageState,MakingSingle = item.MakingSingle, CreateTime = Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd")
+            });
+            var result = new {
+                Storage = newform
+            };
+            return Json(result,JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

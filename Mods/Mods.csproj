@@ -93,6 +93,7 @@
     <Compile Include="Employees.cs">
       <DependentUpon>CangKuModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ExpressionExtensions.cs" />
     <Compile Include="Ineventory.cs">
       <DependentUpon>CangKuModel.tt</DependentUpon>
     </Compile>
