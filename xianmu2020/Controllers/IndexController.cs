@@ -204,6 +204,10 @@ namespace xianmu2020.Controllers
             {
                 where = where.And(item=>item.StoOrderId.IndexOf(re.StoOrderId)!=-1);
             }
+            if (re.StoType!=0)
+            {
+                where = where.And(item=>item.StoType.Equals(re.StoType));
+            }
             if (re.Start!=null)
             {
                 where = where.And(item => item.CreateTime >= re.Start);
@@ -216,8 +220,7 @@ namespace xianmu2020.Controllers
             var pageIndex = re.PageIndex;
             var pageCount = 0;
             var count = 0;
-            var StorageService = new StStorageService();
-            var StorageList = StorageService.GetByWhereAsc(where,item=>item.CreateTime,ref pageIndex,ref pageCount,ref count,pageSize);
+            var StorageList = new StStorageService().GetByWhereAsc(where,item=>item.CreateTime,ref pageIndex,ref pageCount,ref count,pageSize);
             var newform = StorageList.Select(item => new {
                 StoOrderId = item.StoOrderId,StoType = item.StoType,SuppliersType = item.SuppliersType,GoodsTotal=item.GoodsTotal,
                 TotalMoney = item.TotalMoney,StStorageState = item.StStorageState,MakingSingle = item.MakingSingle, CreateTime = Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd")
@@ -234,9 +237,21 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryStorageAdd()
         {
-            //测试 
+            var model = new StStorageDJTypeService().GetAll();
+           model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择入库单类型" });
+            ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
+            //测试
             ViewBag.Type = new SelectList("");
             return View();
+        }
+        //add入库单里的供应商
+        public ActionResult QueryGYS() {            
+            var model1 = new SupplierService().GetByWhere(item => true);
+            var Supplierform = model1.Select(item => new {
+                SupplierId = item.SupplierId,SupplierName = item.SupplierName, Phone = item.Phone,Contacts = item.Contacts,Email = item.Email, Fax = item.Fax,Site = item.Site
+            });
+            var result = new{supplierAction = Supplierform };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

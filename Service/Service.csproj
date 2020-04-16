@@ -45,6 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StStorageDJTypeService.cs" />
     <Compile Include="StStorageService.cs" />
+    <Compile Include="SupplierService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mods\Mods.csproj">

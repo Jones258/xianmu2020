@@ -54,7 +54,7 @@
                     单据类型 @Html.DropDownList("StStorageDJType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
                 </div>
                 <div class="col-md-2 form-inline" style="margin-top:29px;">
-                    <button type="button" class="btn btn-info">搜索</button>
+                    <button id="btnTwo" type="button" class="btn btn-info">搜索</button>
                 </div>
             </div>
 
@@ -127,7 +127,8 @@
                     $("#myModal2").modal();
                 })
                 $("#BtnSelect").click(BingStorageData);
-             BingStorageData();
+                $("#btnTwo").click(BingStorageData);
+                BingStorageData();
             
         })
         //入库单加载数据
@@ -136,10 +137,11 @@
             var StoOrderIdValue = $("[name=StoOrderId]").val();
             var StartValue = $("[name=Start]").val();
             var EndValue = $("[name=End]").val();
+            var StStorageDJTypeValue = $("[name=StStorageDJType]").val();
 
             $.ajax({
                 url:"@Url.Action("GetStorage")",
-                data: { StoOrderId: StoOrderIdValue, Start: StartValue, End: EndValue, pageIndex: pageIndexValue },
+                data: { StoOrderId: StoOrderIdValue, Start: StartValue, End: EndValue, pageIndex: pageIndexValue, StoType:StStorageDJTypeValue },
                 dataType:"json",
                 type:"get",
                 success: function (result) {
@@ -147,14 +149,36 @@
                     $("#textPageIndex").val(result.PageIndex);
                     pageIndexValue = result.PageIndex;
                     $("table tr:gt(0)").remove();
-                    $.each(result.Storage, function (index,value) {
+                    $.each(result.Storage, function (index, value) {
+                        var StoType = null;
+                        var StStorageState = null;
                         var str = "<tr>";
                         str += "<td>" + value.StoOrderId + "</td>";
-                        str += "<td>" + value.StoType + "</td>";
+                        if (value.StoType==1) {
+                            StoType = "采购收货入库";
+                        } else if (value.StoType == 2) {
+                            StoType = "销售退货入库";
+                        } else if (value.StoType == 3) {
+                            StoType = "生产产品入库";
+                        } else if (value.StoType == 4) {
+                            StoType = "领用退还入库";
+                        } else if (value.StoType == 5) {
+                            StoType = "借货入库";
+                        } else if (value.StoType == 6) {
+                            StoType = "借出还入";
+                        }
+                        str += "<td>" + StoType + "</td>";
                         str += "<td>" + value.SuppliersType + "</td>";
                         str += "<td>" + value.GoodsTotal + "</td>";
                         str += "<td>" + value.TotalMoney + "</td>";
-                        str += "<td>" + value.StStorageState + "</td>";
+                        if (value.StStorageState==1) {
+                            StStorageState = "待审核";
+                        } else if (value.StStorageState==2) {
+                            StStorageState = "审核通过";
+                        } else if (value.StStorageState==3) {
+                            StStorageState = "审核失败";
+                        }
+                        str += "<td>" + StStorageState + "</td>";
                         str += "<td>" + value.MakingSingle + "</td>";
                         str += "<td>" + value.CreateTime + "</td>";
                         str += "<td><a id=\"UpdateRuKu\"   href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a id=\"SelectRK\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";;
