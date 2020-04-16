@@ -192,7 +192,7 @@ namespace xianmu2020.Controllers
             {
                 where = where.And(item=>item.CreateTime<= re.End);
             }
-
+            
             var StorageService = new StStorageService();
             var StorageList = StorageService.GetByWhere(where);
             var newform = StorageList.Select(item => new {
