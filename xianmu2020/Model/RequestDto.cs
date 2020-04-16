@@ -10,6 +10,5 @@ namespace xianmu2020.Model
         public string StoOrderId { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
-        public int PageIndex { get; set; }
     }
 }

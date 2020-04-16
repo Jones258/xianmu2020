@@ -12,9 +12,6 @@ namespace xianmu2020.Controllers
 {
     public class IndexController : Controller
     {
-        public int pageSize {
-            get { return 2; }
-        }
         // GET: Index
         public ActionResult Index()
         {
@@ -196,17 +193,14 @@ namespace xianmu2020.Controllers
                 where = where.And(item=>item.CreateTime<= re.End);
             }
 
-            var pageIndex = re.PageIndex;
-            var pageCount = 0;
-            var count = 0;
             var StorageService = new StStorageService();
-            var StorageList = StorageService.GetByWhereAsc(where,item=>item.CreateTime,ref pageIndex,ref pageCount,ref count,pageSize);
+            var StorageList = StorageService.GetByWhere(where);
             var newform = StorageList.Select(item => new {
                 StoOrderId = item.StoOrderId,StoType = item.StoType,SuppliersType = item.SuppliersType,GoodsTotal=item.GoodsTotal,
                 TotalMoney = item.TotalMoney,StStorageState = item.StStorageState,MakingSingle = item.MakingSingle, CreateTime = Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd")
             });
             var result = new {
-                Storage = newform,PageIndex=pageIndex,PageCount=pageCount,Count=count
+                Storage = newform
             };
             return Json(result,JsonRequestBehavior.AllowGet);
         }
