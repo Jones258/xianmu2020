@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using Mods;
 using Service;
 using xianmu2020.Model;
+using System.Web.Security;
 
 namespace xianmu2020.Controllers
 {
@@ -42,6 +43,22 @@ namespace xianmu2020.Controllers
         public ActionResult QueryLogin()
         {
             return View();
+        }
+
+        [HttpPost]
+        //登录方法
+        public ActionResult Login(Admin admin) {
+            var adminService = new adminService();
+            var finUser = adminService.GetByWhere(item => item.UserName.Equals(admin.UserName) && item.Passworld.Equals(admin.Passworld)).FirstOrDefault();
+            if (true)
+            {
+                if (finUser!=null)
+                {
+                    FormsAuthentication.SetAuthCookie(finUser.Id.ToString(),false);
+                    return RedirectToAction("Homes", "Index");
+                }
+                return View("QueryLogin");
+            }
         }
 
         #region 系统设置
