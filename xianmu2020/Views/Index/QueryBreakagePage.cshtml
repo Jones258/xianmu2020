@@ -31,9 +31,9 @@
         <div class="row" style="margin-left:-92px;  border:0px solid black;width:1126px;background-color:#f5f8f8">
             <div class="col-md-5 form-group form-inline" style="margin-top:15px; ">
                 <button type="button" id="btn1" class="btn btn-group">所有</button>
-                <button type="button" id="btn1" class="btn btn-group">待审核</button>
-                <button type="button" id="btn1" class="btn btn-group">审核通过</button>
-                <button type="button" id="btn1" class="btn btn-group">审核失败</button>
+                <button type="button" id="btn2" class="btn btn-group">待审核</button>
+                <button type="button" id="btn3" class="btn btn-group">审核通过</button>
+                <button type="button" id="btn4" class="btn btn-group">审核失败</button>
             </div>
             <div class="col-md-3 form-group form-inline" style="margin-top:15px;float:right;margin-right:-58px;">
                 <a href="@Url.Action("QueryBreakageAdd")" class="btn btn-primary">新增报损</a>
@@ -41,10 +41,10 @@
             </div>
             <div class="row">
                 <div class="col-md-3 form-group form-inline " style="margin-top:83px;margin-left:-470px;">
-                    <input type="text" class="form-control" placeholder="请输入报损单号" />
+                    <input type="text" id="DH" class="form-control" placeholder="请输入报损单号" />
                 </div>
                 <div class="col-md-7 form-group form-inline" style="margin-top:19px;">
-                    <label class="control-label" style="margin-left:-20px;">时间</label> &nbsp;<input type="date" class="form-control" style="width:150px;" />&nbsp;-&nbsp;<input type="date" class="form-control" style="width:150px;" />&nbsp;&nbsp;<button type="button" class="btn btn-info">搜索</button>
+                    <label class="control-label" style="margin-left:-20px;">时间</label> &nbsp;<input type="date" id="SJ1" class="form-control" style="width:150px;" />&nbsp;-&nbsp;<input type="date" id="SJ2" class="form-control" style="width:150px;" />&nbsp;&nbsp;<button id="ss" type="button" class="btn btn-info">搜索</button>
                 </div>
             </div>
 
@@ -63,19 +63,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>单据编号1</td>
-                            <td>报损类型1</td>
-                            <td>客户名称1</td>
-                            <td>报损数量1</td>
-                            <td>状态1</td>
-                            <td>创建人1</td>
-                            <td>创建时间1</td>
-                            <td>
-                                <a id="UpdateBaoSun" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;
-                            <a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;
-                            <a id="BSD" href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
-                        </tr>
+                        @*<tr>
+                                <td>单据编号1</td>
+                                <td>报损类型1</td>
+                                <td>客户名称1</td>
+                                <td>报损数量1</td>
+                                <td>状态1</td>
+                                <td>创建人1</td>
+                                <td>创建时间1</td>
+                                <td>
+                                    <a id="UpdateBaoSun" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;
+                                <a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;
+                                <a id="BSD" href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
+                            </tr>*@
                     </tbody>
                 </table>
             </div>
@@ -93,7 +93,7 @@
 
     @*修改*@
     <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
+        <div id="div1" class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
             <div class="modal-content">
                 <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -233,3 +233,249 @@
 
 </body>
 </html>
+<script type="text/javascript">
+
+    $(function () {
+
+        $("#div1").hide();
+        //$("#UpdateBaoSun").click(function () {
+        //    $("#div1").show();
+        //})
+        //$("#BtnSq").click(function () {
+        //    $("#div1").hide();
+        //})
+        //$("#UpdateRuKu").click(function () {
+        //    $("#myModal").modal();
+        //})
+        //$("#SelectRK").click(function () {
+        //    $("#myModal2").modal();
+        //})
+        //$("#BtnSelect").click(BingStorageData);
+        BingStorageData();
+        $("#btn2").click(function () {
+            bt();
+        })
+        $("#btn1").click(function () {
+            BingStorageData();
+        })
+        $("#btn3").click(function () {
+            bt2();
+        })
+        $("#btn4").click(function () {
+            bt1();
+        })
+        $("#ss").click(function () {
+            SSData();
+        })
+    })
+    function SSData() {
+        var StartValue = $("#SJ1").val();
+        var EndValue = $("#SJ2").val();
+        var BGLidValue = $("#DH").val();
+        $.ajax({
+            url: "@Url.Action("GetBreakageSS")",
+            data: { Start: StartValue, End: EndValue, BGLid: BGLidValue },
+            dataType: "json",
+            type: "get",
+            success: function (result) {
+                $("table tr:gt(0)").remove();
+                var a = null;
+                var b = null;
+                $.each(result.Breakage1, function (index, value) {
+                    var str = "<tr>";
+                    str += "<td>" + value.BGLid + "</td>";
+                    if (value.BreakageType == 1) {
+                        b = "损坏报损";
+                    } else if (value.BreakageType == 2) {
+                        b = "丢失报损";
+                    }
+                    str += "<td>" + b + "</td>";
+
+                    str += "<td>" + value.PreparedMan + "</td>";
+                    str += "<td>" + value.PreparedCount + "</td>";
+
+                    if (value.BreakageGLAduitState == 1) {
+                        a = "通过";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        a = "未通过";
+                    } else if (value.BreakageGLAduitState == 3) {
+                        a = "审核中";
+                    }
+                    str += "<td>" + a + "</td>";
+                    str += "<td>" + value.CreationMan + "</td>";
+                    str += "<td>" + value.CreationTime + "</td>";
+                    str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    str += "</tr>";
+                    $("table tbody").append(str);
+                })
+            }
+        })
+    }
+    function bt() {
+
+        $.ajax({
+            url: "@Url.Action("GetBreakageData")",
+            data: { BreakageGLAduitState: 3 },
+            dataType: "json",
+            type: "get",
+            success: function (result) {
+                $("table tr:gt(0)").remove();
+                var a = null;
+                var b = null;
+                $.each(result.Breakage, function (index, value) {
+                    var str = "<tr>";
+                    str += "<td>" + value.BGLid + "</td>";
+                    if (value.BreakageType == 1) {
+                        b = "损坏报损";
+                    } else if (value.BreakageType == 2) {
+                        b = "丢失报损";
+                    }
+                    str += "<td>" + b + "</td>";
+
+                    str += "<td>" + value.PreparedMan + "</td>";
+                    str += "<td>" + value.PreparedCount + "</td>";
+
+                    if (value.BreakageGLAduitState == 1) {
+                        a = "通过";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        a = "未通过";
+                    } else if (value.BreakageGLAduitState == 3) {
+                        a = "审核中";
+                    }
+                    str += "<td>" + a + "</td>";
+                    str += "<td>" + value.CreationMan + "</td>";
+                    str += "<td>" + value.CreationTime + "</td>";
+                    str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    str += "</tr>";
+                    $("table tbody").append(str);
+                })
+            }
+        })
+    }
+    function bt1() {
+        $.ajax({
+            url: "@Url.Action("GetBreakageData3")",
+            data: { BreakageGLAduitState: 1 },
+            dataType: "json",
+            type: "get",
+            success: function (result) {
+                $("table tr:gt(0)").remove();
+                var a = null;
+                var b = null;
+                $.each(result.Breakage, function (index, value) {
+                    var str = "<tr>";
+                    str += "<td>" + value.BGLid + "</td>";
+                    if (value.BreakageType == 1) {
+                        b = "损坏报损";
+                    } else if (value.BreakageType == 2) {
+                        b = "丢失报损";
+                    }
+                    str += "<td>" + b + "</td>";
+
+                    str += "<td>" + value.PreparedMan + "</td>";
+                    str += "<td>" + value.PreparedCount + "</td>";
+
+                    if (value.BreakageGLAduitState == 1) {
+                        a = "通过";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        a = "未通过";
+                    } else if (value.BreakageGLAduitState == 3) {
+                        a = "审核中";
+                    }
+                    str += "<td>" + a + "</td>";
+                    str += "<td>" + value.CreationMan + "</td>";
+                    str += "<td>" + value.CreationTime + "</td>";
+                    str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    str += "</tr>";
+                    $("table tbody").append(str);
+                })
+            }
+        })
+    }
+    function bt2() {
+        $.ajax({
+            url: "@Url.Action("GetBreakageData2")",
+            data: { BreakageGLAduitState: 2 },
+            dataType: "json",
+            type: "get",
+            success: function (result) {
+                $("table tr:gt(0)").remove();
+                var a = null;
+                var b = null;
+                $.each(result.Breakage, function (index, value) {
+                    var str = "<tr>";
+                    str += "<td>" + value.BGLid + "</td>";
+                    if (value.BreakageType == 1) {
+                        b = "损坏报损";
+                    } else if (value.BreakageType == 2) {
+                        b = "丢失报损";
+                    }
+                    str += "<td>" + b + "</td>";
+
+                    str += "<td>" + value.PreparedMan + "</td>";
+                    str += "<td>" + value.PreparedCount + "</td>";
+
+                    if (value.BreakageGLAduitState == 1) {
+                        a = "通过";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        a = "未通过";
+                    } else if (value.BreakageGLAduitState == 3) {
+                        a = "审核中";
+                    }
+                    str += "<td>" + a + "</td>";
+                    str += "<td>" + value.CreationMan + "</td>";
+                    str += "<td>" + value.CreationTime + "</td>";
+                    str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    str += "</tr>";
+                    $("table tbody").append(str);
+                })
+            }
+        })
+    }
+    //入库单加载数据
+    function BingStorageData() {
+        //取值
+        var BGLidValue = $("[name=BGLid]").val();
+        var StartValue = $("[name=Start]").val();
+        var EndValue = $("[name=End]").val();
+
+        $.ajax({
+            url: "@Url.Action("GetBreakageGL")",
+            data: null,
+            dataType: "json",
+            type: "get",
+            success: function (result) {
+                $("table tr:gt(0)").remove();
+                var a = null;
+                var b = null;
+                $.each(result.Breakage, function (index, value) {
+                    var str = "<tr>";
+                    str += "<td>" + value.BGLid + "</td>";
+                    if (value.BreakageType == 1) {
+                        b = "损坏报损";
+                    } else if (value.BreakageType == 2) {
+                        b = "丢失报损";
+                    }
+                    str += "<td>" + b + "</td>";
+
+                    str += "<td>" + value.PreparedMan + "</td>";
+                    str += "<td>" + value.PreparedCount + "</td>";
+
+                    if (value.BreakageGLAduitState == 1) {
+                        a = "通过";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        a = "未通过";
+                    } else if (value.BreakageGLAduitState == 3) {
+                        a = "审核中";
+                    }
+                    str += "<td>" + a + "</td>";
+                    str += "<td>" + value.CreationMan + "</td>";
+                    str += "<td>" + value.CreationTime + "</td>";
+                    str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    str += "</tr>";
+                    $("table tbody").append(str);
+                })
+            }
+        })
+    }
+</script>

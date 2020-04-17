@@ -28,8 +28,9 @@
                         <label class="control-label">报损单编号</label><input type="text" class="form-control" disabled="disabled" placeholder="可不填,自动生成" />
                     </div>
                     <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">报损类型</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:230px;" })
+                        <label class="control-label">报损类型</label> @Html.DropDownList("StStorageDJType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
                     </div>
+                    
                     <div class=" col-md-3 form-inline" style="margin-top:13px;margin-left:70px;">
                         <label class="control-label">制单时间</label><input type="date" class="form-control" value="administrator" />
                     </div>
@@ -53,7 +54,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        @*<tr>
                             <td>产品编号1</td>
                             <td>产品名称1</td>
                             <td>产品条码1</td>
@@ -61,7 +62,7 @@
                             <td>库位1</td>
                             <td>报损数量1</td>
                             <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
-                        </tr>
+                        </tr>*@
                     </tbody>
                 </table>
             </div>
@@ -72,6 +73,14 @@
                     <a href="@Url.Action("QueryBreakagePage")" class="btn btn-danger">取消</a>
                 </div>
             </div>
+            <div class="row form-inline form-group text-center" style="margin-top:30px;margin-right:30px;">
+                <button type="button" class="btn btn-primary form-group">首页</button>
+                <button type="button" class="btn btn-primary form-group">上一页</button>
+                <input type="text" class="form-control" style="width:80px;" />
+                <button type="button" class="btn btn-primary form-group">Go</button>
+                <button type="button" class="btn btn-primary form-group">下一页</button>
+                <button type="button" class="btn btn-primary form-group">尾页</button>
+            </div>
         </div>
     </div>
 
@@ -81,7 +90,58 @@
             $("#myModals").modal();
         })
     </script>
+    <script type="text/javascript">
 
+        $(function () {
+
+            $("#div1").hide();
+                $("#BtnGJ").click(function () {
+                    $("#div1").show();
+                })
+                $("#BtnSq").click(function () {
+                    $("#div1").hide();
+                })
+                $("#UpdateRuKu").click(function () {
+                    $("#myModal").modal();
+                })
+                $("#SelectRK").click(function () {
+                    $("#myModal2").modal();
+                })
+                $("#BtnSelect").click(BingStorageData);
+             BingStorageData();
+
+        })
+        //入库单加载数据
+        function BingStorageData() {
+            //取值
+            var BGLidValue = $("[name=BGLid]").val();
+            var StartValue = $("[name=Start]").val();
+            var EndValue = $("[name=End]").val();
+
+            $.ajax({
+                url:"@Url.Action("GetBreakageGL")",
+                data: { BGLid: BGLidValue, Start: StartValue, End: EndValue },
+                dataType:"json",
+                type:"get",
+                success: function (result) {
+                    $("table tr:gt(0)").remove();
+                    $.each(result.Breakage, function (index, value) {
+                        var str = "<tr>";
+                        str += "<td>" + value.BGLid + "</td>";
+                        str += "<td>" + value.BreakageType + "</td>";
+                        str += "<td>" + value.PreparedMan + "</td>";
+                        str += "<td>" + value.PreparedCount + "</td>";
+                        str += "<td>" + value.BreakageGLAduitState + "</td>";
+                        str += "<td>" + value.CreationMan + "</td>";
+                        str += "<td>" + value.CreationTime + "</td>";
+                        str += "<td><a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                        str += "</tr>";
+                        $("table tbody").append(str);
+                    })
+                }
+           })
+       }
+    </script>
 
 
     @*出库产品模态图*@

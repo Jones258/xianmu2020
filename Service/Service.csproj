@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseService.cs" />
     <Compile Include="BaseServices.cs" />
+    <Compile Include="BreakageGLService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StStorageDJTypeService.cs" />
     <Compile Include="StStorageService.cs" />
