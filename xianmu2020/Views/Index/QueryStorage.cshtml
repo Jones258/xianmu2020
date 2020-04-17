@@ -54,7 +54,7 @@
                     单据类型 @Html.DropDownList("StStorageDJType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
                 </div>
                 <div class="col-md-2 form-inline" style="margin-top:29px;">
-                    <button type="button" class="btn btn-info">搜索</button>
+                    <button id="btnTwo" type="button" class="btn btn-info">搜索</button>
                 </div>
             </div>
 
@@ -73,34 +73,45 @@
                             <td>操作</td>
                         </tr>
                     </thead>
-                    <tbody>
-                        @*<tr>
-                            <td>0001</td>
-                            <td>生产产品入库</td>
-                            <td>北大青鸟ACCP</td>
-                            <td>90</td>
-                            <td>8098098.98元</td>
-                            <td>审核成功</td>
-                            <td>adminserin</td>
-                            <td>2020-04-03</td>
-                            <td><a id="UpdateRuKu"   href="#"><span  class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a id="SelectRK" href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
-                        </tr>*@
+                    <tbody>                       
                     </tbody>
                 </table>
             </div>
             <div class="row form-inline form-group text-center" style="margin-top:30px;margin-right:30px;">
-                <button type="button" class="btn btn-primary form-group">首页</button>
-                <button type="button" class="btn btn-primary form-group">上一页</button>
-                <input type="text" class="form-control" style="width:80px;" />
-                <button type="button" class="btn btn-primary form-group">Go</button>
-                <button type="button" class="btn btn-primary form-group">下一页</button>
-                <button type="button" class="btn btn-primary form-group">尾页</button>
+                <button id="btnSY" type="button" class="btn btn-primary form-group">首页</button>
+                <button id="btnSYY" type="button" class="btn btn-primary form-group">上一页</button>
+                <input id="textPageIndex" type="text" class="form-control" style="width:80px;" />
+                <button id="btnGo" type="button" class="btn btn-primary form-group">Go</button>
+                <button id="btnXYY" type="button" class="btn btn-primary form-group">下一页</button>
+                <button id="WY" type="button" class="btn btn-primary form-group">尾页</button>
+                <label id="txtLabel" style="font-size:16px;margin:0px auto;"></label>
             </div>
         </div>
     </div>
     <script type="text/javascript">
-
+        var pageIndexValue = 1;
         $(function () {
+
+            $("#btnSY").click(function () {
+                pageIndexValue = 1;
+                BingStorageData();
+            })
+            $("#btnSYY").click(function () {
+                pageIndexValue = pageIndexValue - 1;
+                BingStorageData();
+            })
+            $("#btnGo").click(function () {
+                pageIndexValue = parseInt($("#textPageIndex").val());
+                BingStorageData();
+            })
+            $("#btnXYY").click(function () {
+                pageIndexValue = pageIndexValue + 1;
+                BingStorageData();
+            })
+            $("#WY").click(function () {
+                pageIndexValue = 999999;
+                BingStorageData();
+            })
           
             $("#div1").hide();
                 $("#BtnGJ").click(function () {
@@ -116,7 +127,8 @@
                     $("#myModal2").modal();
                 })
                 $("#BtnSelect").click(BingStorageData);
-             BingStorageData();
+                $("#btnTwo").click(BingStorageData);
+                BingStorageData();
             
         })
         //入库单加载数据
@@ -125,22 +137,48 @@
             var StoOrderIdValue = $("[name=StoOrderId]").val();
             var StartValue = $("[name=Start]").val();
             var EndValue = $("[name=End]").val();
+            var StStorageDJTypeValue = $("[name=StStorageDJType]").val();
 
             $.ajax({
                 url:"@Url.Action("GetStorage")",
-                data: { StoOrderId: StoOrderIdValue, Start: StartValue, End: EndValue },
+                data: { StoOrderId: StoOrderIdValue, Start: StartValue, End: EndValue, pageIndex: pageIndexValue, StoType:StStorageDJTypeValue },
                 dataType:"json",
                 type:"get",
                 success: function (result) {
+                    $("#txtLabel").html("当前第" + result.PageIndex + "页 / 共计" + result.PageCount + " 页 共计" + result.Count + " 条");
+                    $("#textPageIndex").val(result.PageIndex);
+                    pageIndexValue = result.PageIndex;
                     $("table tr:gt(0)").remove();
-                    $.each(result.Storage, function (index,value) {
+                    $.each(result.Storage, function (index, value) {
+                        var StoType = null;
+                        var StStorageState = null;
                         var str = "<tr>";
                         str += "<td>" + value.StoOrderId + "</td>";
-                        str += "<td>" + value.StoType + "</td>";
+                        if (value.StoType==1) {
+                            StoType = "采购收货入库";
+                        } else if (value.StoType == 2) {
+                            StoType = "销售退货入库";
+                        } else if (value.StoType == 3) {
+                            StoType = "生产产品入库";
+                        } else if (value.StoType == 4) {
+                            StoType = "领用退还入库";
+                        } else if (value.StoType == 5) {
+                            StoType = "借货入库";
+                        } else if (value.StoType == 6) {
+                            StoType = "借出还入";
+                        }
+                        str += "<td>" + StoType + "</td>";
                         str += "<td>" + value.SuppliersType + "</td>";
                         str += "<td>" + value.GoodsTotal + "</td>";
                         str += "<td>" + value.TotalMoney + "</td>";
-                        str += "<td>" + value.StStorageState + "</td>";
+                        if (value.StStorageState==1) {
+                            StStorageState = "待审核";
+                        } else if (value.StStorageState==2) {
+                            StStorageState = "审核通过";
+                        } else if (value.StStorageState==3) {
+                            StStorageState = "审核失败";
+                        }
+                        str += "<td>" + StStorageState + "</td>";
                         str += "<td>" + value.MakingSingle + "</td>";
                         str += "<td>" + value.CreateTime + "</td>";
                         str += "<td><a id=\"UpdateRuKu\"   href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a id=\"SelectRK\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";;
