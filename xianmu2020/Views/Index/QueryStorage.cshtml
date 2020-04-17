@@ -29,8 +29,8 @@
         </div>
         <div class="row" style="margin-left:-92px;  border:0px solid black;width:1126px;background-color:#f5f8f8">
             <div class="col-md-5 form-group form-inline" style="margin-top:15px; ">
-                <button type="button" id="btn1" class="btn btn-group">所有</button>
-                <button type="button" id="btn1" class="btn btn-group">待审核</button>
+                <button name="sy" type="button" id="btn1" class="btn btn-group">所有</button>
+                <button name="dsh" type="button" id="btn1" class="btn btn-group">待审核</button>
                 <button type="button" id="btn1" class="btn btn-group">审核通过</button>
                 <button type="button" id="btn1" class="btn btn-group">审核失败</button>
             </div>
@@ -91,6 +91,7 @@
     <script type="text/javascript">
         var pageIndexValue = 1;
         $(function () {
+            State();
 
             $("#btnSY").click(function () {
                 pageIndexValue = 1;
@@ -131,6 +132,15 @@
                 BingStorageData();
             
         })
+
+        function State() {
+            $("[name=dsh]").click(function () {
+                if (value.StStorageState==1) {
+                    BingStorageData();
+                }
+            })
+        }
+
         //入库单加载数据
         function BingStorageData() {
             //取值

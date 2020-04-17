@@ -14,7 +14,7 @@ namespace xianmu2020.Controllers
     public class IndexController : Controller
     {
         public int pageSize {
-            get { return 2; }
+            get { return 1; }
         }
         // GET: Index
         public ActionResult Index()
