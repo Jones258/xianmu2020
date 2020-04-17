@@ -189,7 +189,7 @@ namespace xianmu2020.Controllers
         public ActionResult QueryStorage()
         {
             var StStorageDJTypeService = new StStorageDJTypeService();
-            var model = StStorageDJTypeService.GetAll();
+            var model = StStorageDJTypeService.GetByWhere(item=>item.State==1);
             model.Insert(0, new ChuBaoPanTuiTypes() {CBPTTid=0,DaBillTYpeName="请选择入库单类型" });
             ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
 
@@ -240,7 +240,7 @@ namespace xianmu2020.Controllers
             var model = new StStorageDJTypeService().GetAll();
            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择入库单类型" });
             ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
-            //测试
+            //测试 
             ViewBag.Type = new SelectList("");
             return View();
         }
@@ -293,11 +293,141 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryBreakageAdd()
         {
+            var StStorageDJTypeService = new StStorageDJTypeService();
+            var model = StStorageDJTypeService.GetByWhere(item => item.State == 2);
+            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择报损类型" });
+            ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
+
             //测试 
             ViewBag.Type = new SelectList("");
             return View();
         }
+        //加载报损数据方法1
+        public ActionResult GetBreakageGL(RequestDto re)
+        {
+            Expression<Func<BreakageGL, bool>> where = item => item.State == 1;
+            
+            var BreakageGLService = new BreakageGLService();
+            var BreakageList = BreakageGLService.GetByWhere(where);
+            var newform = BreakageList.Select(item => new {
+                BGLid = item.BGLid,
+                BreakageType = item.BreakageType,
+                PreparedMan = item.PreparedMan,
+                PreparedCount = item.PreparedCount,
+                BreakageGLAduitState = item.BreakageGLAduitState,
+                CreationMan = item.CreationMan,
+                CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
+            });
+            
+            var result = new
+            {
+                Breakage = newform
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //审核通过
+        public ActionResult GetBreakageData(RequestDto re)
+        {
+            Expression<Func<BreakageGL, bool>> where = item => item.State == 1&&item.BreakageGLAduitState==3;
+            
+            var BreakageGLService = new BreakageGLService();
+            var BreakageList = BreakageGLService.GetByWhere(where);
+            var newform = BreakageList.Select(item => new {
+                BGLid = item.BGLid,
+                BreakageType = item.BreakageType,
+                PreparedMan = item.PreparedMan,
+                PreparedCount = item.PreparedCount,
+                BreakageGLAduitState = item.BreakageGLAduitState,
+                CreationMan = item.CreationMan,
+                CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
+            });
 
+            var result = new
+            {
+                Breakage = newform
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //待审核
+        public ActionResult GetBreakageData2(RequestDto re)
+        {
+            Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 1;
+
+            var BreakageGLService = new BreakageGLService();
+            var BreakageList = BreakageGLService.GetByWhere(where);
+            var newform = BreakageList.Select(item => new {
+                BGLid = item.BGLid,
+                BreakageType = item.BreakageType,
+                PreparedMan = item.PreparedMan,
+                PreparedCount = item.PreparedCount,
+                BreakageGLAduitState = item.BreakageGLAduitState,
+                CreationMan = item.CreationMan,
+                CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
+            });
+
+            var result = new
+            {
+                Breakage = newform
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //审核未通过
+        public ActionResult GetBreakageData3(RequestDto re)
+        {
+            Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 2;
+
+            var BreakageGLService = new BreakageGLService();
+            var BreakageList = BreakageGLService.GetByWhere(where);
+            var newform = BreakageList.Select(item => new {
+                BGLid = item.BGLid,
+                BreakageType = item.BreakageType,
+                PreparedMan = item.PreparedMan,
+                PreparedCount = item.PreparedCount,
+                BreakageGLAduitState = item.BreakageGLAduitState,
+                CreationMan = item.CreationMan,
+                CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
+            });
+
+            var result = new
+            {
+                Breakage = newform
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //搜索
+        public ActionResult GetBreakageSS(BreakDto re)
+        {
+            Expression<Func<BreakageGL, bool>> where = item => item.State == 1 ;
+            if (re.BGLid != 0)
+            {
+                where = where.And(item => item.BGLid==re.BGLid);
+            }
+            if (re.Start != null)
+            {
+                where = where.And(item => item.CreationTime >= re.Start);
+            }
+            if (re.End != null)
+            {
+                where = where.And(item => item.CreationTime <= re.End);
+            }
+            var BreakageGLService = new BreakageGLService();
+            var BreakageList = BreakageGLService.GetByWhere(where);
+            var newform = BreakageList.Select(item => new {
+                BGLid = item.BGLid,
+                BreakageType = item.BreakageType,
+                PreparedMan = item.PreparedMan,
+                PreparedCount = item.PreparedCount,
+                BreakageGLAduitState = item.BreakageGLAduitState,
+                CreationMan = item.CreationMan,
+                CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
+            });
+
+            var result = new
+            {
+                Breakage1 = newform
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         /// <summary>
         /// 盘点管理页面视图
         /// </summary>
