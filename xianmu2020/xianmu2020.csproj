@@ -132,6 +132,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Model\BreakDto.cs" />
+    <Compile Include="Model\ProductSortDto.cs" />
     <Compile Include="Model\RequestDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

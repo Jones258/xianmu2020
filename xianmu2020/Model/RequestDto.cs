@@ -7,7 +7,9 @@ namespace xianmu2020.Model
 {
     public class RequestDto
     {
+        public int zt { get; set; }
         //入库
+        public int PageIndex { get; set; }
         public int StoType { get; set; }
         public string StoOrderId { get; set; }
         public DateTime? Start { get; set; }

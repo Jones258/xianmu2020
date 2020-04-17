@@ -29,10 +29,10 @@
             </div>
             <div class="row">
                 <div class="col-md-3" style="margin-top:15px;margin-left:13px;">
-                    <input type="text" class="form-control" placeholder="请输入类别编号或名称" />
+                    <input name="ProductSortName" type="text" class="form-control" placeholder="请输入类别编号或名称" />
                 </div>
                 <div class="col-md-1" style="margin-top:15px;margin-left:-21px;">
-                    <button type="button" class="btn btn-primary">搜索</button>
+                    <button id="btn" type="button" class="btn btn-primary">搜索</button>
                 </div>
 
             </div>
@@ -50,73 +50,66 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>类别编号1</td>
-                            <td>类别名称1</td>
-                            <td>administrator</td>
-                            <td>创建时间1</td>
-                            <td>备注1</td>
-                            <td>
-                                <a id="UpdateCPLB" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;
-                                <a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
             <div class="row form-inline form-group text-center" style="margin-top:30px;margin-right:30px;">
-                <button type="button" class="btn btn-primary form-group">首页</button>
-                <button type="button" class="btn btn-primary form-group">上一页</button>
-                <input type="text" class="form-control" style="width:80px;" />
-                <button type="button" class="btn btn-primary form-group">Go</button>
-                <button type="button" class="btn btn-primary form-group">下一页</button>
-                <button type="button" class="btn btn-primary form-group">尾页</button>
+                <button id="btnSY" type="button" class="btn btn-primary form-group">首页</button>
+                <button id="btnSYY" type="button" class="btn btn-primary form-group">上一页</button>
+                <input id="textPageIndex" type="text" class="form-control" style="width:80px;" />
+                <button id="btnGo" type="button" class="btn btn-primary form-group">Go</button>
+                <button id="btnXYY" type="button" class="btn btn-primary form-group">下一页</button>
+                <button id="WY" type="button" class="btn btn-primary form-group">尾页</button>
+                <label id="txtLabel" style="font-size:16px;margin:0px auto;"></label>
             </div>
         </div>
     </div>
 
     @*添加产品类别对话框*@
-    <div class="modal fade" id="myModal1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document" style="width:400px;">
-            <div class="modal-content">
-                <div class="modal-header" style="color:white; background-color:#37435c;">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">添加产品类别</h4>
-                </div>
-                <div class="modal-body" id="cnt">
-                    <div class="row form-inline form-group" style="margin-top:10px;">
-                        <div class="col-md-4">
-                            <label class="control-label">类别编号</label>
-                        </div>
-                        <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
-                            <input type="text" class="form-control" disabled="disabled" placeholder="自动生成，可不填" />
-                        </div>
+    <form>
+        <div class="modal fade" id="myModal1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document" style="width:400px;">
+                <div class="modal-content">
+                    <div class="modal-header" style="color:white; background-color:#37435c;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">添加产品类别</h4>
                     </div>
-                    <div class="row form-inline form-group" style="margin-top:10px;">
-                        <div class="col-md-4">
-                            <label class="control-label">类别名称</label>
+                    <div class="modal-body" id="cnt">
+                        <div class="row form-inline form-group" style="margin-top:10px;">
+                            <div class="col-md-4">
+                                <label class="control-label">类别编号</label>
+                            </div>
+                            <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
+                                <input name="ProductSortId" type="text" class="form-control" @*disabled="disabled"*@ placeholder="自动生成，可不填" />
+                            </div>
                         </div>
-                        <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
-                            <input type="text" class="form-control" placeholder="请输入类别名称" />
+                        <div class="row form-inline form-group" style="margin-top:10px;">
+                            <div class="col-md-4">
+                                <label class="control-label">类别名称</label>
+                            </div>
+                            <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
+                                <input name="ProductSortName" type="text" class="form-control" placeholder="请输入类别名称" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="row form-inline form-group" style="margin-top:10px;">
-                        <div class="col-md-4">
-                            <label class="control-label">备注</label>
+                        <div class="row form-inline form-group" style="margin-top:10px;">
+                            <div class="col-md-4">
+                                <label class="control-label">备注</label>
+                            </div>
+                            <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
+                                <input name="Remark" type="text" class="form-control" />
+                            </div>
                         </div>
-                        <div class="col-md-8" style="margin-left:-20px;margin-top:-10px;">
-                            <input type="text" class="form-control" />
-                        </div>
-                    </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">确定</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnAdd" type="button" class="btn btn-primary">确定</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
+   
 
     @*修改产品类别对话框*@
     <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -162,6 +155,34 @@
     </div>
 
     <script type="text/javascript">
+        var pageIndexValue = 1;
+        $(function () {
+
+
+            $("#btnSY").click(function () {
+                pageIndexValue = 1;
+                BinData();
+            })
+            $("#btnSYY").click(function () {
+                pageIndexValue = pageIndexValue - 1;
+                BinData();
+            })
+            $("#btnGo").click(function () {
+                pageIndexValue = parseInt($("#textPageIndex").val());
+                BinData();
+            })
+            $("#btnXYY").click(function () {
+                pageIndexValue = pageIndexValue + 1;
+                BinData();
+            })
+            $("#WY").click(function () {
+                pageIndexValue = 999999;
+                BinData();
+            })
+
+            BinData();
+        })
+
         //打开添加产品类别对话框
         $("#BtnAddCPLB").click(function () {
             $("#myModal1").modal();
@@ -170,6 +191,80 @@
         $("#UpdateCPLB").click(function () {
             $("#myModal2").modal();
         })
+        //加载数据方法
+        $("#btn").click(BinData);
+        //添加数据方法
+        $("#btnAdd").click(AddBindData);
+        //删除
+        $("#Deletes").click(BinData);
+
+
+        function BinData() {
+            var ProductSortNameValue=  $("[name=ProductSortName]").val();
+            $.ajax({
+                url:"@Url.Action("GetProductSort")",
+                data: { ProductSortName: ProductSortNameValue, PageIndex: pageIndexValue },
+                dataType:"json",
+                type:"get",
+                success: function (result) {
+                    $("table tr:gt(0)").remove();
+                    $("#txtLabel").html("当前第" + result.PageIndex + "页 / 共计" + result.PageCount + " 页 共计" + result.Count + " 条");
+                    $("#textPageIndex").val(result.PageIndex);
+                    pageIndexValue = result.PageIndex;
+                    $.each(result.ProductAction, function (index, value) {
+                        var str = "<tr>";
+                        str += "<td>"+value.ProductSortId+"</td>";
+                        str += "<td>"+value.ProductSortName+"</td>";
+                        str += "<td>"+value.CreationMen+"</td>";
+                        str += "<td>"+value.CreationTime+"</td>";
+                        str += "<td>"+value.Remark+"</td>";
+                        str += "<td><a id=\"UpdateRuKu\"   href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span id=\"Deletes\"" + value.ProductSortId + " style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                        $("table tbody").append(str);
+                    })
+                  
+                }
+            })
+        }
+
+        //添加方法
+        function AddBindData() {
+            var formValue = $("form").serializeArray();
+            var objJson = {};
+            $.each(formValue, function (index,value) {
+                objJson[value.name] = value.value;
+            })
+            $.ajax({
+                url:"@Url.Action("GetProductSortAdd")",
+                data: objJson,
+                dataType:"json",
+                type:"post",
+                success: function (AddProduct) {
+                    alert(AddProduct.Msg);
+                    BinData();
+                }
+            })
+        }
+        //删除方法
+        function DeleteData() {
+            var deleteValue = $("form").serializeArray(0);
+            var objJson = {};
+            $.each(deleteValue, function (index,value) {
+                objJson[value.name] = value.value;
+            })
+            $.ajax({
+                url:"@Url.Action("GetDeleteProductSort")",
+                data: objJson,
+            dataType:"json",
+            type:"get",
+            success: function (DeleteResult) {
+                alert(DeleteResult.Msg);
+                BinData();
+            }
+        })
+            
+
+        }
+
     </script>
 
 </body>

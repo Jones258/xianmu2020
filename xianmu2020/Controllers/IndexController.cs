@@ -14,7 +14,7 @@ namespace xianmu2020.Controllers
     public class IndexController : Controller
     {
         public int pageSize {
-            get { return 1; }
+            get { return 2; }
         }
         // GET: Index
         public ActionResult Index()
@@ -161,6 +161,47 @@ namespace xianmu2020.Controllers
         {
             return View();
         }
+        //产品类别查询
+        public ActionResult GetProductSort(ProductSortDto dto) {
+            Expression<Func<ProductSort, bool>> where = item => item.State == 1;
+            if (!string.IsNullOrEmpty(dto.ProductSortName))
+            {
+                where = where.And(item=>item.ProductSortName.IndexOf(dto.ProductSortName)!=-1||item.ProductSortId.IndexOf(dto.ProductSortName) !=-1);
+            }
+            var pageIndex = dto.PageIndex;
+            var pageCount = 0;
+            var count = 0;
+            var ProductSortModel = new ProductSortService().GetByWhereAsc(where,item=>item.CreationTime,ref pageIndex,ref pageCount,ref count,pageSize);
+            var ProductSort = ProductSortModel.Select(item => new {
+                ProductSortId = item.ProductSortId, ProductSortName = item.ProductSortName,
+                CreationMen = item.CreationMen,
+                CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd"),
+                Remark=item.Remark
+            });
+            var result = new { ProductAction=ProductSort,PageIndex = pageIndex, PageCount = pageCount, Count = count };
+            return Json(result,JsonRequestBehavior.AllowGet);
+        }
+        
+        [HttpPost]
+        //添加产品类别
+        public ActionResult GetProductSortAdd(ProductSort productSort) {
+            productSort.CreationMen = "administrator";
+            productSort.CreationTime = DateTime.Now;
+            productSort.State = 1;
+            var ProductSortModel = new ProductSortService().Add(productSort);
+            var addresult = new {
+                AddProduct = ProductSortModel, Msg = ProductSortModel ? "添加成功" : "添加失败！"
+            };
+            return Json(addresult,JsonRequestBehavior.AllowGet);
+        }
+        //删除产品
+        public ActionResult GetDeleteProductSort(ProductSort productSort) {
+            var deleteProductSort = new ProductSortService().Delete(productSort);
+            var DeleteResult = new {
+                deleteproduct = deleteProductSort,Msg = deleteProductSort ? "删除成功！":"删除失败"
+            };
+            return Json(DeleteResult, JsonRequestBehavior.AllowGet);
+        }
 
         /// <summary>
         /// 产品管理
@@ -198,7 +239,7 @@ namespace xianmu2020.Controllers
         }
 
         //加载数据方法1
-        public ActionResult GetStorage(RequestDto re) {
+        public ActionResult GetStorage(RequestDto re,int zt) {
             Expression<Func<StStorage, bool>> where = item => item.State==1;
             if (!string.IsNullOrEmpty(re.StoOrderId))
             {
@@ -215,6 +256,10 @@ namespace xianmu2020.Controllers
             if (re.End!=null)
             {
                 where = where.And(item=>item.CreateTime<= re.End);
+            }
+            if (re.zt!=0)
+            {
+                where = where.And(item=>item.StStorageState==re.zt);
             }
 
             var pageIndex = re.PageIndex;
