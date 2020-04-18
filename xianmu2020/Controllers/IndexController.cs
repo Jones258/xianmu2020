@@ -505,6 +505,32 @@ namespace xianmu2020.Controllers
             ViewBag.Type = new SelectList("");
             return View();
         }
+        public ActionResult GetRefun(RequestDto dto,int zt) {
+            Expression<Func<Refund, bool>> where = item => item.State == 1 && item.PreparedTime >= dto.Start && item.PreparedTime <= dto.End;
+            if (!string.IsNullOrEmpty(dto.RefundId))
+            {
+                where = where.And(item => item.RefundId.IndexOf(dto.RefundId)!=-1);
+            }
+            if (zt != 0)
+            {
+                where = where.And(item => item.RefundAuditState == zt);
+            }
+            var pageIndex = dto.PageIndex;
+            var pageCount = 0;
+            var count = 0;
+
+            var RefundModel = new RefundService().GetByWhereAsc(where,item=>item.PreparedTime,ref pageIndex,ref pageCount,ref count, pageSize);
+            var newRefund = RefundModel.Select(item => new {
+                RefundId = item.RefundId,
+                RefundCount=item.RefundCount,
+                ClientSite = item.ClientSite,//把这个字段当成退货类型字段
+                RefundAuditState = item.RefundAuditState,
+                PreparedMan = item.PreparedMan,
+                PreparedTime = Convert.ToDateTime(item.PreparedTime).ToString("yyyy-MM-dd")
+            });
+            var RefundResult = new{RefundAction = newRefund, PageIndex = pageIndex, PageCount = pageCount, Count = count };
+            return Json(RefundResult,JsonRequestBehavior.AllowGet);
+        }
 
         /// <summary>
         /// 新增产品退货页面视图

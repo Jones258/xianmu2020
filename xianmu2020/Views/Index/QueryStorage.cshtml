@@ -159,6 +159,8 @@
             var EndValue = $("[name=End]").val();
             var StStorageDJTypeValue = $("[name=StStorageDJType]").val();
 
+            var StoType = null;
+            var StStorageState = null;
             $.ajax({
                 url:"@Url.Action("GetStorage")",
                 data: { zt:ztValue, StoOrderId: StoOrderIdValue, Start: StartValue, End: EndValue, pageIndex: pageIndexValue, StoType:StStorageDJTypeValue },
@@ -170,8 +172,7 @@
                     pageIndexValue = result.PageIndex;
                     $("table tr:gt(0)").remove();
                     $.each(result.Storage, function (index, value) {
-                        var StoType = null;
-                        var StStorageState = null;
+                       
                         var str = "<tr>";
                         str += "<td>" + value.StoOrderId + "</td>";
                         if (value.StoType==1) {
@@ -201,7 +202,7 @@
                         str += "<td>" + StStorageState + "</td>";
                         str += "<td>" + value.MakingSingle + "</td>";
                         str += "<td>" + value.CreateTime + "</td>";
-                        str += "<td><a id=\"UpdateRuKu\"   href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a id=\"SelectRK\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                        str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a id=\"SelectRK\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                         str += "</tr>";
                         $("table tbody").append(str);
                     })

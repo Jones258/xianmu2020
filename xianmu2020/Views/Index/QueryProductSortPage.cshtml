@@ -22,7 +22,6 @@
             </div>
         </div>
         <div class="row" style="margin-left:-92px;  border:0px solid black;width:1126px;background-color:#f5f8f8">
-
             <div class="col-md-3 form-group form-inline" style="margin-top:13px;float:right;margin-right:-30px;">
                 <button id="BtnAddCPLB" type="button" class="btn btn-primary">新增产品类别</button>
                 <button type="button" class="btn btn-info">导出</button>
@@ -218,7 +217,7 @@
                         str += "<td>"+value.CreationMen+"</td>";
                         str += "<td>"+value.CreationTime+"</td>";
                         str += "<td>"+value.Remark+"</td>";
-                        str += "<td><a id=\"UpdateRuKu\"   href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span id=\"Deletes\"" + value.ProductSortId + " style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                        str += "<td><a id=\"UpdateRuKu\"   href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a class\btn btn-danger\" href=\"#\">删除</a></td>";
                         $("table tbody").append(str);
                     })
                   
