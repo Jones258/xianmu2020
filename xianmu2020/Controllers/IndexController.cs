@@ -13,7 +13,8 @@ namespace xianmu2020.Controllers
 {
     public class IndexController : Controller
     {
-        public int pageSize {
+        public int pageSize
+        {
             get { return 2; }
         }
         // GET: Index
@@ -47,14 +48,15 @@ namespace xianmu2020.Controllers
 
         [HttpPost]
         //登录方法
-        public ActionResult Login(Admin admin) {
+        public ActionResult Login(Admin admin)
+        {
             var adminService = new adminService();
             var finUser = adminService.GetByWhere(item => item.UserName.Equals(admin.UserName) && item.Passworld.Equals(admin.Passworld)).FirstOrDefault();
             if (true)
             {
-                if (finUser!=null)
+                if (finUser != null)
                 {
-                    FormsAuthentication.SetAuthCookie(finUser.Id.ToString(),false);
+                    FormsAuthentication.SetAuthCookie(finUser.Id.ToString(), false);
                     return RedirectToAction("Homes", "Index");
                 }
                 return View("QueryLogin");
@@ -118,7 +120,8 @@ namespace xianmu2020.Controllers
         /// 库位管理
         /// </summary>
         /// <returns></returns>
-        public ActionResult QuerySeatingPage() {
+        public ActionResult QuerySeatingPage()
+        {
             //测试 
             ViewBag.Type = new SelectList("");
             return View();
@@ -128,7 +131,8 @@ namespace xianmu2020.Controllers
         /// 供应商管理
         /// </summary>
         /// <returns></returns>
-        public ActionResult QuerySupplierPage() {
+        public ActionResult QuerySupplierPage()
+        {
 
             //测试 
             ViewBag.Type = new SelectList("");
@@ -139,7 +143,8 @@ namespace xianmu2020.Controllers
         /// 客户管理
         /// </summary>
         /// <returns></returns>
-        public ActionResult QueryClientPage() {
+        public ActionResult QueryClientPage()
+        {
 
             return View();
         }
@@ -148,7 +153,8 @@ namespace xianmu2020.Controllers
         /// 计量单位
         /// </summary>
         /// <returns></returns>
-        public ActionResult QueryMeasureUnitPage() {
+        public ActionResult QueryMeasureUnitPage()
+        {
 
             return View();
         }
@@ -189,8 +195,8 @@ namespace xianmu2020.Controllers
         public ActionResult QueryStorage()
         {
             var StStorageDJTypeService = new StStorageDJTypeService();
-            var model = StStorageDJTypeService.GetByWhere(item=>item.State==1);
-            model.Insert(0, new ChuBaoPanTuiTypes() {CBPTTid=0,DaBillTYpeName="请选择入库单类型" });
+            var model = StStorageDJTypeService.GetByWhere(item => item.State == 1);
+            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择入库单类型" });
             ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
 
             ViewBag.Type = new SelectList("");
@@ -198,37 +204,49 @@ namespace xianmu2020.Controllers
         }
 
         //加载数据方法1
-        public ActionResult GetStorage(RequestDto re) {
-            Expression<Func<StStorage, bool>> where = item => item.State==1;
+        public ActionResult GetStorage(RequestDto re)
+        {
+            Expression<Func<StStorage, bool>> where = item => item.State == 1;
             if (!string.IsNullOrEmpty(re.StoOrderId))
             {
-                where = where.And(item=>item.StoOrderId.IndexOf(re.StoOrderId)!=-1);
+                where = where.And(item => item.StoOrderId.IndexOf(re.StoOrderId) != -1);
             }
-            if (re.StoType!=0)
+            if (re.StoType != 0)
             {
-                where = where.And(item=>item.StoType.Equals(re.StoType));
+                where = where.And(item => item.StoType.Equals(re.StoType));
             }
-            if (re.Start!=null)
+            if (re.Start != null)
             {
                 where = where.And(item => item.CreateTime >= re.Start);
             }
-            if (re.End!=null)
+            if (re.End != null)
             {
-                where = where.And(item=>item.CreateTime<= re.End);
+                where = where.And(item => item.CreateTime <= re.End);
             }
 
             var pageIndex = re.PageIndex;
             var pageCount = 0;
             var count = 0;
-            var StorageList = new StStorageService().GetByWhereAsc(where,item=>item.CreateTime,ref pageIndex,ref pageCount,ref count,pageSize);
-            var newform = StorageList.Select(item => new {
-                StoOrderId = item.StoOrderId,StoType = item.StoType,SuppliersType = item.SuppliersType,GoodsTotal=item.GoodsTotal,
-                TotalMoney = item.TotalMoney,StStorageState = item.StStorageState,MakingSingle = item.MakingSingle, CreateTime = Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd")
+            var StorageList = new StStorageService().GetByWhereAsc(where, item => item.CreateTime, ref pageIndex, ref pageCount, ref count, pageSize);
+            var newform = StorageList.Select(item => new
+            {
+                StoOrderId = item.StoOrderId,
+                StoType = item.StoType,
+                SuppliersType = item.SuppliersType,
+                GoodsTotal = item.GoodsTotal,
+                TotalMoney = item.TotalMoney,
+                StStorageState = item.StStorageState,
+                MakingSingle = item.MakingSingle,
+                CreateTime = Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd")
             });
-            var result = new {
-                Storage = newform,PageIndex=pageIndex,PageCount=pageCount,Count=count
+            var result = new
+            {
+                Storage = newform,
+                PageIndex = pageIndex,
+                PageCount = pageCount,
+                Count = count
             };
-            return Json(result,JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -238,19 +256,27 @@ namespace xianmu2020.Controllers
         public ActionResult QueryStorageAdd()
         {
             var model = new StStorageDJTypeService().GetAll();
-           model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择入库单类型" });
+            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择入库单类型" });
             ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
             //测试 
             ViewBag.Type = new SelectList("");
             return View();
         }
         //add入库单里的供应商
-        public ActionResult QueryGYS() {            
+        public ActionResult QueryGYS()
+        {
             var model1 = new SupplierService().GetByWhere(item => true);
-            var Supplierform = model1.Select(item => new {
-                SupplierId = item.SupplierId,SupplierName = item.SupplierName, Phone = item.Phone,Contacts = item.Contacts,Email = item.Email, Fax = item.Fax,Site = item.Site
+            var Supplierform = model1.Select(item => new
+            {
+                SupplierId = item.SupplierId,
+                SupplierName = item.SupplierName,
+                Phone = item.Phone,
+                Contacts = item.Contacts,
+                Email = item.Email,
+                Fax = item.Fax,
+                Site = item.Site
             });
-            var result = new{supplierAction = Supplierform };
+            var result = new { supplierAction = Supplierform };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -302,38 +328,26 @@ namespace xianmu2020.Controllers
             ViewBag.Type = new SelectList("");
             return View();
         }
+        public int PageSize
+        {
+            get { return 2; }
+        }
         //加载报损数据方法1
         public ActionResult GetBreakageGL(RequestDto re)
         {
             Expression<Func<BreakageGL, bool>> where = item => item.State == 1;
-            
+
             var BreakageGLService = new BreakageGLService();
-            var BreakageList = BreakageGLService.GetByWhere(where);
-            var newform = BreakageList.Select(item => new {
-                BGLid = item.BGLid,
-                BreakageType = item.BreakageType,
-                PreparedMan = item.PreparedMan,
-                PreparedCount = item.PreparedCount,
-                BreakageGLAduitState = item.BreakageGLAduitState,
-                CreationMan = item.CreationMan,
-                CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
-            });
-            
-            var result = new
+            var pageCount = 0;
+            var count = 0;
+            var pageIndex = re.PageIndex;
+            var BreakageList = BreakageGLService.GetByWhereDesc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, PageSize);
+
+            //var pageCount = 0;var count = 0;var pageIndex = re.PageIndex;var BreakageList = BreakageGLService.GetByWhereDesc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, PageSize);
+            var newform = BreakageList.Select(item => new
             {
-                Breakage = newform
-            };
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-        //审核通过
-        public ActionResult GetBreakageData(RequestDto re)
-        {
-            Expression<Func<BreakageGL, bool>> where = item => item.State == 1&&item.BreakageGLAduitState==3;
-            
-            var BreakageGLService = new BreakageGLService();
-            var BreakageList = BreakageGLService.GetByWhere(where);
-            var newform = BreakageList.Select(item => new {
                 BGLid = item.BGLid,
+                Standby3 = item.Standby3,
                 BreakageType = item.BreakageType,
                 PreparedMan = item.PreparedMan,
                 PreparedCount = item.PreparedCount,
@@ -344,7 +358,35 @@ namespace xianmu2020.Controllers
 
             var result = new
             {
-                Breakage = newform
+                Breakage = newform,PageIndex = pageIndex, PageCount = pageCount, Count = count
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //审核通过
+        public ActionResult GetBreakageData(RequestDto re)
+        {
+            Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 3;
+
+            var BreakageGLService = new BreakageGLService();
+            var pageCount = 0;
+            var count = 0;
+            var pageIndex = re.PageIndex;
+            var BreakageList = BreakageGLService.GetByWhereDesc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, PageSize);
+            var newform = BreakageList.Select(item => new
+            {
+                BGLid = item.BGLid,
+                Standby3 = item.Standby3,
+                BreakageType = item.BreakageType,
+                PreparedMan = item.PreparedMan,
+                PreparedCount = item.PreparedCount,
+                BreakageGLAduitState = item.BreakageGLAduitState,
+                CreationMan = item.CreationMan,
+                CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
+            });
+
+            var result = new
+            {
+                Breakage = newform,PageIndex = pageIndex, PageCount = pageCount, Count = count
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -354,9 +396,14 @@ namespace xianmu2020.Controllers
             Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 1;
 
             var BreakageGLService = new BreakageGLService();
-            var BreakageList = BreakageGLService.GetByWhere(where);
-            var newform = BreakageList.Select(item => new {
+            var pageCount = 0;
+            var count = 0;
+            var pageIndex = re.PageIndex;
+            var BreakageList = BreakageGLService.GetByWhereDesc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, PageSize);
+            var newform = BreakageList.Select(item => new
+            {
                 BGLid = item.BGLid,
+                Standby3 = item.Standby3,
                 BreakageType = item.BreakageType,
                 PreparedMan = item.PreparedMan,
                 PreparedCount = item.PreparedCount,
@@ -367,7 +414,7 @@ namespace xianmu2020.Controllers
 
             var result = new
             {
-                Breakage = newform
+                Breakage = newform,PageIndex = pageIndex, PageCount = pageCount, Count = count
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -377,9 +424,14 @@ namespace xianmu2020.Controllers
             Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 2;
 
             var BreakageGLService = new BreakageGLService();
-            var BreakageList = BreakageGLService.GetByWhere(where);
-            var newform = BreakageList.Select(item => new {
+            var pageCount = 0;
+            var count = 0;
+            var pageIndex = re.PageIndex;
+            var BreakageList = BreakageGLService.GetByWhereDesc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, PageSize);
+            var newform = BreakageList.Select(item => new
+            {
                 BGLid = item.BGLid,
+                Standby3 = item.Standby3,
                 BreakageType = item.BreakageType,
                 PreparedMan = item.PreparedMan,
                 PreparedCount = item.PreparedCount,
@@ -390,17 +442,41 @@ namespace xianmu2020.Controllers
 
             var result = new
             {
-                Breakage = newform
+                
+                Breakage = newform,PageIndex = pageIndex, PageCount = pageCount, Count = count
             };
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        //删除
+        public ActionResult BreakageDele(int BGLid)
+        {
+            var BreakageGLService = new BreakageGLService();
+            var data = BreakageGLService.GetByWhere(item => item.BGLid == BGLid).SingleOrDefault();
+            data.State = 2;
+            var BreakageList = BreakageGLService.Update(data);
+
+            return Json(JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        //审核通过
+        public ActionResult BreakageUp(int BGLid, int State)
+        {
+            var BreakageGLService = new BreakageGLService();
+            var data = BreakageGLService.GetByWhere(item => item.BGLid == BGLid).SingleOrDefault();
+
+            data.BreakageGLAduitState = State;
+            var BreakageList = BreakageGLService.Update(data);
+
+            return Json(JsonRequestBehavior.AllowGet);
         }
         //搜索
         public ActionResult GetBreakageSS(BreakDto re)
         {
-            Expression<Func<BreakageGL, bool>> where = item => item.State == 1 ;
-            if (re.BGLid != 0)
+            Expression<Func<BreakageGL, bool>> where = item => item.State == 1;
+            if (!string.IsNullOrEmpty(re.Standby3))
             {
-                where = where.And(item => item.BGLid==re.BGLid);
+                where = where.And(item => item.Standby3.Equals(re.Standby3));
             }
             if (re.Start != null)
             {
@@ -411,9 +487,15 @@ namespace xianmu2020.Controllers
                 where = where.And(item => item.CreationTime <= re.End);
             }
             var BreakageGLService = new BreakageGLService();
-            var BreakageList = BreakageGLService.GetByWhere(where);
-            var newform = BreakageList.Select(item => new {
+            var pageCount = 0;
+            var count = 0;
+            var pageIndex = re.PageIndex;
+            var BreakageList = BreakageGLService.GetByWhereDesc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, PageSize);
+            
+            var newform = BreakageList.Select(item => new
+            {
                 BGLid = item.BGLid,
+                Standby3 = item.Standby3,
                 BreakageType = item.BreakageType,
                 PreparedMan = item.PreparedMan,
                 PreparedCount = item.PreparedCount,
@@ -424,7 +506,10 @@ namespace xianmu2020.Controllers
 
             var result = new
             {
-                Breakage1 = newform
+                Breakage1 = newform,
+                PageIndex = pageIndex,
+                PageCount = pageCount,
+                Count = count
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -472,6 +557,6 @@ namespace xianmu2020.Controllers
             return View();
         }
         #endregion
-       
+
     }
 }

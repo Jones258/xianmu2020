@@ -79,14 +79,15 @@
                     </tbody>
                 </table>
             </div>
-            <div class="row form-inline form-group text-center" style="margin-top:30px;margin-right:30px;">
-                <button type="button" class="btn btn-primary form-group">首页</button>
-                <button type="button" class="btn btn-primary form-group">上一页</button>
-                <input type="text" class="form-control" style="width:80px;" />
-                <button type="button" class="btn btn-primary form-group">Go</button>
-                <button type="button" class="btn btn-primary form-group">下一页</button>
-                <button type="button" class="btn btn-primary form-group">尾页</button>
-            </div>
+                <div class="row form-inline form-group text-center" style="margin-top:30px;margin-right:30px;">
+                    <button class="btn btn-primary" type="button" id="btnFirst">首页</button>
+                    <button class="btn btn-primary" type="button" id="btnUp">上一页</button>
+                    <input style="width:70px" class="form-control" type="text" id="txtPageIndex" />
+                    <button class="btn btn-primary" type="button" id="btnGo">Go</button>
+                    <button class="btn btn-primary" type="button" id="btnNext">下一页</button>
+                    <button class="btn btn-primary" type="button" id="btnLast">尾页</button>
+                    <label id="lbMsg" class="control-label"></label>
+                </div>
         </div>
     </div>
 
@@ -234,8 +235,31 @@
 </body>
 </html>
 <script type="text/javascript">
-
+    var pageIndexValue = 1;
     $(function () {
+        var id = null;
+        var at = null;
+        
+        $("#btnFirst").click(function () {
+            pageIndexValue = 1;
+            BingData();
+        });
+        $("#btnUp").click(function () {
+            pageIndexValue = pageIndexValue - 1;
+            BingData();
+        });
+        $("#btnGo").click(function () {
+            pageIndexValue = $("#txtPageIndex").val();
+            BingData();
+        });
+        $("#btnNext").click(function () {
+            pageIndexValue = pageIndexValue + 1;
+            BingData();
+        });
+        $("#btnLast").click(function () {
+            pageIndexValue = 99999;
+            BingData();
+        });
 
         $("#div1").hide();
         //$("#UpdateBaoSun").click(function () {
@@ -250,13 +274,13 @@
         //$("#SelectRK").click(function () {
         //    $("#myModal2").modal();
         //})
-        //$("#BtnSelect").click(BingStorageData);
-        BingStorageData();
+        //$("#BtnSelect").click(BingData);
+        BingData();
         $("#btn2").click(function () {
             bt();
         })
         $("#btn1").click(function () {
-            BingStorageData();
+            BingData();
         })
         $("#btn3").click(function () {
             bt2();
@@ -267,23 +291,32 @@
         $("#ss").click(function () {
             SSData();
         })
+
     })
     function SSData() {
+
         var StartValue = $("#SJ1").val();
         var EndValue = $("#SJ2").val();
-        var BGLidValue = $("#DH").val();
+        var Standby3Value = $("#DH").val();
         $.ajax({
             url: "@Url.Action("GetBreakageSS")",
-            data: { Start: StartValue, End: EndValue, BGLid: BGLidValue },
+            data: { Start: StartValue, End: EndValue, pageIndex: pageIndexValue, Standby3: Standby3Value },
             dataType: "json",
             type: "get",
             success: function (result) {
                 $("table tr:gt(0)").remove();
                 var a = null;
                 var b = null;
+
                 $.each(result.Breakage1, function (index, value) {
+                    at = value.BreakageGLAduitState;
+                    id = value.BGLid;
+                    $("#lbMsg").html("当前第 " + result.PageIndex
+                    + "/" + result.Count + " 总计" + result.PageCount + "条")
+                    $("#textPageIndex").val(result.PageIndex);
+                    pageIndexValue = result.PageIndex;
                     var str = "<tr>";
-                    str += "<td>" + value.BGLid + "</td>";
+                    str += "<td>" + value.Standby3 + "</td>";
                     if (value.BreakageType == 1) {
                         b = "损坏报损";
                     } else if (value.BreakageType == 2) {
@@ -304,18 +337,69 @@
                     str += "<td>" + a + "</td>";
                     str += "<td>" + value.CreationMan + "</td>";
                     str += "<td>" + value.CreationTime + "</td>";
-                    str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    if (value.BreakageGLAduitState == 1) {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;</td>";
+                    } else {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    }
                     str += "</tr>";
                     $("table tbody").append(str);
                 })
             }
         })
     }
+    function Dele() {
+        $.ajax({
+            url: "@Url.Action("BreakageDele")",
+            data: { BGLid: id },
+            dataType: "json",
+            type: "post",
+            success: function () {
+                if (confirm("确认删除吗?")) {
+                    BingData();
+                    alert("删除成功");
+                }
+
+            }
+        })
+    };
+    function Update() {
+        $.ajax({
+            url: "@Url.Action("BreakageUp")",
+            data: { BGLid: id, State: 1 },
+            dataType: "json",
+            type: "post",
+            success: function () {
+                if (confirm("确认审核吗?")) {
+                    BingData();
+                    alert("审核成功");
+                }
+
+            }
+        })
+    };
+    function Update2() {
+        $.ajax({
+            url: "@Url.Action("BreakageUp")",
+            data: { BGLid: id, State: 2 },
+            dataType: "json",
+            type: "post",
+            success: function () {
+                if (confirm("确认审核吗?")) {
+                    BingData();
+                    alert("审核成功");
+                }
+
+            }
+        })
+    };
     function bt() {
 
         $.ajax({
             url: "@Url.Action("GetBreakageData")",
-            data: { BreakageGLAduitState: 3 },
+            data: { BreakageGLAduitState: 3, pageIndex: pageIndexValue},
             dataType: "json",
             type: "get",
             success: function (result) {
@@ -323,8 +407,13 @@
                 var a = null;
                 var b = null;
                 $.each(result.Breakage, function (index, value) {
+                    id = value.BGLid; at = value.BreakageGLAduitState;
+                    $("#lbMsg").html("当前第 " + result.PageIndex
+                    + "/" + result.Count + " 总计" + result.PageCount + "条")
+                    $("#textPageIndex").val(result.PageIndex);
+                    pageIndexValue = result.PageIndex;
                     var str = "<tr>";
-                    str += "<td>" + value.BGLid + "</td>";
+                    str += "<td>" + value.Standby3 + "</td>";
                     if (value.BreakageType == 1) {
                         b = "损坏报损";
                     } else if (value.BreakageType == 2) {
@@ -345,7 +434,13 @@
                     str += "<td>" + a + "</td>";
                     str += "<td>" + value.CreationMan + "</td>";
                     str += "<td>" + value.CreationTime + "</td>";
-                    str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    if (value.BreakageGLAduitState == 1) {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;</td>";
+                    } else {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    }
                     str += "</tr>";
                     $("table tbody").append(str);
                 })
@@ -355,7 +450,7 @@
     function bt1() {
         $.ajax({
             url: "@Url.Action("GetBreakageData3")",
-            data: { BreakageGLAduitState: 1 },
+            data: { BreakageGLAduitState: 1, pageIndex: pageIndexValue },
             dataType: "json",
             type: "get",
             success: function (result) {
@@ -363,8 +458,13 @@
                 var a = null;
                 var b = null;
                 $.each(result.Breakage, function (index, value) {
+                    id = value.BGLid; at = value.BreakageGLAduitState;
+                    $("#lbMsg").html("当前第 " + result.PageIndex
+                    + "/" + result.Count + " 总计" + result.PageCount + "条")
+                    $("#textPageIndex").val(result.PageIndex);
+                    pageIndexValue = result.PageIndex;
                     var str = "<tr>";
-                    str += "<td>" + value.BGLid + "</td>";
+                    str += "<td>" + value.Standby3 + "</td>";
                     if (value.BreakageType == 1) {
                         b = "损坏报损";
                     } else if (value.BreakageType == 2) {
@@ -385,7 +485,13 @@
                     str += "<td>" + a + "</td>";
                     str += "<td>" + value.CreationMan + "</td>";
                     str += "<td>" + value.CreationTime + "</td>";
-                    str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    if (value.BreakageGLAduitState == 1) {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;</td>";
+                    } else {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    }
                     str += "</tr>";
                     $("table tbody").append(str);
                 })
@@ -395,7 +501,7 @@
     function bt2() {
         $.ajax({
             url: "@Url.Action("GetBreakageData2")",
-            data: { BreakageGLAduitState: 2 },
+            data: { BreakageGLAduitState: 2, pageIndex: pageIndexValue},
             dataType: "json",
             type: "get",
             success: function (result) {
@@ -403,8 +509,13 @@
                 var a = null;
                 var b = null;
                 $.each(result.Breakage, function (index, value) {
+                    id = value.BGLid; at = value.BreakageGLAduitState;
+                    $("#lbMsg").html("当前第 " + result.PageIndex
+                     + "/" + result.Count + " 总计" + result.PageCount + "条")
+                    $("#textPageIndex").val(result.PageIndex);
+                    pageIndexValue = result.PageIndex;
                     var str = "<tr>";
-                    str += "<td>" + value.BGLid + "</td>";
+                    str += "<td>" + value.Standby3 + "</td>";
                     if (value.BreakageType == 1) {
                         b = "损坏报损";
                     } else if (value.BreakageType == 2) {
@@ -425,7 +536,13 @@
                     str += "<td>" + a + "</td>";
                     str += "<td>" + value.CreationMan + "</td>";
                     str += "<td>" + value.CreationTime + "</td>";
-                    str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    if (value.BreakageGLAduitState == 1) {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;</td>";
+                    } else {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    }
                     str += "</tr>";
                     $("table tbody").append(str);
                 })
@@ -433,15 +550,15 @@
         })
     }
     //入库单加载数据
-    function BingStorageData() {
+    function BingData() {
         //取值
-        var BGLidValue = $("[name=BGLid]").val();
+        var Standby3Value = $("[name=Standby3]").val();
         var StartValue = $("[name=Start]").val();
         var EndValue = $("[name=End]").val();
 
         $.ajax({
             url: "@Url.Action("GetBreakageGL")",
-            data: null,
+            data: { pageIndex: pageIndexValue},
             dataType: "json",
             type: "get",
             success: function (result) {
@@ -449,8 +566,13 @@
                 var a = null;
                 var b = null;
                 $.each(result.Breakage, function (index, value) {
+                    $("#lbMsg").html("当前第 " + result.PageIndex
+                    + "/" + result.Count + " 总计" + result.PageCount + "条")
+                    $("#textPageIndex").val(result.PageIndex);
+                    pageIndexValue = result.PageIndex;
+                    id = value.BGLid; at = value.BreakageGLAduitState;
                     var str = "<tr>";
-                    str += "<td>" + value.BGLid + "</td>";
+                    str += "<td>" + value.Standby3 + "</td>";
                     if (value.BreakageType == 1) {
                         b = "损坏报损";
                     } else if (value.BreakageType == 2) {
@@ -471,7 +593,13 @@
                     str += "<td>" + a + "</td>";
                     str += "<td>" + value.CreationMan + "</td>";
                     str += "<td>" + value.CreationTime + "</td>";
-                    str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    if (value.BreakageGLAduitState == 1) {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;</td>";
+                    } else if (value.BreakageGLAduitState == 3) {
+                        str += "<td><a id=\"UpdateBaoSun\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;<a id=\"BSD\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    }
                     str += "</tr>";
                     $("table tbody").append(str);
                 })
