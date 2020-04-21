@@ -28,10 +28,10 @@
         </div>
         <div class="row" style="margin-left:-92px;  border:0px solid black;width:1126px;background-color:#f5f8f8;">
             <div class="col-md-5 form-group form-inline" style="margin-top:15px; ">
-                <button type="button" id="btn1" class="btn btn-group">所有</button>
-                <button type="button" id="btn1" class="btn btn-group">待审核</button>
-                <button type="button" id="btn1" class="btn btn-group">审核通过</button>
-                <button type="button" id="btn1" class="btn btn-group">审核失败</button>
+                <button name="sy" type="button" id="btn1" class="btn btn-group btn2" value="所有">所有</button>
+                <button name="dsh" type="button" id="btn1" class="btn btn-group btn2" value="待审核">待审核</button>
+                <button name="shtg" type="button" id="btn1" class="btn btn-group btn2" value="审核通过">审核通过</button>
+                <button name="shsb" type="button" id="btn1" class="btn btn-group btn2" value="审核失败">审核失败</button>
             </div>
             <div class="col-md-3 form-group form-inline" style="margin-top:15px;float:right;margin-right:-58px;">
                 <a href="@Url.Action("QueryRefundThAdd")" class="btn btn-primary">新增退货</a>
@@ -39,10 +39,10 @@
             </div>
             <div class="row">
                 <div class="col-md-3 form-group form-inline " style="margin-top:83px;margin-left:-470px;">
-                    <input type="text" class="form-control" placeholder="请输入退货单号" />
+                    <input type="text" class="form-control" name="RefundId" placeholder="请输入退货单号" />
                 </div>
                 <div class="col-md-7 form-group form-inline" style="margin-top:19px;">
-                    <label class="control-label" style="margin-left:-20px;">时间</label> &nbsp;<input type="date" class="form-control" style="width:150px;" />&nbsp;-&nbsp;<input type="date" class="form-control" style="width:150px;" />&nbsp;&nbsp;<button type="button" class="btn btn-info">搜索</button>
+                    <label class="control-label" style="margin-left:-20px;">时间</label> &nbsp;<input name="Start" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")"  type="date" class="form-control" style="width:150px;" />&nbsp;-&nbsp;<input name="End" value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" type="date" class="form-control" style="width:150px;" />&nbsp;&nbsp;<button id="btn" type="button" class="btn btn-info">搜索</button>
                 </div>
             </div>
 
@@ -51,7 +51,7 @@
                     <thead>
                         <tr style="font-weight:bold;">
                             <td><input type="checkbox" /></td>
-                            <td>退货单</td>
+                            <td>退货单号</td>
                             <td>退货类型</td>
                             <td>退货数量</td>
                             <td>状态</td>
@@ -61,7 +61,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        @*<tr>
                             <td><input type="checkbox" /></td>
                             <td>退货单1</td>
                             <td>退货类型1</td>
@@ -70,17 +70,18 @@
                             <td>制单人1</td>
                             <td>2020-03-03</td>
                             <td><a id="UpdateTuiHuo" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a id="THXQ" href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-hand-right"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
-                        </tr>
+                        </tr>*@
                     </tbody>
                 </table>
             </div>
             <div class="row form-inline form-group text-center" style="margin-top:30px;margin-right:30px;">
-                <button type="button" class="btn btn-primary form-group">首页</button>
-                <button type="button" class="btn btn-primary form-group">上一页</button>
-                <input type="text" class="form-control" style="width:80px;" />
-                <button type="button" class="btn btn-primary form-group">Go</button>
-                <button type="button" class="btn btn-primary form-group">下一页</button>
-                <button type="button" class="btn btn-primary form-group">尾页</button>
+                <button id="btnSY" type="button" class="btn btn-primary form-group">首页</button>
+                <button id="btnSYY" type="button" class="btn btn-primary form-group">上一页</button>
+                <input id="textPageIndex" type="text" class="form-control" style="width:80px;" />
+                <button id="btnGo" type="button" class="btn btn-primary form-group">Go</button>
+                <button id="btnXYY" type="button" class="btn btn-primary form-group">下一页</button>
+                <button id="WY" type="button" class="btn btn-primary form-group">尾页</button>
+                <label id="txtLabel" style="font-size:16px;margin:0px auto;"></label>
             </div>
         </div>
     </div>
@@ -262,6 +263,100 @@
         $("#THXQ").click(function () {
             $("#myModal2").modal();
         })
+
+        var pageIndexValue = 1;
+        var ztValue = 0;
+        $(function () {
+
+            //状态切换
+            $("[name=sy]").click(function () {
+                ztValue = 0;
+            })
+            $("[name=dsh]").click(function () {
+                ztValue = 1;
+            })
+            $("[name=shtg]").click(function () {
+                ztValue = 2;
+            })
+            $("[name=shsb]").click(function () {
+                ztValue = 3;
+            })
+            $(".btn2").click(function () {
+                BindData()
+            })
+
+            //加载数据
+            BindData();
+            $("#btnSY").click(function () {
+                pageIndexValue = 1;
+                BindData();
+            })
+            $("#btnSYY").click(function () {
+                pageIndexValue = pageIndexValue - 1;
+                BindData();
+            })
+            $("#btnGo").click(function () {
+                pageIndexValue = parseInt($("#textPageIndex").val());
+                BindData();
+            })
+            $("#btnXYY").click(function () {
+                pageIndexValue = pageIndexValue + 1;
+                BindData();
+            })
+            $("#WY").click(function () {
+                pageIndexValue = 999999;
+                BindData();
+            })
+            //模糊查询
+            $("#btn").click(BindData);
+        })
+
+        //加载数据方法
+        function BindData() {
+            var RefundTypes = null;
+            var RefundState = null;
+            var RefundIdValue = $("[name=RefundId]").val();
+            var StartValue = $("[name=Start]").val();
+            var EndValue = $("[name=End]").val();
+            $.ajax({
+                url: "@Url.Action("GetRefun")",
+                data: { RefundId: RefundIdValue, PageIndex: pageIndexValue, Start: StartValue, End: EndValue, zt: ztValue },
+                dataType: "json",
+                type:"get", 
+                success: function (RefundResult) {
+                    $("#txtLabel").html("当前第" + RefundResult.PageIndex + "页 / 共计" + RefundResult.PageCount + " 页 共计" + RefundResult.Count + " 条");
+                    $("#textPageIndex").val(RefundResult.PageIndex);
+                    pageIndexValue = RefundResult.PageIndex;
+                    $("table tr:gt(0)").remove();
+                    $.each(RefundResult.RefundAction, function (index, value) {                     
+                        var str = "<tr>";
+                        str+="<td><input type=\"checkbox\" /></td>";
+                        str += "<td>" + value.RefundId + "</td>";
+                        if (value.ClientSite == 7) {
+                            RefundTypes = "销售退货";
+                        } else if (value.ClientSite == 8) {
+                            RefundTypes = "采购退货";
+                        } 
+                        str += "<td>" + RefundTypes + "</td>";
+                        str += "<td>" + value.RefundCount + "</td>";
+                        if (value.RefundAuditState == 1) {
+                            RefundState = "待审核";
+                        } else if (value.RefundAuditState == 2) {
+                            RefundState = "审核通过";
+                        } else if (value.RefundAuditState == 3) {
+                            RefundState = "审核失败";
+                        }
+                        str += "<td>" + RefundState + "</td>";
+                        str += "<td>"+value.PreparedMan+"</td>";
+                        str += "<td>" + value.PreparedTime + "</td>";
+                        str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a id=\"SelectRK\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                        str += "</tr>";
+                        $("table tbody").append(str);
+                    })
+                }
+            })
+        }
+
     </script>
 
 

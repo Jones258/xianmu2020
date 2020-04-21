@@ -29,10 +29,10 @@
         </div>
         <div class="row" style="margin-left:-92px;  border:0px solid black;width:1126px;background-color:#f5f8f8">
             <div class="col-md-5 form-group form-inline" style="margin-top:15px; ">
-                <button type="button" id="btn1" class="btn btn-group">所有</button>
-                <button type="button" id="btn1" class="btn btn-group">待审核</button>
-                <button type="button" id="btn1" class="btn btn-group">审核通过</button>
-                <button type="button" id="btn1" class="btn btn-group">审核失败</button>
+                <button name="sy" type="button" id="btn1" class="btn btn-group btn2" value="所有">所有</button>
+                <button name="dsh" type="button" id="btn1" class="btn btn-group btn2" value="待审核">待审核</button>
+                <button name="shtg" type="button" id="btn1" class="btn btn-group btn2" value="审核通过">审核通过</button>
+                <button name="shsb" type="button" id="btn1" class="btn btn-group btn2" value="审核失败">审核失败</button>
             </div>
             <div class="col-md-3 form-group form-inline" style="margin-top:15px;float:right;margin-right:-58px;">
                 <a href="@Url.Action("QueryStorageAdd")" class="btn btn-primary">新增入库</a>
@@ -90,7 +90,26 @@
     </div>
     <script type="text/javascript">
         var pageIndexValue = 1;
+        var ztValue = 0;
         $(function () {
+
+            //状态切换
+            $("[name=sy]").click(function () {
+                ztValue = 0;
+            })
+            $("[name=dsh]").click(function () {
+                ztValue = 1;
+            })
+            $("[name=shtg]").click(function () {
+                ztValue = 2;
+            })
+            $("[name=shsb]").click(function () {
+                ztValue = 3;
+            })
+            $(".btn2").click(function () {
+                BingStorageData();
+            })
+
 
             $("#btnSY").click(function () {
                 pageIndexValue = 1;
@@ -131,6 +150,7 @@
                 BingStorageData();
             
         })
+
         //入库单加载数据
         function BingStorageData() {
             //取值
@@ -139,9 +159,11 @@
             var EndValue = $("[name=End]").val();
             var StStorageDJTypeValue = $("[name=StStorageDJType]").val();
 
+            var StoType = null;
+            var StStorageState = null;
             $.ajax({
                 url:"@Url.Action("GetStorage")",
-                data: { StoOrderId: StoOrderIdValue, Start: StartValue, End: EndValue, pageIndex: pageIndexValue, StoType:StStorageDJTypeValue },
+                data: { zt:ztValue, StoOrderId: StoOrderIdValue, Start: StartValue, End: EndValue, pageIndex: pageIndexValue, StoType:StStorageDJTypeValue },
                 dataType:"json",
                 type:"get",
                 success: function (result) {
@@ -150,8 +172,7 @@
                     pageIndexValue = result.PageIndex;
                     $("table tr:gt(0)").remove();
                     $.each(result.Storage, function (index, value) {
-                        var StoType = null;
-                        var StStorageState = null;
+                       
                         var str = "<tr>";
                         str += "<td>" + value.StoOrderId + "</td>";
                         if (value.StoType==1) {
@@ -181,7 +202,7 @@
                         str += "<td>" + StStorageState + "</td>";
                         str += "<td>" + value.MakingSingle + "</td>";
                         str += "<td>" + value.CreateTime + "</td>";
-                        str += "<td><a id=\"UpdateRuKu\"   href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a id=\"SelectRK\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";;
+                        str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a id=\"SelectRK\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                         str += "</tr>";
                         $("table tbody").append(str);
                     })
