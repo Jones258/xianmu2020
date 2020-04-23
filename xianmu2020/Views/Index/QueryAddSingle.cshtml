@@ -59,40 +59,8 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row" style="margin-top:22px;">
-                <table class="table table-bordered table-hover table-responsive" style=" width:1100px;margin:0px auto; border:1px solid #e07a7a">
-                    <thead>
-                        <tr style="font-weight:bold;">
-                            <td>产品名称</td>
-                            <td>产品条码</td>
-                            <td>产品编号</td>
-                            <td>批次</td>
-                            <td>单价</td>
-                            <td>规格</td>
-                            <td>出库数</td>
-                            <td>库位</td>
-                            <td>操作</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>出库产品1</td>
-                            <td>098112</td>
-                            <td>0005</td>
-                            <td>批次1</td>
-                            <td>单价1</td>
-                            <td>规格1</td>
-                            <td>出库数1</td>
-                            <td>库位1</td>
-                            <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
             <div class="row" style="border:0px solid black;width:1100px;height:90px; margin-left:14px;margin-top:20px;background-color:#f5f8f8;">
                 <div class="col-md-5 form-group form-inline" style="margin-top:25px;">
-                    <button id="btnAdd" type="button" class="btn btn-info">新增产品</button>
                     <button type="button" class="btn btn-info">保存</button>
                     <a href="@Url.Action("QueryDelivery")" class="btn btn-danger">取消</a>
                 </div>
@@ -109,63 +77,6 @@
         $("#myModal3").modal();
     }
     </script>
-
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModals" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document" style="margin:0px auto; width:800px;height:300px;">
-            <div class="modal-content">
-                <div class="modal-header" style="border:0px solid black ;height:50px;color:white;background-color:#37435c;">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">出库产品</h4>
-                </div>
-                <div class="modal-body" id="cnt" style="border:1px solid pink;height:55px;  ">
-                    <div class="row form-group form-inline" style="margin-top:-5px;">
-                        <div class="col-md-2">
-                            <label class="control-label">产品编号</label>
-                        </div>
-                        <div class="col-md-4" style="margin-left:-60px;margin-top:-6px;">
-                            <input type="text" class="form-control" />
-                        </div>
-                        <div class="col-md-5">
-                            <label class="control-label"> 提示：输入搜索产品关键字查询产品信息！</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row"  style="width:778px;margin:0px auto;height:200px;">
-                    <table class="table table-bordered table-hover table-responsive" style="width:778px;margin:0px auto;">
-                        <thead>
-                            <tr>
-                                <td><input type="checkbox" /></td>
-                                <td>产品名称</td>
-                                <td>产品条码</td>
-                                <td>批次</td>
-                                <td>库位</td>
-                                <td>现有库存</td>
-                                <td>出库数</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><input type="checkbox" /></td>
-                                <td>产品名称1</td>
-                                <td>产品条码1</td>
-                                <td>批次1</td>
-                                <td>库位1</td>
-                                <td>库存1</td>
-                                <td><input type="text" class="form-control" style="width:80px;" /></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">确定</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     @*客户*@
     <div class="modal fade" id="myModal3" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

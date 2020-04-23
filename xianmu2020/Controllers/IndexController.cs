@@ -340,8 +340,20 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryDelivery()
         {
-            //测试 
-            ViewBag.Type = new SelectList("");
+            var StStorageDJTypeService = new StStorageDJTypeService();
+            var model = StStorageDJTypeService.GetByWhere(item => item.State == 5);
+            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择报损类型" });
+            ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
+
+            var PService = new ProductGLService();
+            var model2 = PService.GetAll();
+            model2.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择产品" });
+            ViewBag.ProductGLType = new SelectList(model2, "PGLid", "ProductName");
+
+            var ClientService = new ClientService();
+            var model3 = ClientService.GetAll();
+            model3.Insert(0, new Client() { Cid = 0, ClientName = "请选择客户名称" });
+            ViewBag.ClientType = new SelectList(model3, "Cid", "ClientName");
             return View();
         }
 
@@ -351,11 +363,26 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryAddSingle()
         {
-            //测试 
-            ViewBag.Type = new SelectList("");
+            var StStorageDJTypeService = new StStorageDJTypeService();
+            var model = StStorageDJTypeService.GetByWhere(item => item.State == 6);
+            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择报损类型" });
+            ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
+
+            var PService = new ProductGLService();
+            var model2 = PService.GetAll();
+            model2.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择产品" });
+            ViewBag.ProductGLType = new SelectList(model2, "PGLid", "ProductName");
+
+            var ClientService = new ClientService();
+            var model3 = ClientService.GetAll();
+            model3.Insert(0, new Client() { Cid = 0, ClientName = "请选择客户名称" });
+            ViewBag.ClientType = new SelectList(model3, "Cid", "ClientName");
             return View();
         }
-
+        public int PageSize
+        {
+            get { return 2; }
+        }
         /// <summary>
         /// 报损管理页面视图
         /// </summary>
@@ -363,7 +390,7 @@ namespace xianmu2020.Controllers
         public ActionResult QueryBreakagePage()
         {
             var StStorageDJTypeService = new StStorageDJTypeService();
-            var model = StStorageDJTypeService.GetByWhere(item => item.State == 2);
+            var model = StStorageDJTypeService.GetByWhere(item => item.State == 6);
             model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择报损类型" });
             ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
 
@@ -410,7 +437,7 @@ namespace xianmu2020.Controllers
         public ActionResult QueryBreakageAdd()
         {
             var StStorageDJTypeService = new StStorageDJTypeService();
-            var model = StStorageDJTypeService.GetByWhere(item => item.State == 2);
+            var model = StStorageDJTypeService.GetByWhere(item => item.State == 6);
             model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择报损类型" });
             ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
 
@@ -446,13 +473,6 @@ namespace xianmu2020.Controllers
         {
             var ser = new BreakageGLService();
             var data = ser.GetByWhere(item => item.BGLid == gl.BGLid).SingleOrDefault();
-            //data.Standby3 = gl.Standby3;
-            //data.BreakageType = gl.BreakageType;
-            //data.PreparedMan = gl.PreparedMan;
-            //data.Standby4 = gl.Standby4;
-            //data.PreparedCount = gl.PreparedCount;
-            //data.CreationMan = gl.CreationMan;
-            //data.CreationTime = gl.CreationTime;
             gl.Standby1 = 0;
             gl.Standby2 = 0;
             gl.State = 1;
@@ -465,10 +485,7 @@ namespace xianmu2020.Controllers
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        public int PageSize
-        {
-            get { return 2; }
-        }
+        
         //加载报损数据方法1
         public ActionResult GetBreakageGL(RequestDto re)
         {

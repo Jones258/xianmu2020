@@ -146,10 +146,11 @@
 </body>
 </html>
 <script type="text/javascript">
-    var ClientTypevalue = null;
-    var ProductGLType = null;
+    
     var pageIndexValue = 1;
     var id = null;
+    var ClientTypevalue = null;
+    var ProductGLType = null;
     $(function () {
 
         var at = null;
@@ -193,7 +194,7 @@
         $("#ss").click(function () {
             SSData();
         })
-
+        
         $("#ClientType").change(function () {
             ClientTypevalue = $(this).find("option:selected").text();
         });
@@ -216,14 +217,14 @@
         var zdr = $("#zdr").val();
         $.ajax({
             url: "@Url.Action("UpdateBreakagePage")",
-            data: {BGLid:BGLidValue, Standby3: dj, BreakageType: StStorageDJType, PreparedMan: ClientTypevalue, Standby4: ProductGLType, PreparedCount: sl, CreationMan: zdr, CreationTime: sj },
-        dataType: "json",
-        type: "post",
-        success: function (result) {
-            alert(result.Msg);
-            BingData();
-        }
-    })
+            data: { BGLid: BGLidValue, Standby3: dj, BreakageType: StStorageDJType, PreparedMan: ClientTypevalue, Standby4: ProductGLType, PreparedCount: sl, CreationMan: zdr, CreationTime: sj },
+            dataType: "json",
+            type: "post",
+            success: function (result) {
+                alert(result.Msg);
+                BingData();
+            }
+        })
     }
     function UpdateData() {
         $("#myModal").modal();
@@ -231,23 +232,23 @@
         $.ajax({
             url: "@Url.Action("Data")",
             data: { BGLid: id },
-        dataType: "json",
-        type: "get",
-        success: function (result) {
-            $.each(result.data, function (index, value) {
-                $("#BGLid").val(value.BGLid);
-                $("#dj").val(value.Standby3);
-                $("#StStorageDJType").val(value.BreakageType);
-                $("#sl").val(value.PreparedCount);
-                $("#sj").val(value.CreationTime);
-                $("#zdr").val(value.CreationMan);
-                $("#ClientType").find("option:selected").text(value.PreparedMan);
-                $("#ProductGLType").find("option:selected").text(value.Standby4);
-            }
+            dataType: "json",
+            type: "get",
+            success: function (result) {
+                $.each(result.data, function (index, value) {
+                    $("#BGLid").val(value.BGLid);
+                    $("#dj").val(value.Standby3);
+                    $("#StStorageDJType").val(value.BreakageType);
+                    $("#sl").val(value.PreparedCount);
+                    $("#sj").val(value.CreationTime);
+                    $("#zdr").val(value.CreationMan);
+                    $("#ClientType").find("option:selected").text(value.PreparedMan);
+                    $("#ProductGLType").find("option:selected").text(value.Standby4);
+                }
 
-            )
-        }
-    });
+                )
+            }
+        });
     }
     function SSData() {
 
@@ -276,9 +277,9 @@
                     var str = "<tr id=\"t\">";
                     str += "<td  style=\"display:none\">" + value.BGLid + "</td>";
                     str += "<td>" + value.Standby3 + "</td>";
-                    if (value.BreakageType == 7) {
+                    if (value.BreakageType == 17) {
                         b = "损坏报损";
-                    } else if (value.BreakageType == 8) {
+                    } else if (value.BreakageType == 18) {
                         b = "丢失报损";
                     }
                     str += "<td>" + b + "</td>";
@@ -378,9 +379,9 @@
                     str += "<td  style=\"display:none\">" + value.BGLid + "</td>";
 
                     str += "<td>" + value.Standby3 + "</td>";
-                    if (value.BreakageType == 7) {
+                    if (value.BreakageType == 17) {
                         b = "损坏报损";
-                    } else if (value.BreakageType == 8) {
+                    } else if (value.BreakageType == 18) {
                         b = "丢失报损";
                     }
                     str += "<td>" + b + "</td>";
@@ -429,9 +430,9 @@
                     pageIndexValue = result.PageIndex; var str = "<tr id=\"t\">"; str += "<td  style=\"display:none\">" + value.BGLid + "</td>";
 
                     str += "<td>" + value.Standby3 + "</td>";
-                    if (value.BreakageType == 7) {
+                    if (value.BreakageType == 17) {
                         b = "损坏报损";
-                    } else if (value.BreakageType == 8) {
+                    } else if (value.BreakageType == 18) {
                         b = "丢失报损";
                     }
                     str += "<td>" + b + "</td>";
@@ -480,9 +481,9 @@
                     pageIndexValue = result.PageIndex; var str = "<tr id=\"t\">"; str += "<td  style=\"display:none\">" + value.BGLid + "</td>";
 
                     str += "<td>" + value.Standby3 + "</td>";
-                    if (value.BreakageType == 7) {
+                    if (value.BreakageType == 17) {
                         b = "损坏报损";
-                    } else if (value.BreakageType == 8) {
+                    } else if (value.BreakageType == 18) {
                         b = "丢失报损";
                     }
                     str += "<td>" + b + "</td>";
@@ -537,9 +538,9 @@
                     id = value.BGLid; at = value.BreakageGLAduitState;
 
                     str += "<td>" + value.Standby3 + "</td>";
-                    if (value.BreakageType == 7) {
+                    if (value.BreakageType == 17) {
                         b = "损坏报损";
-                    } else if (value.BreakageType == 8) {
+                    } else if (value.BreakageType == 18) {
                         b = "丢失报损";
                     }
                     str += "<td>" + b + "</td>";
