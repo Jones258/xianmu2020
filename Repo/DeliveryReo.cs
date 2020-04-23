@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mods;
-namespace Service
+
+namespace Repo
 {
-   public class ClientService:BaseServices<Client>
+  public  class DeliveryReo:BaseDao<Delivery>
     {
     }
 }

@@ -48,8 +48,7 @@
                             <td>操作</td>
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
             <div class="row form-inline form-group text-center" style="margin-top:30px;margin-right:30px;">
@@ -108,7 +107,7 @@
             </div>
         </div>
     </form>
-   
+
 
     @*修改产品类别对话框*@
     <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -155,8 +154,9 @@
 
     <script type="text/javascript">
         var pageIndexValue = 1;
+        
         $(function () {
-
+            var idValue = null;
 
             $("#btnSY").click(function () {
                 pageIndexValue = 1;
@@ -194,8 +194,6 @@
         $("#btn").click(BinData);
         //添加数据方法
         $("#btnAdd").click(AddBindData);
-        //删除
-        $("#Deletes").click(BinData);
 
 
         function BinData() {
@@ -211,16 +209,17 @@
                     $("#textPageIndex").val(result.PageIndex);
                     pageIndexValue = result.PageIndex;
                     $.each(result.ProductAction, function (index, value) {
+                        idValue = value.ProductSortId;
                         var str = "<tr>";
                         str += "<td>"+value.ProductSortId+"</td>";
                         str += "<td>"+value.ProductSortName+"</td>";
                         str += "<td>"+value.CreationMen+"</td>";
                         str += "<td>"+value.CreationTime+"</td>";
                         str += "<td>"+value.Remark+"</td>";
-                        str += "<td><a id=\"UpdateRuKu\"   href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a class\btn btn-danger\" href=\"#\">删除</a></td>";
+                        str += "<td><a id=\"UpdateCPLB\"   href=\"#\"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"DeleteData()\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
                         $("table tbody").append(str);
                     })
-                  
+
                 }
             })
         }
@@ -245,23 +244,21 @@
         }
         //删除方法
         function DeleteData() {
-            var deleteValue = $("form").serializeArray(0);
-            var objJson = {};
-            $.each(deleteValue, function (index,value) {
-                objJson[value.name] = value.value;
-            })
             $.ajax({
                 url:"@Url.Action("GetDeleteProductSort")",
-                data: objJson,
-            dataType:"json",
-            type:"get",
-            success: function (DeleteResult) {
-                alert(DeleteResult.Msg);
-                BinData();
-            }
-        })
-            
-
+                data: {id:idValue},
+                dataType:"json",
+                type:"post",
+                success: function () {
+                    if (confirm("确认删除吗？")) {
+                        BinData();
+                        alert("删除成功！");
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            })
         }
 
     </script>

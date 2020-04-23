@@ -47,9 +47,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="adminRepo.cs" />
+    <Compile Include="adminService.cs" />
     <Compile Include="BaseDao.cs" />
     <Compile Include="BaseRepository.cs" />
+    <Compile Include="BaseServices.cs" />
     <Compile Include="BreakageGLRepo.cs" />
+    <Compile Include="ClientReo.cs" />
+    <Compile Include="DeliveryReo.cs" />
+    <Compile Include="IneventoryReo.cs" />
     <Compile Include="ChuRuBaosunProductRepo.cs" />
     <Compile Include="ClientRepo.cs" />
     <Compile Include="ProductGLRepo.cs" />

@@ -167,7 +167,7 @@
                     </div>
                 </div>
                 <div class="row" style="width:778px;margin:0px auto;height:200px;">
-                    <table class="table table-bordered table-responsive">
+                    <table id="table1" class="table table-bordered table-responsive">
                         <thead>
                             <tr style="font-weight:bold;">
                                 <td><input type="checkbox" style="width:15px;height:15px;" /></td>
@@ -256,10 +256,6 @@
 
     <script type="text/javascript">
 
-        $(document).ready(function () {
-            GYS();
-        })
-
     $("#btnAdd").click(function () {
         $("#myModal").modal();
     })
@@ -268,7 +264,7 @@
             $("#myModal2").modal();
     }
     function GongYinShang() {
-        $("#myModal3").modal(GYS);
+        $("#myModal3").modal();
     }
         //供应商查询
     function GYS() {

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Repo;
 using Mods;
+
 namespace Service
 {
-   public class ClientService:BaseServices<Client>
+  public  class adminService:BaseServices<Admin>
     {
     }
 }

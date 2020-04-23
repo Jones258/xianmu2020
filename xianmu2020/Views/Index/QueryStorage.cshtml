@@ -48,7 +48,7 @@
             </div>
             <div id="div1" class="row" style="border:1px dotted black; width:1040px;height:90px;margin-top:8px;margin-left:15px;">
                 <div class="col-md-3 form-inline" style="margin-top:10px;">
-                    供应商<input type="text" class="form-control" />
+                    供应商<input name="SuppliersType" type="text" class="form-control" />
                 </div>
                 <div class="col-md-3  form-group" style="margin-top:10px;">
                     单据类型 @Html.DropDownList("StStorageDJType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
@@ -91,6 +91,7 @@
     <script type="text/javascript">
         var pageIndexValue = 1;
         var ztValue = 0;
+        var deleteid = null;
         $(function () {
 
             //状态切换
@@ -151,6 +152,64 @@
             
         })
 
+        //删除
+        function Delete() {
+            $.ajax({
+                url:"@Url.Action("GetDeleteRK")",
+                data: { id: deleteid },
+                dataType:"json",
+                type:"post",
+                success: function () {
+                    if (confirm("确认删除吗？")) {
+                        BingStorageData()
+                        alert("删除成功！");
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            })
+
+        }
+
+        //审核通过API1
+        function UpStStorageState2() {
+            $.ajax({
+                url:"@Url.Action("StStorageUpSH")",
+                data: { Stoid: deleteid, StStorageStates: 2 },
+                dataType:"json",
+                type:"post",
+                success: function () {
+                    if (confirm("确认审核通过吗？")) {
+                        BingStorageData()
+                        alert("审核成功！");
+                        return true;
+                    }
+                }
+            })
+        }
+        
+        //审核不通过API2
+        function UpStStorageState3() {
+            $.ajax({
+                url:"@Url.Action("StStorageUpSH")",
+                data: { Stoid: deleteid, StStorageStates: 3 },
+            dataType:"json",
+            type:"post",
+            success: function () {
+                if (confirm("确认审核不通过吗？")) {
+                    BingStorageData()
+                    alert("审核成功！");
+                    return true;
+                }
+            }
+        })
+        }
+
+
+
+
+
         //入库单加载数据
         function BingStorageData() {
             //取值
@@ -158,12 +217,13 @@
             var StartValue = $("[name=Start]").val();
             var EndValue = $("[name=End]").val();
             var StStorageDJTypeValue = $("[name=StStorageDJType]").val();
+            var SuppliersTypeValue = $("[name=SuppliersType]").val();
 
             var StoType = null;
             var StStorageState = null;
             $.ajax({
                 url:"@Url.Action("GetStorage")",
-                data: { zt:ztValue, StoOrderId: StoOrderIdValue, Start: StartValue, End: EndValue, pageIndex: pageIndexValue, StoType:StStorageDJTypeValue },
+                data: { zt: ztValue, StoOrderId: StoOrderIdValue, Start: StartValue, End: EndValue, pageIndex: pageIndexValue, StoType: StStorageDJTypeValue, SuppliersType:SuppliersTypeValue },
                 dataType:"json",
                 type:"get",
                 success: function (result) {
@@ -172,7 +232,7 @@
                     pageIndexValue = result.PageIndex;
                     $("table tr:gt(0)").remove();
                     $.each(result.Storage, function (index, value) {
-                       
+                        deleteid = value.Stoid;
                         var str = "<tr>";
                         str += "<td>" + value.StoOrderId + "</td>";
                         if (value.StoType==1) {
@@ -202,7 +262,13 @@
                         str += "<td>" + StStorageState + "</td>";
                         str += "<td>" + value.MakingSingle + "</td>";
                         str += "<td>" + value.CreateTime + "</td>";
-                        str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a id=\"SelectRK\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                        if (value.StStorageState == 2) {
+                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                        } else if (value.StStorageState == 3) {
+                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                        } else {
+                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState2()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState3()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                        }                      
                         str += "</tr>";
                         $("table tbody").append(str);
                     })
