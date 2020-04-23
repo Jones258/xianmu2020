@@ -214,23 +214,7 @@ namespace xianmu2020.Controllers
             deleteProductSort.Update(data);
             return Json(JsonRequestBehavior.AllowGet);
         }
-        ////通过id查询出来
-        //public ActionResult QueryUpdateProductSort(int id) {
-        //    var QueryProductSortService = new ProductSortService();
-        //    var model = QueryProductSortService.GetByWhere(item=>item.PSid.Equals(id)).SingleOrDefault();
-        //    return View(model);
-        //}
-        ////修改方法
-        //public ActionResult GetProductSort(ProductSort pro) {
-        //    var UpdateProductSortService = new ProductSortService();
-        //    var model = UpdateProductSortService.GetByWhere(item => item.PSid.Equals(pro.PSid)).SingleOrDefault();
-        //    pro.CreationTime = model.CreationTime;
-        //    var UpdateModel = UpdateProductSortService.Update(pro);
-        //    var UpResult = new {
-        //        UpdateAPI=UpdateModel
-        //    };
-        //    return Json(UpResult,JsonRequestBehavior.AllowGet);
-        //}
+      
 
         /// <summary>
         /// 产品管理
@@ -343,23 +327,6 @@ namespace xianmu2020.Controllers
             //测试 
             ViewBag.Type = new SelectList("");
             return View();
-        }
-        //add入库单里的供应商
-        public ActionResult QueryGYS()
-        {
-            var model1 = new SupplierService().GetByWhere(item => true);
-            var Supplierform = model1.Select(item => new
-            {
-                SupplierId = item.SupplierId,
-                SupplierName = item.SupplierName,
-                Phone = item.Phone,
-                Contacts = item.Contacts,
-                Email = item.Email,
-                Fax = item.Fax,
-                Site = item.Site
-            });
-            var result = new { supplierAction = Supplierform };
-            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
