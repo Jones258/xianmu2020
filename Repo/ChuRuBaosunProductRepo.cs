@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mods;
-namespace Service
+namespace Repo
 {
-    public class ClientService:BaseService<Client>
+    public class ChuRuBaosunProductRepo:BaseRepository<CChuRuBaosunProduct>
     {
     }
 }

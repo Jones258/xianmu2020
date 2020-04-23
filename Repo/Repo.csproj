@@ -55,6 +55,9 @@
     <Compile Include="ClientReo.cs" />
     <Compile Include="DeliveryReo.cs" />
     <Compile Include="IneventoryReo.cs" />
+    <Compile Include="ChuRuBaosunProductRepo.cs" />
+    <Compile Include="ClientRepo.cs" />
+    <Compile Include="ProductGLRepo.cs" />
     <Compile Include="ProductSort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RefundReo.cs" />

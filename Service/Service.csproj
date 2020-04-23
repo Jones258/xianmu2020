@@ -44,6 +44,9 @@
     <Compile Include="adminService.cs" />
     <Compile Include="BaseServices.cs" />
     <Compile Include="BreakageGLService.cs" />
+    <Compile Include="ChuRuBaosunProductService.cs" />
+    <Compile Include="ClientService.cs" />
+    <Compile Include="ProductGLService.cs" />
     <Compile Include="ClientService.cs" />
     <Compile Include="DeliveryService.cs" />
     <Compile Include="IneventoryService.cs" />

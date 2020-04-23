@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Mods;
 namespace Service
 {
-    public class ClientService:BaseService<Client>
+    public class ProductGLService:BaseServices<ProductGL>
     {
     }
 }
