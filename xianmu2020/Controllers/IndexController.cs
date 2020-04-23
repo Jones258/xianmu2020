@@ -188,7 +188,7 @@ namespace xianmu2020.Controllers
             var result = new { ProductAction = ProductSort, PageIndex = pageIndex, PageCount = pageCount, Count = count };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
+        
         [HttpPost]
         //添加产品类别
         public ActionResult GetProductSortAdd(ProductSort productSort)
@@ -214,7 +214,7 @@ namespace xianmu2020.Controllers
             deleteProductSort.Update(data);
             return Json(JsonRequestBehavior.AllowGet);
         }
-
+      
 
         /// <summary>
         /// 产品管理
@@ -322,7 +322,7 @@ namespace xianmu2020.Controllers
         public ActionResult QueryStorageAdd()
         {
             var model = new StStorageDJTypeService().GetByWhere(item=>item.State==1);
-            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择入库单类型" });
+           model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择入库单类型" });
             ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
             //测试 
             ViewBag.Type = new SelectList("");
@@ -448,6 +448,8 @@ namespace xianmu2020.Controllers
             ViewBag.ClientType = new SelectList(model3, "Cid", "ClientName");
             return View();
         }
+
+        //修改查询
         public ActionResult Data(int BGLid)
         {
 
@@ -473,6 +475,7 @@ namespace xianmu2020.Controllers
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         /// <summary>
         /// 添加报损单and添加报损产品视图
         /// </summary>
@@ -496,6 +499,8 @@ namespace xianmu2020.Controllers
 
             return View();
         }
+
+        //添加
         [HttpPost]
         public ActionResult QueryChuRuBaosunProductAdd(BreakageGL gl)
         {
@@ -510,6 +515,7 @@ namespace xianmu2020.Controllers
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         //报损修改
         [HttpPost]
         public ActionResult UpdateBreakagePage(BreakageGL gl)
@@ -528,12 +534,16 @@ namespace xianmu2020.Controllers
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        
+
+        public int PageSize
+        {
+            get { return 2; }
+        }
         //加载报损数据方法1
         public ActionResult GetBreakageGL(RequestDto re)
         {
             Expression<Func<BreakageGL, bool>> where = item => item.State == 1;
-
+            
             var BreakageGLService = new BreakageGLService();
             var pageCount = 0;
             var count = 0;
@@ -552,7 +562,7 @@ namespace xianmu2020.Controllers
                 CreationMan = item.CreationMan,
                 CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
             });
-
+            
             var result = new
             {
                 Breakage = newform,
@@ -566,7 +576,7 @@ namespace xianmu2020.Controllers
         public ActionResult GetBreakageData(RequestDto re)
         {
             Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 3;
-
+            
             var BreakageGLService = new BreakageGLService();
             var pageCount = 0;
             var count = 0;
@@ -659,6 +669,7 @@ namespace xianmu2020.Controllers
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         [HttpPost]
         //删除
         public ActionResult BreakageDele(int BGLid)
@@ -902,6 +913,6 @@ namespace xianmu2020.Controllers
             return Json(AddResult,JsonRequestBehavior.AllowGet);
         }
         #endregion
-
+       
     }
 }
