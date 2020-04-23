@@ -433,6 +433,8 @@ namespace xianmu2020.Controllers
             ViewBag.ClientType = new SelectList(model3, "Cid", "ClientName");
             return View();
         }
+
+        //修改查询
         public ActionResult Data(int BGLid)
         {
 
@@ -458,6 +460,7 @@ namespace xianmu2020.Controllers
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         /// <summary>
         /// 添加报损单and添加报损产品视图
         /// </summary>
@@ -481,6 +484,8 @@ namespace xianmu2020.Controllers
 
             return View();
         }
+
+        //添加
         [HttpPost]
         public ActionResult QueryChuRuBaosunProductAdd(BreakageGL gl)
         {
@@ -495,6 +500,7 @@ namespace xianmu2020.Controllers
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         //报损修改
         [HttpPost]
         public ActionResult UpdateBreakagePage(BreakageGL gl)
@@ -520,6 +526,7 @@ namespace xianmu2020.Controllers
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         public int PageSize
         {
             get { return 2; }
@@ -654,6 +661,7 @@ namespace xianmu2020.Controllers
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         [HttpPost]
         //删除
         public ActionResult BreakageDele(int BGLid)
