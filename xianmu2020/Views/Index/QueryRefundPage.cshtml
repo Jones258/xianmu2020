@@ -352,9 +352,9 @@
                         str += "<td>" + value.PreparedMan + "</td>";
                         str += "<td>" + value.PreparedTime + "</td>";
                         if (value.RefundAuditState == 2) {
-                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"RefundAuditStateUp2()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                         } else if (value.RefundAuditState == 3) {
-                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"RefundAuditStateUp1()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a></td>";
                         } else {
                             str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"RefundAuditStateUp1()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"RefundAuditStateUp2()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                         }

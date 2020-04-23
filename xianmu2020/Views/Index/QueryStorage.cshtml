@@ -263,9 +263,9 @@
                         str += "<td>" + value.MakingSingle + "</td>";
                         str += "<td>" + value.CreateTime + "</td>";
                         if (value.StStorageState == 2) {
-                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState3()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                         } else if (value.StStorageState == 3) {
-                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState2()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a></td>";
                         } else {
                             str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState2()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState3()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                         }                      

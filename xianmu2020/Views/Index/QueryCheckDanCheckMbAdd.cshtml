@@ -15,78 +15,129 @@
     <title>QueryCheckDanCheckMbAdd</title>
 </head>
 <body>
-    <div class="container">
-        <div class="row" style="margin-left:-89px; width:1118px; border:0px solid black;background-color:#37435c;border-radius:2px;">
-            <div class="col-md-8">
-                <h5 style="font-size:15px;font-weight:bold;color:white;">新增盘点</h5>
-            </div>
-        </div>
-        <div class="row" style="border:1px dotted black;width:1118px;height:550px; margin-left:-89px;">
-            <div style="border:0px solid black; width:1100px;margin:0px auto;height:170px;margin-top:15px;background-color:#f5f8f8;">
-                <div class="row">
-                    <div class=" col-md-3 form-inline" style="margin-top:13px;margin-left:50px;">
-                        <label class="control-label">盘点编号</label><input type="text" class="form-control" disabled="disabled" placeholder="可不填,自动生成" />
-                    </div>
-                    <div class=" col-md-3 form-inline" style="margin-top:13px;">
-                        <label class="control-label">制单时间</label><input type="date" class="form-control" value="administrator" />
-                    </div>
-                    <div class=" col-md-3 form-inline" style="margin-top:13px;">
-                        <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" />
-                    </div>                  
-                </div>
-                <div ckass="row">
-                    <div class=" col-md-6 form-inline" style="margin-top:13px;margin-left:35px;">
-                        <label class="control-label">备注</label><input type="text" class="form-control" />
-                    </div>
+    <form>
+        <div class="container">
+            <div class="row" style="margin-left:-89px; width:1118px; border:0px solid black;background-color:#37435c;border-radius:2px;">
+                <div class="col-md-8">
+                    <h5 style="font-size:15px;font-weight:bold;color:white;">新增盘点</h5>
                 </div>
             </div>
+            <div class="row" style="border:1px dotted black;width:1118px;height:550px; margin-left:-89px;">
+                <div style="border:0px solid black; width:1100px;margin:0px auto;height:170px;margin-top:15px;background-color:#f5f8f8;">
+                    <div class="row">
+                        <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:50px;">
+                            <label class="control-label">盘点编号</label><input name="CheckId" type="text" class="form-control" placeholder="可不填,自动生成" />
+                        </div>
+                        <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                            <label class="control-label">制单时间</label><input name="PreparedTime" type="date" class="form-control"  />
+                        </div>
+                        <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                            <label class="control-label">制单人</label><input name="PreparedMan" type="text" class="form-control" value="administrator" />
+                        </div>
+                        <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                            <label class="control-label">产品名称</label>@Html.DropDownList("Cps", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
+                        </div>
+                        <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:35px;">
+                            <label class="control-label">产品类别</label>@Html.DropDownList("Lbs", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
+                        </div>
+                    </div>
+                    <div ckass="row">
+                        <div class=" col-md-6 form-inline" style="margin-top:13px;margin-left:35px;">
+                            <label class="control-label">备注</label><input name="Remark" type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
 
-            <div class="row" style="margin-top:22px;">
-                <table class="table table-bordered table-hover table-responsive" style=" width:1100px;margin:0px auto; border:1px solid #e07a7a">
-                    <thead>
-                        <tr style="font-weight:bold;">
-                            <td>产品编号</td>
-                            <td>产品名称</td>
-                            <td>产品条码</td>
-                            <td>规格</td>
-                            <td>类别</td>
-                            <td>操作</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>产品编号1</td>
-                            <td>产品名称1</td>
-                            <td>产品条码1</td>
-                            <td>规格1</td>
-                            <td>类别1</td>
-                            <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="row" style="border:0px solid black;width:1100px;height:90px; margin-left:14px;margin-top:20px;background-color:#f5f8f8;">
-                <div class="col-md-5 form-group form-inline" style="margin-top:25px;">
-                    <button id="btnAdd" type="button" class="btn btn-info">新增产品</button>
-                    <button type="button" class="btn btn-info">保存</button>
-                    <a href="@Url.Action("QueryCheckPage")" class="btn btn-danger">取消</a>
+                @*<div class="row" style="margin-top:22px;">
+                    <table class="table table-bordered table-hover table-responsive" style=" width:1100px;margin:0px auto; border:1px solid #e07a7a">
+                        <thead>
+                            <tr style="font-weight:bold;">
+                                <td>产品编号</td>
+                                <td>产品名称</td>
+                                <td>产品条码</td>
+                                <td>规格</td>
+                                <td>类别</td>
+                                <td>操作</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>产品编号1</td>
+                                <td>产品名称1</td>
+                                <td>产品条码1</td>
+                                <td>规格1</td>
+                                <td>类别1</td>
+                                <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>*@
+                <div class="row" style="border:0px solid black;width:1100px;height:90px; margin-left:8px;margin-top:20px;background-color:#f5f8f8;">
+                    <div class="col-md-5 form-group form-inline" style="margin-top:25px;margin-left:35px;">
+                        <button id="btnAdd2" type="button" class="btn btn-info">保存</button>
+                        <a href="@Url.Action("QueryCheckPage")" class="btn btn-danger">取消</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
+  
 
 
     <script type="text/javascript">
+        var Cping = null;
+        var CpLbie = null;
+
         $("#btnAdd").click(function () {
             $("#myModal2").modal();
         })
+        $(function () {
+            //添加
+            $("#btnAdd2").click(AddIneventory);
+
+            $("#Cp").change(function () {
+                Cping = $(this).find("option:selected").text();
+            })
+
+            $("#LB").change(function () {
+                CpLbie = $(this).find("option:selected").text();
+            })
+        })
+
+
+        //添加方法
+        function AddIneventory() {
+            alert(111);
+            var CheckIdValue = $("[name=CheckId]").val();
+            var PreparedTimeValue = $("[name=PreparedTime]").val();
+            var PreparedManValue = $("[name=PreparedMan]").val();
+            var RemarkValue = $("[name=Remark]").val();
+            var LBValue = $("[name=LB]").val();
+
+            //var formValue = $("form").serializeArray();
+            //var objJson = {};
+            //$.each(formValue, function (index,value) {
+            //    objJson[value.name] = value.value;
+            //})
+            $.ajax({
+                url:"@Url.Action("GetAddIneventory")",
+                data: { CheckId: CheckIdValue, PreparedTime: PreparedTimeValue, PreparedMan: PreparedManValue, Remark: RemarkValue, LB: LBValue, Standby3: Cping, Standby4: CpLbie },
+               // data:objJson,
+                dataType:"json",
+                type:"post",
+                success: function (AddResult) {
+                    alert(AddResult.Msg);
+                }
+            })
+        }
+
     </script>
 
 
 
     @*出库产品模态图*@
     <!-- Modal -->
-    <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    @*<div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document" style="margin:0px auto; width:800px;height:300px;">
             <div class="modal-content">
                 <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
@@ -143,6 +194,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 </body>
 </html>

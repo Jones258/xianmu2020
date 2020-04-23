@@ -419,17 +419,17 @@ namespace xianmu2020.Controllers
         {
             var StStorageDJTypeService = new StStorageDJTypeService();
             var model = StStorageDJTypeService.GetByWhere(item => item.State == 2);
-            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择报损类型" });
+            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "" });
             ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
 
             var PService = new ProductGLService();
             var model2 = PService.GetAll();
-            model2.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择产品" });
+            model2.Insert(0, new ProductGL() { PGLid = 0, ProductName = "" });
             ViewBag.ProductGLType = new SelectList(model2, "PGLid", "ProductName");
 
             var ClientService = new ClientService();
             var model3 = ClientService.GetAll();
-            model3.Insert(0, new Client() { Cid = 0, ClientName = "请选择客户名称" });
+            model3.Insert(0, new Client() { Cid = 0, ClientName = "" });
             ViewBag.ClientType = new SelectList(model3, "Cid", "ClientName");
             return View();
         }
@@ -736,7 +736,14 @@ namespace xianmu2020.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult QueryCheckPage(RequestDto dto)
-        {
+        {   
+            //下拉框产品类别
+            var ProductLB = new ProductSortService();
+            var ProductLBList = ProductLB.GetByWhere(item => item.State == 1);
+            ViewBag.Lbs = new SelectList(ProductLBList, "PSid", "ProductSortName");
+            //下拉框产品
+            var ProductGuanLi = new ProductGLService().GetByWhere(item => item.State == 1);
+            ViewBag.Cps = new SelectList(ProductGuanLi, "PGLid", "ProductName");       
             //测试 
             ViewBag.Type = new SelectList("");
             return View();
@@ -754,11 +761,12 @@ namespace xianmu2020.Controllers
             var pageIndex = dto.PageIndex;
             var pageCount = 0;
             var count = 0;
-            var IneventoryService = new IneventoryService().GetByWhereAsc(where, item => item.PreparedTime, ref pageIndex, ref pageCount, ref count, pageSize);
-            var newIneventory = IneventoryService.Select(item => new {
+            var IneventoryServices = new IneventoryService().GetByWhereAsc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, pageSize);
+            var newIneventory = IneventoryServices.Select(item => new {
                 Iid = item.Iid,
                 CheckId = item.CheckId,
                 CheckType = item.CheckType,
+                Standby3 = item.Standby3,
                 PreparedTime = Convert.ToDateTime(item.PreparedTime).ToString("yyyy-MM-dd"),
                 PreparedMan = item.PreparedMan,
                 CheckAuditState =item.CheckAuditState ,
@@ -797,10 +805,73 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryCheckDanCheckMbAdd()
         {
+            //下拉框产品类别
+            var ProductLB = new ProductSortService();
+            var ProductLBList = ProductLB.GetByWhere(item => item.State == 1);
+            ProductLBList.Insert(0, new ProductSort() { PSid = 0, ProductSortName = "请选择产品类别" });
+            ViewBag.Lbs = new SelectList(ProductLBList, "PSid", "ProductSortName");
+            //下拉框产品
+            var ProductGuanLi = new ProductGLService().GetByWhere(item => item.State == 1);
+            ProductGuanLi.Insert(0,new ProductGL() { PGLid=0,ProductName="请选择盘点产品" });
+            ViewBag.Cps = new SelectList(ProductGuanLi, "PGLid", "ProductName");
+
             //测试 
             ViewBag.Type = new SelectList("");
             return View();
         }
+
+        [HttpPost]
+        //添加盘点单
+        public ActionResult GetAddIneventory(Ineventory Ineven) {
+            Ineven.CheckAuditState = 1;
+            Ineven.CreationTime = DateTime.Now;
+            Ineven.State = 1;
+            Ineven.CheckType = 3;
+            var AddIneventory = new IneventoryService().Add(Ineven);
+            var AddResult = new {
+                AddIneventoryAction = AddIneventory,
+                Msg= AddIneventory ? "添加成功！": "添加失败！"
+            };
+            return Json(AddResult,JsonRequestBehavior.AllowGet);
+        }
+        //修改先查看
+        public ActionResult QueryUpdateIneventory(int Iid) {
+            var QueryUpIneventory = new IneventoryService().GetByWhere(item=>item.Iid==Iid);
+            var UpIneventoryList = QueryUpIneventory.Select(item=> new {
+                Iid=item.Iid,
+                CheckId = item.CheckId,
+                PreparedTime = Convert.ToDateTime(item.PreparedTime).ToString("yyyy-MM-dd"),
+                man=item.PreparedMan,
+                Standby3 = item.Standby3,
+                Standby4 = item.Standby4,
+                Remark = item.Remark
+            });
+            var UpResult = new {
+                UpIneventory= UpIneventoryList
+            };
+            return Json(UpResult,JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        //修改
+        public ActionResult UpdateIneventory(Ineventory ineventory) {
+            var UpIneventory = new IneventoryService();
+            var UpModel = UpIneventory.GetByWhere(item => item.Iid == ineventory.Iid).SingleOrDefault();
+            ineventory.CheckType = UpModel.CheckType;
+            ineventory.CreationTime = DateTime.Now;
+            ineventory.PreparedMan = UpModel.PreparedMan;
+            ineventory.CheckAuditState = UpModel.CheckAuditState;
+            ineventory.State = UpModel.State;
+            ineventory.Standby1 = 0;
+            ineventory.Standby2 = 0;
+            var UpdatePd = UpIneventory.Update(ineventory);
+            var UpResult = new {
+                IneventoryAction = UpdatePd,
+                Msg = UpdatePd ? "修改成功！":"修改失败！"
+            };
+            return Json(UpResult,JsonRequestBehavior.AllowGet);
+        }
+
 
         /// <summary>
         /// 退货管理页面视图
