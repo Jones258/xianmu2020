@@ -168,43 +168,52 @@ namespace xianmu2020.Controllers
             return View();
         }
         //产品类别查询
-        public ActionResult GetProductSort(ProductSortDto dto) {
+        public ActionResult GetProductSort(ProductSortDto dto)
+        {
             Expression<Func<ProductSort, bool>> where = item => item.State == 1;
             if (!string.IsNullOrEmpty(dto.ProductSortName))
             {
-                where = where.And(item=>item.ProductSortName.IndexOf(dto.ProductSortName)!=-1||item.ProductSortId.IndexOf(dto.ProductSortName) !=-1);
+                where = where.And(item => item.ProductSortName.IndexOf(dto.ProductSortName) != -1 || item.ProductSortId.IndexOf(dto.ProductSortName) != -1);
             }
             var pageIndex = dto.PageIndex;
             var pageCount = 0;
             var count = 0;
-            var ProductSortModel = new ProductSortService().GetByWhereAsc(where,item=>item.CreationTime,ref pageIndex,ref pageCount,ref count,pageSize);
-            var ProductSort = ProductSortModel.Select(item => new {
-                ProductSortId = item.ProductSortId, ProductSortName = item.ProductSortName,
+            var ProductSortModel = new ProductSortService().GetByWhereAsc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, pageSize);
+            var ProductSort = ProductSortModel.Select(item => new
+            {
+                ProductSortId = item.ProductSortId,
+                ProductSortName = item.ProductSortName,
                 CreationMen = item.CreationMen,
                 CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd"),
-                Remark=item.Remark
+                Remark = item.Remark
             });
-            var result = new { ProductAction=ProductSort,PageIndex = pageIndex, PageCount = pageCount, Count = count };
-            return Json(result,JsonRequestBehavior.AllowGet);
+            var result = new { ProductAction = ProductSort, PageIndex = pageIndex, PageCount = pageCount, Count = count };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         //添加产品类别
-        public ActionResult GetProductSortAdd(ProductSort productSort) {
+        public ActionResult GetProductSortAdd(ProductSort productSort)
+        {
             productSort.CreationMen = "administrator";
             productSort.CreationTime = DateTime.Now;
             productSort.State = 1;
             var ProductSortModel = new ProductSortService().Add(productSort);
-            var addresult = new {
-                AddProduct = ProductSortModel, Msg = ProductSortModel ? "添加成功" : "添加失败！"
+            var addresult = new
+            {
+                AddProduct = ProductSortModel,
+                Msg = ProductSortModel ? "添加成功" : "添加失败！"
             };
-            return Json(addresult,JsonRequestBehavior.AllowGet);
+            return Json(addresult, JsonRequestBehavior.AllowGet);
         }
         //删除产品
-        public ActionResult GetDeleteProductSort(ProductSort productSort) {
+        public ActionResult GetDeleteProductSort(ProductSort productSort)
+        {
             var deleteProductSort = new ProductSortService().Delete(productSort);
-            var DeleteResult = new {
-                deleteproduct = deleteProductSort,Msg = deleteProductSort ? "删除成功！":"删除失败"
+            var DeleteResult = new
+            {
+                deleteproduct = deleteProductSort,
+                Msg = deleteProductSort ? "删除成功！" : "删除失败"
             };
             return Json(DeleteResult, JsonRequestBehavior.AllowGet);
         }
@@ -245,8 +254,9 @@ namespace xianmu2020.Controllers
         }
 
         //加载数据方法1
-        public ActionResult GetStorage(RequestDto re,int zt) {
-            Expression<Func<StStorage, bool>> where = item => item.State==1;
+        public ActionResult GetStorage(RequestDto re, int zt)
+        {
+            Expression<Func<StStorage, bool>> where = item => item.State == 1;
             if (!string.IsNullOrEmpty(re.StoOrderId))
             {
                 where = where.And(item => item.StoOrderId.IndexOf(re.StoOrderId) != -1);
@@ -263,18 +273,25 @@ namespace xianmu2020.Controllers
             {
                 where = where.And(item => item.CreateTime <= re.End);
             }
-            if (re.zt!=0)
+            if (re.zt != 0)
             {
-                where = where.And(item=>item.StStorageState==re.zt);
+                where = where.And(item => item.StStorageState == re.zt);
             }
 
             var pageIndex = re.PageIndex;
             var pageCount = 0;
             var count = 0;
-            var StorageList = new StStorageService().GetByWhereAsc(where,item=>item.CreateTime,ref pageIndex,ref pageCount,ref count,pageSize);
-            var newform = StorageList.Select(item => new {
-                StoOrderId = item.StoOrderId,StoType = item.StoType,SuppliersType = item.SuppliersType,GoodsTotal=item.GoodsTotal,
-                TotalMoney = item.TotalMoney,StStorageState = item.StStorageState,MakingSingle = item.MakingSingle, CreateTime = Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd")
+            var StorageList = new StStorageService().GetByWhereAsc(where, item => item.CreateTime, ref pageIndex, ref pageCount, ref count, pageSize);
+            var newform = StorageList.Select(item => new
+            {
+                StoOrderId = item.StoOrderId,
+                StoType = item.StoType,
+                SuppliersType = item.SuppliersType,
+                GoodsTotal = item.GoodsTotal,
+                TotalMoney = item.TotalMoney,
+                StStorageState = item.StStorageState,
+                MakingSingle = item.MakingSingle,
+                CreateTime = Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd")
             });
             var result = new
             {
@@ -293,7 +310,7 @@ namespace xianmu2020.Controllers
         public ActionResult QueryStorageAdd()
         {
             var model = new StStorageDJTypeService().GetAll();
-           model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择入库单类型" });
+            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择入库单类型" });
             ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
             //测试 
             ViewBag.Type = new SelectList("");
@@ -345,11 +362,47 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryBreakagePage()
         {
-            //测试 
-            ViewBag.Type = new SelectList("");
+            var StStorageDJTypeService = new StStorageDJTypeService();
+            var model = StStorageDJTypeService.GetByWhere(item => item.State == 2);
+            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择报损类型" });
+            ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
+
+            var PService = new ProductGLService();
+            var model2 = PService.GetAll();
+            model2.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择产品" });
+            ViewBag.ProductGLType = new SelectList(model2, "PGLid", "ProductName");
+
+            var ClientService = new ClientService();
+            var model3 = ClientService.GetAll();
+            model3.Insert(0, new Client() { Cid = 0, ClientName = "请选择客户名称" });
+            ViewBag.ClientType = new SelectList(model3, "Cid", "ClientName");
             return View();
         }
+        public ActionResult Data(int BGLid)
+        {
 
+            var ser = new BreakageGLService();
+            var model = ser.GetByWhere(item => item.BGLid.Equals(BGLid));
+
+            var newform = model.Select(item => new
+            {
+                BGLid = item.BGLid,
+                Standby4 = item.Standby4,//报损产品
+                Standby3 = item.Standby3,
+                BreakageType = item.BreakageType,
+                PreparedMan = item.PreparedMan,
+                PreparedCount = item.PreparedCount,
+                BreakageGLAduitState = item.BreakageGLAduitState,
+                CreationMan = item.CreationMan,
+                CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
+            });
+
+            var result = new
+            {
+                data = newform
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         /// <summary>
         /// 添加报损单and添加报损产品视图
         /// </summary>
@@ -361,9 +414,56 @@ namespace xianmu2020.Controllers
             model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择报损类型" });
             ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
 
-            //测试 
-            ViewBag.Type = new SelectList("");
+            var PService = new ProductGLService();
+            var model2 = PService.GetAll();
+            model2.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择产品" });
+            ViewBag.ProductGLType = new SelectList(model2, "PGLid", "ProductName");
+
+            var ClientService = new ClientService();
+            var model3 = ClientService.GetAll();
+            model3.Insert(0, new Client() { Cid = 0, ClientName = "请选择客户名称" });
+            ViewBag.ClientType = new SelectList(model3, "Cid", "ClientName");
+
             return View();
+        }
+        [HttpPost]
+        public ActionResult QueryChuRuBaosunProductAdd(BreakageGL gl)
+        {
+            var ser = new BreakageGLService();
+            gl.State = 1;
+            gl.BreakageGLAduitState = 3;
+            var saveResu = ser.Add(gl);
+            var result = new
+            {
+                ActionResult = saveResu,
+                Msg = saveResu ? "添加成功" : "添加失败"
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //报损修改
+        [HttpPost]
+        public ActionResult UpdateBreakagePage(BreakageGL gl)
+        {
+            var ser = new BreakageGLService();
+            var data = ser.GetByWhere(item => item.BGLid == gl.BGLid).SingleOrDefault();
+            //data.Standby3 = gl.Standby3;
+            //data.BreakageType = gl.BreakageType;
+            //data.PreparedMan = gl.PreparedMan;
+            //data.Standby4 = gl.Standby4;
+            //data.PreparedCount = gl.PreparedCount;
+            //data.CreationMan = gl.CreationMan;
+            //data.CreationTime = gl.CreationTime;
+            gl.Standby1 = 0;
+            gl.Standby2 = 0;
+            gl.State = 1;
+            gl.BreakageGLAduitState = data.BreakageGLAduitState;
+            var saveResu = ser.Update(gl);
+            var result = new
+            {
+                ActionResult = saveResu,
+                Msg = saveResu ? "修改成功" : "修改失败"
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
         public int PageSize
         {
@@ -373,17 +473,17 @@ namespace xianmu2020.Controllers
         public ActionResult GetBreakageGL(RequestDto re)
         {
             Expression<Func<BreakageGL, bool>> where = item => item.State == 1;
-            
+
             var BreakageGLService = new BreakageGLService();
             var pageCount = 0;
             var count = 0;
             var pageIndex = re.PageIndex;
             var BreakageList = BreakageGLService.GetByWhereDesc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, PageSize);
 
-            //var pageCount = 0;var count = 0;var pageIndex = re.PageIndex;var BreakageList = BreakageGLService.GetByWhereDesc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, PageSize);
             var newform = BreakageList.Select(item => new
             {
                 BGLid = item.BGLid,
+                Standby4 = item.Standby4,//报损产品
                 Standby3 = item.Standby3,
                 BreakageType = item.BreakageType,
                 PreparedMan = item.PreparedMan,
@@ -392,10 +492,13 @@ namespace xianmu2020.Controllers
                 CreationMan = item.CreationMan,
                 CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
             });
-            
+
             var result = new
             {
-                Breakage = newform,PageIndex = pageIndex, PageCount = pageCount, Count = count
+                Breakage = newform,
+                PageIndex = pageIndex,
+                PageCount = pageCount,
+                Count = count
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -403,7 +506,7 @@ namespace xianmu2020.Controllers
         public ActionResult GetBreakageData(RequestDto re)
         {
             Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 3;
-            
+
             var BreakageGLService = new BreakageGLService();
             var pageCount = 0;
             var count = 0;
@@ -412,6 +515,7 @@ namespace xianmu2020.Controllers
             var newform = BreakageList.Select(item => new
             {
                 BGLid = item.BGLid,
+                Standby4 = item.Standby4,//报损产品
                 Standby3 = item.Standby3,
                 BreakageType = item.BreakageType,
                 PreparedMan = item.PreparedMan,
@@ -423,7 +527,10 @@ namespace xianmu2020.Controllers
 
             var result = new
             {
-                Breakage = newform,PageIndex = pageIndex, PageCount = pageCount, Count = count
+                Breakage = newform,
+                PageIndex = pageIndex,
+                PageCount = pageCount,
+                Count = count
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -440,6 +547,7 @@ namespace xianmu2020.Controllers
             var newform = BreakageList.Select(item => new
             {
                 BGLid = item.BGLid,
+                Standby4 = item.Standby4,//报损产品
                 Standby3 = item.Standby3,
                 BreakageType = item.BreakageType,
                 PreparedMan = item.PreparedMan,
@@ -451,7 +559,10 @@ namespace xianmu2020.Controllers
 
             var result = new
             {
-                Breakage = newform,PageIndex = pageIndex, PageCount = pageCount, Count = count
+                Breakage = newform,
+                PageIndex = pageIndex,
+                PageCount = pageCount,
+                Count = count
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -468,6 +579,7 @@ namespace xianmu2020.Controllers
             var newform = BreakageList.Select(item => new
             {
                 BGLid = item.BGLid,
+                Standby4 = item.Standby4,//报损产品
                 Standby3 = item.Standby3,
                 BreakageType = item.BreakageType,
                 PreparedMan = item.PreparedMan,
@@ -479,8 +591,11 @@ namespace xianmu2020.Controllers
 
             var result = new
             {
-                
-                Breakage = newform,PageIndex = pageIndex, PageCount = pageCount, Count = count
+
+                Breakage = newform,
+                PageIndex = pageIndex,
+                PageCount = pageCount,
+                Count = count
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -528,10 +643,11 @@ namespace xianmu2020.Controllers
             var count = 0;
             var pageIndex = re.PageIndex;
             var BreakageList = BreakageGLService.GetByWhereDesc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, PageSize);
-            
+
             var newform = BreakageList.Select(item => new
             {
                 BGLid = item.BGLid,
+                Standby4 = item.Standby4,//报损产品
                 Standby3 = item.Standby3,
                 BreakageType = item.BreakageType,
                 PreparedMan = item.PreparedMan,
@@ -582,11 +698,12 @@ namespace xianmu2020.Controllers
             ViewBag.Type = new SelectList("");
             return View();
         }
-        public ActionResult GetRefun(RequestDto dto,int zt) {
+        public ActionResult GetRefun(RequestDto dto, int zt)
+        {
             Expression<Func<Refund, bool>> where = item => item.State == 1 && item.PreparedTime >= dto.Start && item.PreparedTime <= dto.End;
             if (!string.IsNullOrEmpty(dto.RefundId))
             {
-                where = where.And(item => item.RefundId.IndexOf(dto.RefundId)!=-1);
+                where = where.And(item => item.RefundId.IndexOf(dto.RefundId) != -1);
             }
             if (zt != 0)
             {
@@ -596,17 +713,18 @@ namespace xianmu2020.Controllers
             var pageCount = 0;
             var count = 0;
 
-            var RefundModel = new RefundService().GetByWhereAsc(where,item=>item.PreparedTime,ref pageIndex,ref pageCount,ref count, pageSize);
-            var newRefund = RefundModel.Select(item => new {
+            var RefundModel = new RefundService().GetByWhereAsc(where, item => item.PreparedTime, ref pageIndex, ref pageCount, ref count, pageSize);
+            var newRefund = RefundModel.Select(item => new
+            {
                 RefundId = item.RefundId,
-                RefundCount=item.RefundCount,
+                RefundCount = item.RefundCount,
                 ClientSite = item.ClientSite,//把这个字段当成退货类型字段
                 RefundAuditState = item.RefundAuditState,
                 PreparedMan = item.PreparedMan,
                 PreparedTime = Convert.ToDateTime(item.PreparedTime).ToString("yyyy-MM-dd")
             });
-            var RefundResult = new{RefundAction = newRefund, PageIndex = pageIndex, PageCount = pageCount, Count = count };
-            return Json(RefundResult,JsonRequestBehavior.AllowGet);
+            var RefundResult = new { RefundAction = newRefund, PageIndex = pageIndex, PageCount = pageCount, Count = count };
+            return Json(RefundResult, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -620,6 +738,6 @@ namespace xianmu2020.Controllers
             return View();
         }
         #endregion
-       
+
     }
 }
