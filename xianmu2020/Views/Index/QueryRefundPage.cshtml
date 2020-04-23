@@ -42,7 +42,7 @@
                     <input type="text" class="form-control" name="RefundId" placeholder="请输入退货单号" />
                 </div>
                 <div class="col-md-7 form-group form-inline" style="margin-top:19px;">
-                    <label class="control-label" style="margin-left:-20px;">时间</label> &nbsp;<input name="Start" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")"  type="date" class="form-control" style="width:150px;" />&nbsp;-&nbsp;<input name="End" value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" type="date" class="form-control" style="width:150px;" />&nbsp;&nbsp;<button id="btn" type="button" class="btn btn-info">搜索</button>
+                    <label class="control-label" style="margin-left:-20px;">时间</label> &nbsp;<input name="Start" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" type="date" class="form-control" style="width:150px;" />&nbsp;-&nbsp;<input name="End" value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" type="date" class="form-control" style="width:150px;" />&nbsp;&nbsp;<button id="btn" type="button" class="btn btn-info">搜索</button>
                 </div>
             </div>
 
@@ -62,15 +62,15 @@
                     </thead>
                     <tbody>
                         @*<tr>
-                            <td><input type="checkbox" /></td>
-                            <td>退货单1</td>
-                            <td>退货类型1</td>
-                            <td>退货数量1</td>
-                            <td>状态1</td>
-                            <td>制单人1</td>
-                            <td>2020-03-03</td>
-                            <td><a id="UpdateTuiHuo" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a id="THXQ" href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-hand-right"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
-                        </tr>*@
+                                <td><input type="checkbox" /></td>
+                                <td>退货单1</td>
+                                <td>退货类型1</td>
+                                <td>退货数量1</td>
+                                <td>状态1</td>
+                                <td>制单人1</td>
+                                <td>2020-03-03</td>
+                                <td><a id="UpdateTuiHuo" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a id="THXQ" href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-hand-right"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
+                            </tr>*@
                     </tbody>
                 </table>
             </div>
@@ -130,7 +130,7 @@
                                 <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" />
                             </div>
                             <div class="col-md-9">
-                                <label class="control-label">备注</label><input type="text" class="form-control"  />
+                                <label class="control-label">备注</label><input type="text" class="form-control" />
                             </div>
 
                         </div>
@@ -266,6 +266,7 @@
 
         var pageIndexValue = 1;
         var ztValue = 0;
+        var ZhuanTai = null;
         $(function () {
 
             //状态切换
@@ -322,21 +323,22 @@
                 url: "@Url.Action("GetRefun")",
                 data: { RefundId: RefundIdValue, PageIndex: pageIndexValue, Start: StartValue, End: EndValue, zt: ztValue },
                 dataType: "json",
-                type:"get", 
+                type: "get",
                 success: function (RefundResult) {
                     $("#txtLabel").html("当前第" + RefundResult.PageIndex + "页 / 共计" + RefundResult.PageCount + " 页 共计" + RefundResult.Count + " 条");
                     $("#textPageIndex").val(RefundResult.PageIndex);
                     pageIndexValue = RefundResult.PageIndex;
                     $("table tr:gt(0)").remove();
-                    $.each(RefundResult.RefundAction, function (index, value) {                     
+                    $.each(RefundResult.RefundAction, function (index, value) {
+                        ZhuanTai = value.Rid;
                         var str = "<tr>";
-                        str+="<td><input type=\"checkbox\" /></td>";
+                        str += "<td><input type=\"checkbox\" /></td>";
                         str += "<td>" + value.RefundId + "</td>";
-                        if (value.ClientSite == 7) {
+                        if (value.Standby1 == 7) {
                             RefundTypes = "销售退货";
-                        } else if (value.ClientSite == 8) {
+                        } else if (value.Standby1 == 8) {
                             RefundTypes = "采购退货";
-                        } 
+                        }
                         str += "<td>" + RefundTypes + "</td>";
                         str += "<td>" + value.RefundCount + "</td>";
                         if (value.RefundAuditState == 1) {
@@ -347,14 +349,71 @@
                             RefundState = "审核失败";
                         }
                         str += "<td>" + RefundState + "</td>";
-                        str += "<td>"+value.PreparedMan+"</td>";
+                        str += "<td>" + value.PreparedMan + "</td>";
                         str += "<td>" + value.PreparedTime + "</td>";
-                        str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a id=\"SelectRK\" href=\"#\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                        if (value.RefundAuditState == 2) {
+                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                        } else if (value.RefundAuditState == 3) {
+                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                        } else {
+                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"RefundAuditStateUp1()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"RefundAuditStateUp2()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                        }
                         str += "</tr>";
                         $("table tbody").append(str);
                     })
                 }
             })
+        }
+
+        //删除方法
+        function deleteState() {
+            $.ajax({
+                url: "@Url.Action("DelRefund")",
+                data: { Rid: ZhuanTai },
+                dataType: "json",
+                type: "post",
+                success: function () {
+                    if (confirm("确认删除吗？")) {
+                        BindData();
+                        alert("删除成功！");
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            })
+        }
+        //审核通过
+        function RefundAuditStateUp1() {
+            $.ajax({
+                url: "@Url.Action("RefundUpSHZT")",
+                data: { Rid: ZhuanTai, RefundAuditStates:2 },
+            dataType: "json",
+            type: "post",
+            success: function () {
+                if (confirm("确认审核通过吗？")) {
+                    BindData();
+                    alert("审核成功！");
+                    return true;
+                }
+            }
+        })
+        }
+        //审核不通过
+        function RefundAuditStateUp2() {
+            $.ajax({
+                url: "@Url.Action("RefundUpSHZT")",
+                data: { Rid: ZhuanTai, RefundAuditStates:3 },
+            dataType: "json",
+            type: "post",
+            success: function () {
+                if (confirm("确认审核不通过吗？")) {
+                    BindData();
+                    alert("审核成功！");
+                    return true;
+                }
+            }
+        })
         }
 
     </script>

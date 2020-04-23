@@ -29,10 +29,10 @@
         </div>
         <div class="row" style="margin-left:-92px;  border:0px solid black;width:1126px;background-color:#f5f8f8">
             <div class="col-md-5 form-group form-inline" style="margin-top:15px; ">
-                <button type="button" id="btn1" class="btn btn-group">所有</button>
-                <button type="button" id="btn1" class="btn btn-group">待审核</button>
-                <button type="button" id="btn1" class="btn btn-group">审核通过</button>
-                <button type="button" id="btn1" class="btn btn-group">审核失败</button>
+                <button name="sy" type="button" id="btn1" class="btn btn-group btn2" value="所有">所有</button>
+                <button name="dsh" type="button" id="btn1" class="btn btn-group btn2" value="待审核">待审核</button>
+                <button name="shtg" type="button" id="btn1" class="btn btn-group btn2" value="审核通过">审核通过</button>
+                <button name="shsb" type="button" id="btn1" class="btn btn-group btn2" value="审核失败">审核失败</button>
             </div>
             <div class="col-md-3 form-group form-inline" style="margin-top:15px;float:right;margin-right:-58px;">
                 <a href="@Url.Action("QueryAddSingle")" class="btn btn-primary">新增出库</a>
@@ -40,21 +40,18 @@
             </div>
             <div class="row">
                 <div class="col-md-3 form-group form-inline " style="margin-top:83px;margin-left:-470px;">
-                    <input type="text" class="form-control" placeholder="请输入入库单号" />
+                    <input type="text" name="DeliveryId" class="form-control" placeholder="请输入出单号" />
                 </div>
                 <div class="col-md-7 form-group form-inline" style="margin-top:19px;">
-                    <label class="control-label" style="margin-left:-20px;">时间</label> &nbsp;<input type="date" class="form-control" style="width:150px;" />&nbsp;-&nbsp;<input type="date" class="form-control" style="width:150px;" />&nbsp;&nbsp;<button type="button" class="btn btn-info">搜索</button>&nbsp;<button type="button" id="BtnGJ" class="btn btn-info">高级搜索</button>&nbsp;<button type="button" id="BtnSq" class="btn btn-info">收起</button>
+                    <label class="control-label" style="margin-left:-20px;">时间</label> &nbsp;<input name="Start" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" type="date" class="form-control" style="width:150px;" />&nbsp;-&nbsp;<input  name="End" value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" type="date" class="form-control" style="width:150px;" />&nbsp;&nbsp;<button id="btnSelect" type="button" class="btn btn-info">搜索</button>&nbsp;<button type="button" id="BtnGJ" class="btn btn-info">高级搜索</button>&nbsp;<button type="button" id="BtnSq" class="btn btn-info">收起</button>
                 </div>
             </div>
             <div id="div1" class="row" style="border:1px dotted black; width:1040px;height:90px;margin-top:8px;margin-left:15px;">
-                <div class="col-md-3 form-inline" style="margin-top:10px;">
-                    客户<input type="text" class="form-control" />
-                </div>
                 <div class="col-md-3  form-group" style="margin-top:10px;">
-                    单据类型 @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
+                    单据类型 @Html.DropDownList("DeliveryType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
                 </div>
                 <div class="col-md-2 form-inline" style="margin-top:29px;">
-                    <button type="button" class="btn btn-info">搜索</button>
+                    <button id="btnTwo" type="button" class="btn btn-info">搜索</button>
                 </div>
             </div>
 
@@ -75,7 +72,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        @*<tr>
                             <td>0001</td>
                             <td>生产产品入库</td>
                             <td>北大青鸟ACCP</td>
@@ -87,22 +84,25 @@
                             <td>2020-04-03</td>
                             <td><a id="UpdateChuKu" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;
                             <a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a id="ChuKuXQ" href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
-                        </tr>
+                        </tr>*@
                     </tbody>
                 </table>
             </div>
             <div class="row form-inline form-group text-center" style="margin-top:30px;margin-right:30px;">
-                <button type="button" class="btn btn-primary form-group">首页</button>
-                <button type="button" class="btn btn-primary form-group">上一页</button>
-                <input type="text" class="form-control" style="width:80px;" />
-                <button type="button" class="btn btn-primary form-group">Go</button>
-                <button type="button" class="btn btn-primary form-group">下一页</button>
-                <button type="button" class="btn btn-primary form-group">尾页</button>
+                <button id="btnSY" type="button" class="btn btn-primary form-group">首页</button>
+                <button id="btnSYY" type="button" class="btn btn-primary form-group">上一页</button>
+                <input id="textPageIndex" type="text" class="form-control" style="width:80px;" />
+                <button id="btnGo" type="button" class="btn btn-primary form-group">Go</button>
+                <button id="btnXYY" type="button" class="btn btn-primary form-group">下一页</button>
+                <button id="WY" type="button" class="btn btn-primary form-group">尾页</button>
+                <label id="txtLabel" style="font-size:16px;margin:0px auto;"></label>
             </div>
         </div>
     </div>
     <script type="text/javascript">
-
+        var pageIndexValue = 1;
+        var ztValue = 0;
+        var deleteid = null;
         $(function () {
             $("#div1").hide();
 
@@ -121,7 +121,169 @@
                 $("#ChuKuXQ").click(function () {
                     $("#myModal2").modal();
                 })
+
+            //状态切换
+                $("[name=sy]").click(function () {
+                    ztValue = 0;
+                })
+                $("[name=dsh]").click(function () {
+                    ztValue = 1;
+                })
+                $("[name=shtg]").click(function () {
+                    ztValue = 2;
+                })
+                $("[name=shsb]").click(function () {
+                    ztValue = 3;
+                })
+                $(".btn2").click(function () {
+                    BingStorageData();
+                })
+
+
+            //分页
+                $("#btnSY").click(function () {
+                    pageIndexValue = 1;
+                    BingStorageData();
+                })
+                $("#btnSYY").click(function () {
+                    pageIndexValue = pageIndexValue - 1;
+                    BingStorageData();
+                })
+                $("#btnGo").click(function () {
+                    pageIndexValue = parseInt($("#textPageIndex").val());
+                    BingStorageData();
+                })
+                $("#btnXYY").click(function () {
+                    pageIndexValue = pageIndexValue + 1;
+                    BingStorageData()
+                })
+                $("#WY").click(function () {
+                    pageIndexValue = 999999;
+                    BingStorageData()
+                })
+                $("#btnSelect").click(BingStorageData);
+                $("#btnTwo").click(BingStorageData);
+                BingStorageData();
         })
+        
+        //入库单加载数据
+        function BingStorageData() {
+            //取值
+            var DeliveryIdValue = $("[name=DeliveryId]").val();
+            var StartValue = $("[name=Start]").val();
+            var EndValue = $("[name=End]").val();
+            var DeliveryTypeValue = $("[name=DeliveryType]").val();
+
+            var DeliveryTYpe = null;
+            var DeliveryAuditState = null;
+            $.ajax({
+                url:"@Url.Action("GetDeliveryData")",
+                data: { zt: ztValue, DeliveryId: DeliveryIdValue, Start: StartValue, End: EndValue, pageIndex: pageIndexValue, DeliveryType: DeliveryTypeValue},
+            dataType:"json",
+            type:"get",
+            success: function (result) {
+                $("#txtLabel").html("当前第" + result.PageIndex + "页 / 共计" + result.PageCount + " 页 共计" + result.Count + " 条");
+                $("#textPageIndex").val(result.PageIndex);
+                pageIndexValue = result.PageIndex;
+                $("table tr:gt(0)").remove();
+                $.each(result.DeliveryAction, function (index, value) {
+                    deleteid = value.Did;
+                    var str = "<tr>";
+                    str += "<td>" + value.DeliveryId + "</td>";
+                    if (value.DeliveryTYpe == 12) {
+                        DeliveryTYpe = "采购退货出库";
+                    } else if (value.DeliveryTYpe == 13) {
+                        DeliveryTYpe = "销售提货出库";
+                    } else if (value.DeliveryTYpe == 14) {
+                        DeliveryTYpe = "领用出库";
+                    } else if (value.DeliveryTYpe == 15) {
+                        DeliveryTYpe = "借货出库";
+                    } else if (value.DeliveryTYpe == 16) {
+                        DeliveryTYpe = "借入还出";
+                    }
+                    str += "<td>" + DeliveryTYpe + "</td>";
+                    str += "<td>" + value.ClientNames + "</td>";
+                    str += "<td>" + value.TotalCount + "</td>";
+                    str += "<td>" + value.TotalMoney + "</td>";
+                    if (value.DeliveryAuditState == 1) {
+                        DeliveryAuditState = "待审核";
+                    } else if (value.DeliveryAuditState == 2) {
+                        DeliveryAuditState = "审核通过";
+                    } else if (value.DeliveryAuditState == 3) {
+                        DeliveryAuditState = "审核失败";
+                    }
+                    str += "<td>" + DeliveryAuditState + "</td>";                   
+                    str += "<td>" + value.OperatingMode + "</td>";
+                    str += "<td>" + value.PreparedBy + "</td>";
+                    str += "<td>" + value.CreationTime + "</td>";
+                    if (value.DeliveryAuditState == 2) {
+                        str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                    } else if (value.DeliveryAuditState == 3) {
+                        str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                    } else {
+                        str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpDeliveryAuditState1()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpDeliveryAuditState2()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                    }
+                    str += "</tr>";
+                    $("table tbody").append(str);
+                })
+            }
+        })
+        }
+
+        //删除
+        function Delete() {
+            $.ajax({
+                url:"@Url.Action("DeleteDelivery")",
+                data: { Did: deleteid },
+            dataType:"json",
+            type:"post",
+            success: function () {
+                if (confirm("确认删除吗？")) {
+                    BingStorageData();
+                    alert("删除成功！");
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        })
+
+        }
+        //修改状态API1
+        function UpDeliveryAuditState1() {
+            $.ajax({
+                url:"@Url.Action("UpDeliveryAuditState")",
+                data: { Did: deleteid, DeliveryAuditStats: 2 },
+                dataType:"json",
+                type:"post",
+                success: function () {
+                    if (confirm("确认审核通过吗？")) {
+                        BingStorageData();
+                        alert("审核成功！");
+                        return true;
+                    }
+                }
+            })
+        }
+        //修改状态API1
+        function UpDeliveryAuditState2() {
+            $.ajax({
+                url:"@Url.Action("UpDeliveryAuditState")",
+                data: { Did: deleteid, DeliveryAuditStats: 3 },
+            dataType:"json",
+            type:"post",
+            success: function () {
+                if (confirm("确认审核不通过吗？")) {
+                    BingStorageData();
+                    alert("审核成功！");
+                    return true;
+                }
+            }
+        })
+        }
+
+        
+
 
     </script>
 

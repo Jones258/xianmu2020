@@ -9,6 +9,7 @@ namespace xianmu2020.Model
     {
         public int zt { get; set; }//通用
         //入库
+        public string SuppliersType { get; set; }
         public int PageIndex { get; set; }//通用
         public int StoType { get; set; }
         public string StoOrderId { get; set; }
@@ -25,6 +26,14 @@ namespace xianmu2020.Model
 
         //退货管理
         public string RefundId { get; set; }
+
+
+        //盘点
+        public string CheckId { get; set; }
+
+        //出库
+        public string DeliveryId { get; set; }
+        public int DeliveryTYpe { get; set; }
 
     }
 }
