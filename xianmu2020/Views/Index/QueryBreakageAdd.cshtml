@@ -96,6 +96,49 @@
                 }
             })
         }
+        //修改
+        var id=null;
+        var name=null;
+        $("#SupplierType").change(function () {
+            var SupplierValue = $(this).val();
+            name== $(this).find("option:selected").text();
+            id=$(this).val();
+            $.ajax({
+                url: "@Url.Action("QueryGys")",
+                data: { id: SupplierValue },
+            dataType: "json",
+            type: "get",
+            success: function (result) {
+                $.each(result.data, function (index, value) {
+                    $("#lxr").val(value.Contacts);
+                    $("#lxfs").val(value.Phone);
+                })
+            }
+        })
+        });
+        //供应商查询
+        function GYS() {
+            var bhValue = $("#bh").val();//入库编号
+            var StStorageDJTypeValue = $("#StStorageDJType").val();//入库类型
+            var ProductGLTypeValue = $("#ProductGLType").val();//入库产品
+            var zdrValue = $("#zdr").val();//制单人
+            var SupplierTypeValue = $("#SupplierType").val();//供应商
+            var lxrValue = $("#lxr").val();//联系人
+            var lxfsValue = $("#lxfs").val();//联系方式
+            var sjValue = $("#sj").val();//制单时间
+            var rksValue = $("#rks").val();//入库数
+            var zjeValue = $("#zje").val();//总金额
+            var bzValue = $("#bz").val();//备注
+            $.ajax({
+                url: "@Url.Action("QueryRkAdd")",
+                data: { StoOrderId: bhValue, StoType:StStorageDJTypeValue,GoodsTotal:rksValue,TotalMoney:zjeValue,MakingSingle:zdrValue,SuppliersId:id,SuppliersName:name,SuppliersPeople:lxrValue,SuppliersContact:lxfsValue,OrdersTime:sjValue,CreateTime:sjValue,Remark:bzValue,Standby4:ProductGLTypeValue},
+            dataType: "json",
+            type: "post",
+            success: function (ActionResult) {
+                alert(ActionResult.msg);
+            }
+        })
+        }
     </script>
 
 </body>

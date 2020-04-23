@@ -179,8 +179,10 @@ namespace xianmu2020.Controllers
             var pageCount = 0;
             var count = 0;
             var ProductSortModel = new ProductSortService().GetByWhereAsc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, pageSize);
-            var ProductSort = ProductSortModel.Select(item => new {
-                ProductSortId = item.ProductSortId, ProductSortName = item.ProductSortName,
+            var ProductSort = ProductSortModel.Select(item => new
+            {
+                ProductSortId = item.ProductSortId,
+                ProductSortName = item.ProductSortName,
                 CreationMen = item.CreationMen,
                 CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd"),
                 Remark = item.Remark
@@ -188,7 +190,7 @@ namespace xianmu2020.Controllers
             var result = new { ProductAction = ProductSort, PageIndex = pageIndex, PageCount = pageCount, Count = count };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        
+
         [HttpPost]
         //添加产品类别
         public ActionResult GetProductSortAdd(ProductSort productSort)
@@ -207,14 +209,15 @@ namespace xianmu2020.Controllers
 
         [HttpPost]
         //删除产品
-        public ActionResult GetDeleteProductSort(string id) {
+        public ActionResult GetDeleteProductSort(string id)
+        {
             var deleteProductSort = new ProductSortService();
             var data = deleteProductSort.GetByWhere(item => item.ProductSortId == id).SingleOrDefault();
             data.State = 0;
             deleteProductSort.Update(data);
             return Json(JsonRequestBehavior.AllowGet);
         }
-      
+
 
         /// <summary>
         /// 产品管理
@@ -242,17 +245,29 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryStorage()
         {
+
             var StStorageDJTypeService = new StStorageDJTypeService();
             var model = StStorageDJTypeService.GetByWhere(item => item.State == 1);
             model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择入库单类型" });
             ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
+
+            var PService = new ProductGLService();
+            var model2 = PService.GetAll();
+            model2.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择产品" });
+            ViewBag.ProductGLType = new SelectList(model2, "PGLid", "ProductName");
+
+            var SupplierService = new SupplierService();
+            var model3 = SupplierService.GetAll();
+            model3.Insert(0, new Supplier() { Sid = 0, SupplierName = "请选择供应商名称" });
+            ViewBag.SupplierType = new SelectList(model3, "Sid", "SupplierName");
 
             ViewBag.Type = new SelectList("");
             return View();
         }
 
         //加载数据方法1
-        public ActionResult GetStorage(RequestDto re, int zt) {
+        public ActionResult GetStorage(RequestDto re, int zt)
+        {
             Expression<Func<StStorage, bool>> where = item => item.State == 1;
             if (!string.IsNullOrEmpty(re.StoOrderId))
             {
@@ -260,11 +275,11 @@ namespace xianmu2020.Controllers
             }
             if (re.StoType != 0)
             {
-                where = where.And(item => item.StoType==re.StoType);
+                where = where.And(item => item.StoType == re.StoType);
             }
             if (!string.IsNullOrEmpty(re.SuppliersType))
             {
-                where = where.And(item=>item.SuppliersType.IndexOf(re.SuppliersType)!=-1);
+                where = where.And(item => item.SuppliersType.IndexOf(re.SuppliersType) != -1);
             }
             if (re.Start != null)
             {
@@ -283,13 +298,24 @@ namespace xianmu2020.Controllers
             var pageCount = 0;
             var count = 0;
             var StorageList = new StStorageService().GetByWhereAsc(where, item => item.CreateTime, ref pageIndex, ref pageCount, ref count, pageSize);
-            var newform = StorageList.Select(item => new {
+            var newform = StorageList.Select(item => new
+            {
                 Stoid = item.Stoid,
-                StoOrderId = item.StoOrderId, StoType = item.StoType, SuppliersType = item.SuppliersType, GoodsTotal = item.GoodsTotal,
-                TotalMoney = item.TotalMoney, StStorageState = item.StStorageState, MakingSingle = item.MakingSingle, CreateTime = Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd")
+                StoOrderId = item.StoOrderId,
+                StoType = item.StoType,
+                SuppliersType = item.SuppliersType,
+                GoodsTotal = item.GoodsTotal,
+                TotalMoney = item.TotalMoney,
+                StStorageState = item.StStorageState,
+                MakingSingle = item.MakingSingle,
+                CreateTime = Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd")
             });
-            var result = new {
-                Storage = newform, PageIndex = pageIndex, PageCount = pageCount, Count = count
+            var result = new
+            {
+                Storage = newform,
+                PageIndex = pageIndex,
+                PageCount = pageCount,
+                Count = count
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -307,9 +333,10 @@ namespace xianmu2020.Controllers
 
         [HttpPost]
         //大拇指改状态（审核通过）
-        public ActionResult StStorageUpSH(int Stoid,int StStorageStates) {
+        public ActionResult StStorageUpSH(int Stoid, int StStorageStates)
+        {
             var UpShStStorag = new StStorageService();
-            var data = UpShStStorag.GetByWhere(item=>item.Stoid==Stoid).SingleOrDefault();
+            var data = UpShStStorag.GetByWhere(item => item.Stoid == Stoid).SingleOrDefault();
             data.StStorageState = StStorageStates;
             UpShStStorag.Update(data);
             return Json(JsonRequestBehavior.AllowGet);
@@ -321,67 +348,186 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryStorageAdd()
         {
-            var model = new StStorageDJTypeService().GetByWhere(item=>item.State==1);
-           model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择入库单类型" });
+            var model = new StStorageDJTypeService().GetByWhere(item => item.State == 1);
+            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择入库单类型" });
             ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
+
+            var PService = new ProductGLService();
+            var model2 = PService.GetAll();
+            model2.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择产品" });
+            ViewBag.ProductGLType = new SelectList(model2, "PGLid", "ProductName");
+
+            var SupplierService = new SupplierService();
+            var model3 = SupplierService.GetAll();
+            model3.Insert(0, new Supplier() { Sid = 0, SupplierName = "请选择供应商名称" });
+            ViewBag.SupplierType = new SelectList(model3, "Sid", "SupplierName");
             //测试 
-            ViewBag.Type = new SelectList("");
             return View();
         }
+        //查询供应商
+        public ActionResult QueryGys(int id)
+        {
+            Expression<Func<Supplier, bool>> where = item => item.State == 1 && item.Sid == id;
+            var SupplierService = new SupplierService();
+            var Supplierlist = SupplierService.GetByWhere(where);
 
+            var newform = Supplierlist.Select(item => new
+            {
+                Standby1 = item.Standby1,
+                Standby2 = item.Standby2,
+                Standby3 = item.Standby3,
+                Standby4 = item.Standby4,
+                Sid = item.Sid,
+                SupplierId = item.SupplierId,
+                SupplierType = item.SupplierType,
+                SupplierName = item.SupplierName,
+                Phone = item.Phone,
+                Fax = item.Fax,
+                Email = item.Email,
+                Contacts = item.Contacts,
+                Site = item.Site,
+                Describe = item.Describe,
+                State = item.State
+            });
+
+            var result = new
+            {
+                data = newform
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //修改查询
+        public ActionResult QueUpt(int id)
+        {
+            Expression<Func<StStorage, bool>> where = item => item.State == 1 && item.Stoid == id;
+
+            var StorageList = new StStorageService().GetByWhere(where);
+            var newform = StorageList.Select(item => new
+            {
+                Stoid = item.Stoid,
+                StoOrderId = item.StoOrderId,
+                StoType = item.StoType,
+                SuppliersType = item.SuppliersType,
+                GoodsTotal = item.GoodsTotal,
+                TotalMoney = item.TotalMoney,
+                StStorageState = item.StStorageState,
+                MakingSingle = item.MakingSingle,
+                Standby4 = item.Standby4,//产品
+                CreateTime = Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd"),
+                SuppliersId = item.SuppliersId,
+                SuppliersName = item.SuppliersName,
+                SuppliersPeople = item.SuppliersPeople,
+                SuppliersContact = item.SuppliersContact,
+                OrdersTime = item.OrdersTime,
+                Remark = item.Remark
+            });
+            var result = new
+            {
+                Storage = newform
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //入库修改
+        [HttpPost]
+        public ActionResult QueryRkUpdate(StStorage gl)
+        {
+            var ser = new StStorageService();
+            gl.State = 1;
+            gl.Standby1 = 1;
+            gl.Standby2 = 1;
+            gl.Standby3 = null;
+            gl.StStorageState = 3;
+            var saveResu = ser.Update(gl);
+            var result = new
+            {
+                ActionResult = saveResu,
+                Msg = saveResu ? "修改成功" : "修改失败"
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //入库添加
+        [HttpPost]
+        public ActionResult QueryRkAdd(StStorage gl)
+        {
+            var ser = new StStorageService();
+            gl.State = 1;
+            gl.Standby1 = 1;
+            gl.Standby2 = 1;
+            gl.Standby3 = null;
+            gl.StStorageState = 3;
+            var saveResu = ser.Add(gl);
+            var result = new
+            {
+                ActionResult = saveResu,
+                Msg = saveResu ? "添加成功" : "添加失败"
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         /// <summary>
         /// 出库管理页面视图
         /// </summary>
         /// <returns></returns>
         public ActionResult QueryDelivery()
         {
-            var model = new StStorageDJTypeService().GetByWhere(item => item.State==5);
-            model.Insert(0,new ChuBaoPanTuiTypes() { CBPTTid=0,DaBillTYpeName= "请选择出库单类型" });
-            ViewBag.DeliveryType = new SelectList(model,"CBPTTid", "DaBillTYpeName");
+            var model = new StStorageDJTypeService().GetByWhere(item => item.State == 5);
+            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择出库单类型" });
+            ViewBag.DeliveryType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
+
+            var PService = new ProductGLService();
+            var model2 = PService.GetAll();
+            model2.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择产品" });
+            ViewBag.ProductGLType = new SelectList(model2, "PGLid", "ProductName");
+
+            var ClientService = new ClientService();
+            var model3 = ClientService.GetAll();
+            model3.Insert(0, new Client() { Cid = 0, ClientName = "请选择客户名称" });
+            ViewBag.ClientType = new SelectList(model3, "Cid", "ClientName");
             //测试 
             ViewBag.Type = new SelectList("");
             return View();
         }
         //获取数据
-        public ActionResult GetDeliveryData(RequestDto re) {
+        public ActionResult GetDeliveryData(RequestDto re)
+        {
             Expression<Func<Delivery, bool>> where = item => item.State == 1 && item.CreationTime >= re.Start && item.CreationTime <= re.End;
-            if (re.DeliveryTYpe!=0)
+            if (re.DeliveryTYpe != 0)
             {
-                where = where.And(item=>item.DeliveryTYpe==re.DeliveryTYpe);
+                where = where.And(item => item.DeliveryTYpe == re.DeliveryTYpe);
             }
             if (!string.IsNullOrEmpty(re.DeliveryId))
             {
-                where = where.And(item=>item.DeliveryId.IndexOf(re.DeliveryId) !=-1);
+                where = where.And(item => item.DeliveryId.IndexOf(re.DeliveryId) != -1);
             }
-            if (re.zt!=0)
+            if (re.zt != 0)
             {
-                where = where.And(item=>item.DeliveryAuditState==re.zt);
+                where = where.And(item => item.DeliveryAuditState == re.zt);
             }
             var pageIndex = re.PageIndex;
             var pageCount = 0;
             var count = 0;
-            var DeliveryList = new DeliveryService().GetByWhereAsc(where,item=>item.CreationTime,ref pageIndex,ref pageCount,ref count,pageSize);
-            var DeliveryNew = DeliveryList.Select(item=> new {
-                Did=item.Did,
-                DeliveryId=item.DeliveryId,
-                DeliveryTYpe=item.DeliveryTYpe,
-                ClientNames=item.ClientNames,
-                TotalCount=item.TotalCount,
-                TotalMoney=item.TotalMoney,
-                DeliveryAuditState=item.DeliveryAuditState,
-                OperatingMode=item.OperatingMode,
-                PreparedBy=item.PreparedBy,
+            var DeliveryList = new DeliveryService().GetByWhereAsc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, pageSize);
+            var DeliveryNew = DeliveryList.Select(item => new
+            {
+                Did = item.Did,
+                DeliveryId = item.DeliveryId,
+                DeliveryTYpe = item.DeliveryTYpe,
+                ClientNames = item.ClientNames,
+                TotalCount = item.TotalCount,
+                TotalMoney = item.TotalMoney,
+                DeliveryAuditState = item.DeliveryAuditState,
+                OperatingMode = item.OperatingMode,
+                PreparedBy = item.PreparedBy,
                 CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
             });
-            var result = new { DeliveryAction = DeliveryNew,  PageIndex = pageIndex, PageCount = pageCount, Count = count };
-            return Json(result,JsonRequestBehavior.AllowGet);
+            var result = new { DeliveryAction = DeliveryNew, PageIndex = pageIndex, PageCount = pageCount, Count = count };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         //删除
         [HttpPost]
         public ActionResult DeleteDelivery(int Did)
         {
-            var IneventoryServices =new DeliveryService().GetByWhere(item => item.Did == Did).SingleOrDefault();
+            var IneventoryServices = new DeliveryService().GetByWhere(item => item.Did == Did).SingleOrDefault();
             IneventoryServices.State = 0;
             new DeliveryService().Update(IneventoryServices);
             return Json(JsonRequestBehavior.AllowGet);
@@ -389,9 +535,10 @@ namespace xianmu2020.Controllers
 
         [HttpPost]
         //修改大拇指状态(审核)
-        public ActionResult UpDeliveryAuditState(int Did,int DeliveryAuditStats) {
+        public ActionResult UpDeliveryAuditState(int Did, int DeliveryAuditStats)
+        {
             var UpState = new DeliveryService();
-            var data = UpState.GetByWhere(item=>item.Did==Did).SingleOrDefault();
+            var data = UpState.GetByWhere(item => item.Did == Did).SingleOrDefault();
             data.DeliveryAuditState = DeliveryAuditStats;
             UpState.Update(data);
             //var UpResult = new {
@@ -534,16 +681,11 @@ namespace xianmu2020.Controllers
             };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
-        public int PageSize
-        {
-            get { return 2; }
-        }
         //加载报损数据方法1
         public ActionResult GetBreakageGL(RequestDto re)
         {
             Expression<Func<BreakageGL, bool>> where = item => item.State == 1;
-            
+
             var BreakageGLService = new BreakageGLService();
             var pageCount = 0;
             var count = 0;
@@ -562,7 +704,7 @@ namespace xianmu2020.Controllers
                 CreationMan = item.CreationMan,
                 CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
             });
-            
+
             var result = new
             {
                 Breakage = newform,
@@ -576,7 +718,7 @@ namespace xianmu2020.Controllers
         public ActionResult GetBreakageData(RequestDto re)
         {
             Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 3;
-            
+
             var BreakageGLService = new BreakageGLService();
             var pageCount = 0;
             var count = 0;
@@ -749,27 +891,29 @@ namespace xianmu2020.Controllers
             ViewBag.Type = new SelectList("");
             return View();
         }
-        public ActionResult GetIneventoryData(RequestDto dto) {
+        public ActionResult GetIneventoryData(RequestDto dto)
+        {
             Expression<Func<Ineventory, bool>> where = item => item.State == 1 && item.PreparedTime >= dto.Start && item.PreparedTime <= dto.End;
             if (!string.IsNullOrEmpty(dto.CheckId))
             {
-                where = where.And(item => item.CheckId.IndexOf(dto.CheckId)!=-1);
+                where = where.And(item => item.CheckId.IndexOf(dto.CheckId) != -1);
             }
-            if (dto.zt!=0)
+            if (dto.zt != 0)
             {
-                where = where.And(item => item.CheckAuditState==dto.zt);
+                where = where.And(item => item.CheckAuditState == dto.zt);
             }
             var pageIndex = dto.PageIndex;
             var pageCount = 0;
             var count = 0;
             var IneventoryService = new IneventoryService().GetByWhereAsc(where, item => item.PreparedTime, ref pageIndex, ref pageCount, ref count, pageSize);
-            var newIneventory = IneventoryService.Select(item => new {
+            var newIneventory = IneventoryService.Select(item => new
+            {
                 Iid = item.Iid,
                 CheckId = item.CheckId,
                 CheckType = item.CheckType,
                 PreparedTime = Convert.ToDateTime(item.PreparedTime).ToString("yyyy-MM-dd"),
                 PreparedMan = item.PreparedMan,
-                CheckAuditState =item.CheckAuditState ,
+                CheckAuditState = item.CheckAuditState,
                 CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
             });
             var result = new
@@ -783,8 +927,9 @@ namespace xianmu2020.Controllers
         }
         //删除
         [HttpPost]
-        public ActionResult DeleteIneventory(int Iid ) {
-            var IneventoryServices = new IneventoryService().GetByWhere(item=>item.Iid==Iid).SingleOrDefault();
+        public ActionResult DeleteIneventory(int Iid)
+        {
+            var IneventoryServices = new IneventoryService().GetByWhere(item => item.Iid == Iid).SingleOrDefault();
             IneventoryServices.State = 0;
             new IneventoryService().Update(IneventoryServices);
             return Json(JsonRequestBehavior.AllowGet);
@@ -792,7 +937,8 @@ namespace xianmu2020.Controllers
 
         [HttpPost]
         //修改大拇指
-        public ActionResult UpdateMZ(int Iid, int CheckAuditStates) {
+        public ActionResult UpdateMZ(int Iid, int CheckAuditStates)
+        {
             var IneventoryServices = new IneventoryService().GetByWhere(item => item.Iid == Iid).SingleOrDefault();
             IneventoryServices.CheckAuditState = CheckAuditStates;
             new IneventoryService().Update(IneventoryServices);
@@ -816,9 +962,118 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryRefundPage()
         {
+            var StStorageDJTypeService = new StStorageDJTypeService();
+            var model = StStorageDJTypeService.GetByWhere(item => item.State == 2);
+            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择退货类型" });
+            ViewBag.RefundTHType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
+
+            var PService = new ProductGLService();
+            var model2 = PService.GetAll();
+            model2.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择产品" });
+            ViewBag.ProductGLType = new SelectList(model2, "PGLid", "ProductName");
+
+            var ClientService = new ClientService();
+            var model3 = ClientService.GetAll();
+            model3.Insert(0, new Client() { Cid = 0, ClientName = "请选择客户名称" });
+            ViewBag.ClientType = new SelectList(model3, "Cid", "ClientName");
             //测试 
             ViewBag.Type = new SelectList("");
             return View();
+        }
+        //退货修改
+        [HttpPost]
+        public ActionResult UpdateRefund(Refund gl)
+        {
+            var ser = new RefundService();
+            var data = ser.GetByWhere(item => item.Rid == gl.Rid).SingleOrDefault();
+            data.Rid = gl.Rid;
+            data.RefundId = gl.RefundId;
+            data.RefundCount = gl.RefundCount;
+            data.ClientId = gl.ClientId;
+            data.ClientName = gl.ClientName;
+            data.ClientSite = gl.ClientSite;
+            data.ClientContactWay = gl.ClientContactWay;
+            data.ContactMan = gl.ContactMan;
+            data.PreparedMan = gl.PreparedMan;
+            data.Remark = gl.Remark;
+            data.PreparedTime = gl.PreparedTime;
+            data.Standby1 = gl.Standby1;
+            data.Standby4 = gl.Standby4;
+            data.Standby2 = 0;
+            data.Standby3 = "空";
+            data.State = 1;
+            gl.RefundAuditState = data.RefundAuditState;
+            var saveResu = ser.Update(data);
+            var result = new
+            {
+                ActionResult = saveResu,
+                Msg = saveResu ? "修改成功" : "修改失败"
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //修改查询
+        public ActionResult RefundData(int id)
+        {
+
+            var ser = new RefundService();
+            var model = ser.GetByWhere(item => item.Rid == id);
+
+            var newform = model.Select(item => new
+            {
+                Rid = item.Rid,
+                RefundId = item.RefundId,
+                RefundCount = item.RefundCount,
+                ClientId = item.ClientId,
+                ClientName = item.ClientName,
+                ClientSite = item.ClientSite,
+                ClientContactWay = item.ClientContactWay,
+                ContactMan = item.ContactMan,
+                PreparedMan = item.PreparedMan,
+                RefundAuditState = item.RefundAuditState,
+                Remark = item.Remark,
+                PreparedTime = Convert.ToDateTime(item.PreparedTime).ToString("yyyy-MM-dd"),
+                State = item.State,
+                Standby1 = item.Standby1,
+                Standby2 = item.Standby2,
+                Standby3 = item.Standby3,
+                Standby4 = item.Standby4
+            });
+
+            var result = new
+            {
+                data = newform
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //查询客户
+        public ActionResult QueryKH(int id)
+        {
+            Expression<Func<Client, bool>> where = item => item.State == 1 && item.Cid == id;
+            var SupplierService = new ClientService();
+            var Supplierlist = SupplierService.GetByWhere(where);
+
+            var newform = Supplierlist.Select(item => new
+            {
+                Cid = item.Cid,
+                ClientId = item.ClientId,
+                ClientName = item.ClientName,
+                Phone = item.Phone,
+                Fax = item.Fax,
+                Email = item.Email,
+                CreationTime = item.CreationTime,
+                State = item.State,
+                Standby1 = item.Standby1,
+                Standby2 = item.Standby2,
+                Standby3 = item.Standby3,
+                Standby4 = item.Standby4
+
+            });
+
+            var result = new
+            {
+                data = newform
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetRefun(RequestDto dto, int zt)
         {
@@ -835,12 +1090,14 @@ namespace xianmu2020.Controllers
             var pageCount = 0;
             var count = 0;
 
-            var RefundModel = new RefundService().GetByWhereAsc(where,item=>item.PreparedTime,ref pageIndex,ref pageCount,ref count, pageSize);
-            var newRefund = RefundModel.Select(item => new {
+            var RefundModel = new RefundService().GetByWhereAsc(where, item => item.PreparedTime, ref pageIndex, ref pageCount, ref count, pageSize);
+            var newRefund = RefundModel.Select(item => new
+            {
                 Rid = item.Rid,
                 RefundId = item.RefundId,
-                RefundCount=item.RefundCount,
+                RefundCount = item.RefundCount,
                 Standby1 = item.Standby1,//把这个字段当成退货类型字段
+                Standby4 = item.Standby4,//把这个字段当成退货产品
                 RefundAuditState = item.RefundAuditState,
                 PreparedMan = item.PreparedMan,
                 PreparedTime = Convert.ToDateTime(item.PreparedTime).ToString("yyyy-MM-dd")
@@ -851,7 +1108,8 @@ namespace xianmu2020.Controllers
 
         [HttpPost]
         //删除（改状态）
-        public ActionResult DelRefund(int Rid) {
+        public ActionResult DelRefund(int Rid)
+        {
             var RefundService = new RefundService().GetByWhere(item => item.Rid == Rid).SingleOrDefault();
             RefundService.State = 0;
             new RefundService().Update(RefundService);
@@ -860,8 +1118,9 @@ namespace xianmu2020.Controllers
 
         [HttpPost]
         //大拇指该状态
-        public ActionResult RefundUpSHZT(int Rid,int RefundAuditStates) {
-            var RefundService = new RefundService().GetByWhere(item=>item.Rid==Rid).SingleOrDefault();
+        public ActionResult RefundUpSHZT(int Rid, int RefundAuditStates)
+        {
+            var RefundService = new RefundService().GetByWhere(item => item.Rid == Rid).SingleOrDefault();
             RefundService.RefundAuditState = RefundAuditStates;
             new RefundService().Update(RefundService);
             return Json(JsonRequestBehavior.AllowGet);
@@ -874,45 +1133,40 @@ namespace xianmu2020.Controllers
         public ActionResult QueryRefundThAdd(string kehuid)
         {
             //退货类型
-            var RefundTHType = new StStorageDJTypeService().GetByWhere(item=>item.State==4);
-            RefundTHType.Insert(0,new ChuBaoPanTuiTypes() {CBPTTid=0,DaBillTYpeName="请选择退货单类型" });
+            var RefundTHType = new StStorageDJTypeService().GetByWhere(item => item.State == 2);
+            RefundTHType.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择退货单类型" });
             ViewBag.RefundTHType = new SelectList(RefundTHType, "CBPTTid", "DaBillTYpeName");
+
+            var PService = new ProductGLService();
+            var model2 = PService.GetAll();
+            model2.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择产品" });
+            ViewBag.ProductGLType = new SelectList(model2, "PGLid", "ProductName");
+
             //客户
-            var ClientModel = new ClientService().GetByWhere(item=>true);
-            ClientModel.Insert(0,new Client() { Cid=0,ClientId="请选择客户编号"});
-            ViewBag.ClientModel = new SelectList(ClientModel, "Cid", "ClientId");
-
-
-            //var Refundlist = new RefundService().GetByWhere(item => item.Rid==Typeid).SingleOrDefault();
-            //var result = new
-            //{
-            //    ClientName = Refundlist.ClientName,
-            //    ClientSite = Refundlist.ClientSite,
-            //    ClientContactWay = Refundlist.ClientContactWay,
-            //    ContactMan = Refundlist.ContactMan
-            //};
-
-            //测试 
-            ViewBag.Type = new SelectList("");
-            //return Json(result,JsonRequestBehavior.AllowGet);
+            var ClientService = new ClientService();
+            var model3 = ClientService.GetAll();
+            model3.Insert(0, new Client() { Cid = 0, ClientName = "请选择客户名称" });
+            ViewBag.ClientType = new SelectList(model3, "Cid", "ClientName");
             return View();
         }
 
         //新增产品退货
         [HttpPost]
-        public ActionResult THProduct(Refund refund) {
+        public ActionResult THProduct(Refund refund)
+        {
             var RefundTHService = new RefundService();
             refund.RefundAuditState = 1;
             refund.State = 1;
-            refund.Standby1 = 1;
+            refund.Standby3 = "";
             var AddList = RefundTHService.Add(refund);
-            var AddResult = new {
+            var AddResult = new
+            {
                 AddRefundAcion = AddList,
                 Msg = AddList ? "添加成功！" : "添加失败！"
             };
-            return Json(AddResult,JsonRequestBehavior.AllowGet);
+            return Json(AddResult, JsonRequestBehavior.AllowGet);
         }
         #endregion
-       
+
     }
 }
