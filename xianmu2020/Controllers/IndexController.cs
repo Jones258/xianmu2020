@@ -717,7 +717,7 @@ namespace xianmu2020.Controllers
         //审核通过
         public ActionResult GetBreakageData(RequestDto re)
         {
-            Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 3;
+            Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 1;
 
             var BreakageGLService = new BreakageGLService();
             var pageCount = 0;
@@ -749,7 +749,7 @@ namespace xianmu2020.Controllers
         //待审核
         public ActionResult GetBreakageData2(RequestDto re)
         {
-            Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 1;
+            Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 2;
 
             var BreakageGLService = new BreakageGLService();
             var pageCount = 0;
@@ -781,7 +781,7 @@ namespace xianmu2020.Controllers
         //审核未通过
         public ActionResult GetBreakageData3(RequestDto re)
         {
-            Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 2;
+            Expression<Func<BreakageGL, bool>> where = item => item.State == 1 && item.BreakageGLAduitState == 3;
 
             var BreakageGLService = new BreakageGLService();
             var pageCount = 0;
