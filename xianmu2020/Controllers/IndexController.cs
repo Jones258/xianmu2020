@@ -454,7 +454,7 @@ namespace xianmu2020.Controllers
             gl.Standby1 = 1;
             gl.Standby2 = 1;
             gl.Standby3 = null;
-            gl.StStorageState = 3;
+            gl.StStorageState = 1;
             var saveResu = ser.Add(gl);
             var result = new
             {
@@ -653,7 +653,7 @@ namespace xianmu2020.Controllers
         {
             var ser = new BreakageGLService();
             gl.State = 1;
-            gl.BreakageGLAduitState = 3;
+            gl.BreakageGLAduitState = 1;
             var saveResu = ser.Add(gl);
             var result = new
             {
