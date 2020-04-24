@@ -17,6 +17,10 @@ namespace xianmu2020.Controllers
         {
             get { return 2; }
         }
+        public int PageSize
+        {
+            get { return 2; }
+        }
         // GET: Index
         public ActionResult Index()
         {
@@ -505,18 +509,17 @@ namespace xianmu2020.Controllers
             var pageIndex = re.PageIndex;
             var pageCount = 0;
             var count = 0;
-            var DeliveryList = new DeliveryService().GetByWhereAsc(where, item => item.CreationTime, ref pageIndex, ref pageCount, ref count, pageSize);
-            var DeliveryNew = DeliveryList.Select(item => new
-            {
-                Did = item.Did,
-                DeliveryId = item.DeliveryId,
-                DeliveryTYpe = item.DeliveryTYpe,
+            var DeliveryList = new DeliveryService().GetByWhereAsc(where,item=>item.CreationTime,ref pageIndex,ref pageCount,ref count,pageSize);
+            var DeliveryNew = DeliveryList.Select(item=> new {
+                Did=item.Did,
+                DeliveryId=item.DeliveryId,
+                DeliveryTYpe=item.DeliveryTYpe,
                 ClientNames = item.ClientNames,
-                TotalCount = item.TotalCount,
-                TotalMoney = item.TotalMoney,
-                DeliveryAuditState = item.DeliveryAuditState,
-                OperatingMode = item.OperatingMode,
-                PreparedBy = item.PreparedBy,
+                TotalCount=item.TotalCount,
+                TotalMoney=item.TotalMoney,
+                DeliveryAuditState=item.DeliveryAuditState,
+                OperatingMode=item.OperatingMode,
+                PreparedBy=item.PreparedBy,
                 CreationTime = Convert.ToDateTime(item.CreationTime).ToString("yyyy-MM-dd")
             });
             var result = new { DeliveryAction = DeliveryNew, PageIndex = pageIndex, PageCount = pageCount, Count = count };
@@ -553,26 +556,53 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryAddSingle()
         {
-            var StStorageDJTypeService = new StStorageDJTypeService();
-            var model = StStorageDJTypeService.GetByWhere(item => item.State == 6);
-            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择报损类型" });
-            ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
-
-            var PService = new ProductGLService();
-            var model2 = PService.GetAll();
-            model2.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择产品" });
-            ViewBag.ProductGLType = new SelectList(model2, "PGLid", "ProductName");
-
-            var ClientService = new ClientService();
-            var model3 = ClientService.GetAll();
-            model3.Insert(0, new Client() { Cid = 0, ClientName = "请选择客户名称" });
-            ViewBag.ClientType = new SelectList(model3, "Cid", "ClientName");
+            //出库单类型
+            var model = new StStorageDJTypeService().GetByWhere(item => item.State == 5);
+            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择出库单类型" });
+            ViewBag.DeliveryType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
+            //客户
+            var ClientModel = new ClientService().GetByWhere(item=>item.State==1);
+            ClientModel.Insert(0,new Client() {Cid=0,ClientName="请选择客户" });
+            ViewBag.Clients = new SelectList(ClientModel,"Cid","ClientName");
+            //下拉框产品
+            var ProductGuanLi = new ProductGLService().GetByWhere(item => item.State == 1);
+            ProductGuanLi.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择出库产品" });
+            ViewBag.Standby3 = new SelectList(ProductGuanLi, "PGLid", "ProductName");
             return View();
         }
-        public int PageSize
-        {
-            get { return 2; }
+
+        //根据客户下拉框查找
+        public ActionResult GetClientXL(int Cid) {
+            var ClientModel = new ClientService().GetByWhere(item=>item.Cid==Cid);
+            var newClient = ClientModel.Select(item=> new {
+                Cid=item.Cid,
+                ClientId = item.ClientId,
+                ClientName = item.ClientName,
+                Phone = item.Phone,
+                Standby3 = item.Standby3,
+                Standby4 = item.Standby4
+            });
+            var result = new { ClientAction=newClient };
+            return Json(result,JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        //添加API
+        public ActionResult GetAddDelivery(Delivery de) {  
+            de.OperatingMode = "电脑";
+            de.CreationTime = DateTime.Now;
+            de.State = 1;
+            de.DeliveryAuditState = 1;
+            var DecimalModel = new DeliveryService().Add(de);
+            var AddResult = new {
+                DeliveryAction = DecimalModel,
+                Msg= DecimalModel ? "添加成功！":"添加失败！"
+            };
+            return Json(AddResult,JsonRequestBehavior.AllowGet);
+        }
+
+
+
         /// <summary>
         /// 报损管理页面视图
         /// </summary>

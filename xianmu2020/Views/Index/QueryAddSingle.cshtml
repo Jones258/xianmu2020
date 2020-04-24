@@ -23,41 +23,50 @@
             </div>
         </div>
         <div class="row" style="border:1px dotted black;width:1118px;height:550px; margin-left:-89px;">
-            <div style="border:0px solid black; width:1100px;margin:0px auto;height:170px;margin-top:15px;background-color:#f5f8f8;">
+            <div style="border:0px solid black; width:1100px;margin:0px auto;height:230px;margin-top:15px;background-color:#f5f8f8;">
                 <div class="row">
                     <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:40px;">
-                        <label class="control-label">出库单编号</label><input type="tel" class="form-control"  placeholder="可不填,自动生成" />
+                        <label class="control-label">出库单编号</label><input name="DeliveryId" type="text" class="form-control"  placeholder="可不填,自动生成" />
                     </div>
                     <div class=" col-md-2 form-inline" style="margin-top:13px;">
                         <label class="control-label">出库单类型</label> @Html.DropDownList("DeliveryType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
                     </div>
                     <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">发货日期</label><input type="date" class="form-control" />
+                        <label class="control-label">发货日期</label><input name="DispatchTime" type="date" class="form-control" />
                     </div>
                     <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">客户名称</label> @Html.DropDownList("Client", null, htmlAttributes: new { @class = "form-control", @style = "width:170px;" })
+                        <label class="control-label">出库产品</label>@Html.DropDownList("Standby3", null, htmlAttributes: new { @class = "form-control", @style = "width:159px;" })
                     </div>
                     <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">客户编号</label><input type="text" class="form-control" @*placeholder="输入关键字搜索或者双击选择"*@ />
+                        <label class="control-label">出库数量</label><input name="TotalCount" type="text" class="form-control" />
                     </div>
-                  
+                                                         
                 </div>
                 <div class="row">
                     <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:40px;">
-                        <label class="control-label">客户联系方式</label> <input type="text" class="form-control" />
+                        <label class="control-label">客户名称</label> @Html.DropDownList("Clients", null, htmlAttributes: new { @class = "form-control", @style = "width:159px;" })
+                    </div> 
+                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                        <label class="control-label">客户编号</label><input name="ClientId" type="text" class="form-control" @*placeholder="输入关键字搜索或者双击选择"*@ />
+                    </div>
+                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                        <label class="control-label">客户联系方式</label> <input name="ClientContactWay" type="text" class="form-control" />
 
                     </div>
                     <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">客户地址</label><input type="text" class="form-control" />
+                        <label class="control-label">客户地址</label><input name="ClientSite" type="text" class="form-control" />
                     </div>
                     <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">联系人</label><input type="text" class="form-control" />
+                        <label class="control-label">联系人</label><input name="ContactMan" type="text" class="form-control" />
                     </div>
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" />
+                                    
+                </div>
+                <div class="row">
+                    <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:40px;">
+                        <label class="control-label">制单人</label><input name="PreparedBy" type="text" class="form-control" value="adminserin" />
                     </div>
-                    <div class=" col-md-3 form-inline" style="margin-top:13px;">
-                        <label class="control-label">备注</label><input type="text" class="form-control" />
+                    <div class=" col-md-4 form-inline" style="margin-top:13px;">
+                        <label class="control-label">备注</label><input name="Remark" type="text" class="form-control" />
                     </div>
                 </div>
             </div>
@@ -94,7 +103,7 @@
             </div>*@
             <div class="row" style="border:0px solid black;width:1100px;height:90px; margin-left:8px;margin-top:20px;background-color:#f5f8f8;">
                 <div class="col-md-5 form-group form-inline" style="margin-top:25px;">
-                    <button type="button" class="btn btn-info">保存</button>
+                    <button id="btnAdd" type="button" class="btn btn-info">保存</button>
                     <a href="@Url.Action("QueryDelivery")" class="btn btn-danger">取消</a>
                 </div>
             </div>
@@ -105,6 +114,58 @@
     $("#btnAdd").click(function () {
         $("#myModals").modal();
     })
+    $(function () {
+        //客户下拉选择
+        KeHuSelect();
+        $("#btnAdd").click(AddDecimal);
+    })
+
+    //查找客户
+    function KeHuSelect() {
+        $("#Clients").change(function () {
+            var ClientsValue = $(this).val();
+            $.ajax({
+                url:"@Url.Action("GetClientXL")",
+                data: { Cid: ClientsValue },
+                dataType:"json",
+                type:"get",
+                success: function (result) {
+                    $.each(result.ClientAction, function (index, value) {
+                            $("[name=ClientId]").val(value.ClientId);
+                            $("[name=ClientContactWay]").val(value.Phone);
+                            $("[name=ClientSite]").val(value.Standby3);
+                            $("[name=ContactMan]").val(value.Standby4);
+                    })
+                }
+            })
+        })
+    }
+
+        //添加方法
+        function AddDecimal() {
+            var Standby3Value = $("[name=Standby3]").find("option:selected").text();
+            var ClientsNames = $("[name=Clients]").find("option:selected").text();
+            var DeliveryIdValue = $("[name=DeliveryId]").val();
+            var DeliveryTypeValue = $("[name=DeliveryType]").val();
+            var DispatchTimeValue = $("[name=DispatchTime]").val();
+            var TotalCountValue = $("[name=TotalCount]").val();
+            var ClientIdValue = $("[name=ClientId]").val();
+            var ClientContactWayValue = $("[name=ClientContactWay]").val();
+            var ClientSiteValue = $("[name=ClientSite]").val();
+            var ContactManValue = $("[name=ContactMan]").val();
+            var PreparedByValue = $("[name=PreparedBy]").val();
+            var RemarkValue = $("[name=Remark]").val();
+            $.ajax({
+                url:"@Url.Action("GetAddDelivery")",
+                data: { Standby3: Standby3Value, ClientNames: ClientsNames, DeliveryId: DeliveryIdValue, DeliveryType: DeliveryTypeValue, DispatchTime: DispatchTimeValue, TotalCount: TotalCountValue, ClientId: ClientIdValue, ClientContactWay: ClientContactWayValue, ClientSite: ClientSiteValue, ContactMan: ContactManValue, PreparedBy: PreparedByValue, Remark: RemarkValue },
+                dataType:"json",
+                type:"post",
+                success: function (AddResult) {
+                    alert(AddResult.Msg);
+                }
+            })
+        }
+
 
     function Kehu() {
         $("#myModal3").modal();

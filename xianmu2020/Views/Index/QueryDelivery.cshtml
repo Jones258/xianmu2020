@@ -65,8 +65,8 @@
                             <td>出库单编号</td>
                             <td>出库类型</td>
                             <td>客户名称</td>
-                            <td>总数量</td>
-                            <td>总金额</td>
+                            <td>出库数量</td>
+                            @*<td>总金额</td>*@
                             <td>状态</td>
                             <td>操作方式</td>
                             <td>制单人</td>
@@ -207,7 +207,7 @@
                     str += "<td>" + DeliveryTYpe + "</td>";
                     str += "<td>" + value.ClientNames + "</td>";
                     str += "<td>" + value.TotalCount + "</td>";
-                    str += "<td>" + value.TotalMoney + "</td>";
+                    //str += "<td>" + value.TotalMoney + "</td>";
                     if (value.DeliveryAuditState == 1) {
                         DeliveryAuditState = "待审核";
                     } else if (value.DeliveryAuditState == 2) {
