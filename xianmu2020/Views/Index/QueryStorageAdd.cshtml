@@ -25,33 +25,33 @@
             <div style="border:0px solid black; width:1100px;margin:0px auto;height:170px;margin-top:15px;background-color:#f5f8f8;">
                 <div class="col-md-3">
                     <label class="control-label">退货编号</label><input type="text" class="form-control" id="bh" />
-                </div>
+                    </div>
                 <div class=" col-md-2 form-inline">
                     <label class="control-label">选择退货产品</label> @Html.DropDownList("ProductGLType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
-                </div>
+                    </div>
                 <div class=" col-md-2 form-inline" style="margin-left:20px;">
                     <label class="control-label">退货类型</label> @Html.DropDownList("RefundTHType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
-                </div>
+                    </div>
                 <div class="col-md-3">
                     <label class="control-label">退货数量</label><input type="text" class="form-control" id="sl" />
-                </div>
+                    </div>
                 <div class="col-md-3">
                     <label class="control-label">制单日期</label><input type="date" class="form-control" value="administrator" id="sj" />
-                </div>
+                    </div>
                 <div class=" col-md-3 form-inline">
                     <label class="control-label">客户名称</label>@Html.DropDownList("ClientType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
                 </div>
-            </div>
+                    </div>
             <div class="row" style="margin-top:10px;">
                 <div class="col-md-3">
                     <label class="control-label">客户编号</label><input type="text" class="form-control" id="khbh" />
-                </div>
+                    </div>
                 <div class="col-md-3">
                     <label class="control-label">客户地址</label><input type="text" class="form-control" id="dz" />
-                </div>
+                    </div>
                 <div class="col-md-3">
                     <label class="control-label">客户联系方式</label><input type="text" class="form-control" id="lxfs" />
-                </div>
+                    </div>
                 <div class="col-md-3">
                     <label class="control-label">联系人</label><input type="text" class="form-control" id="lxr" />
                 </div>
@@ -62,19 +62,19 @@
                 </div>
                 <div class="col-md-9">
                     <label class="control-label">备注</label><input type="text" class="form-control" id="bz" />
+                        </div>
+                        
+                    </div>
                 </div>
-
-            </div>
-            </div>
 
             <div class="row" style="border:0px solid black;width:1100px;height:90px; margin-left:14px;margin-top:20px;background-color:#f5f8f8;">
                 <div class="col-md-5 form-group form-inline" style="margin-top:25px;">
                     <button type="button" class="btn btn-info" onclick="GYS()">保存</button>
                     <a href="@Url.Action("QueryStorage")" class="btn btn-danger">取消</a>
                 </div>
-            </div>
-        </div>
-    </div>
+                        </div>
+                        </div>
+                        </div>
     <script type="text/javascript">
         var id=null;
         var name=null;
@@ -92,12 +92,12 @@
                         $("#lxr").val(value.Contacts);
                         $("#lxfs").val(value.Phone);
                         $("#gysbh").val(value.SupplierId);
-                    })
-                }
+    })
+    }
             })
         });
         //供应商查询
-        function GYS() {
+    function GYS() {
             var bhValue = $("#bh").val();//入库编号
             var StStorageDJTypeValue = $("#StStorageDJType").val();//入库类型
             var ProductGLTypeValue = $("#ProductGLType").val();//入库产品
@@ -110,16 +110,16 @@
             var zjeValue = $("#zje").val();//总金额
             var gysbhValue = $("#gysbh").val();//总金额
             var bzValue = $("#bz").val();//备注
-            $.ajax({
+        $.ajax({
                 url: "@Url.Action("QueryRkAdd")",
                 data: { StoOrderId: bhValue, StoType:StStorageDJTypeValue,GoodsTotal:rksValue,TotalMoney:zjeValue,MakingSingle:zdrValue,SuppliersId:gysbhValue,SuppliersName:name,SuppliersPeople:lxrValue,SuppliersContact:lxfsValue,OrdersTime:sjValue,CreateTime:sjValue,Remark:bzValue,Standby4:ProductGLTypeValue},
                 dataType: "json",
                 type: "post",
                 success: function (ActionResult) {
                     alert(ActionResult.msg);
-                }
-            })
-        }
+            }
+        })
+    }
 
 
     </script>

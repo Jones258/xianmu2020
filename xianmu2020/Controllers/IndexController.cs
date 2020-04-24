@@ -886,7 +886,7 @@ namespace xianmu2020.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult QueryCheckPage(RequestDto dto)
-        {
+        {   
             //下拉框产品类别
             var ProductLB = new ProductSortService();
             var ProductLBList = ProductLB.GetByWhere(item => item.State == 1);
