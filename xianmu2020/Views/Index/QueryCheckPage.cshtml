@@ -53,6 +53,7 @@
                             <td><input type="checkbox" /></td>
                             <td>盘点编号</td>
                             <td>盘点类型</td>
+                            <td>盘点产品</td>
                             <td>状态</td>
                             <td>制单人</td>
                             <td>创建时间</td>
@@ -60,15 +61,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @*<tr>
-                            <td><input type="checkbox" /></td>
-                            <td>盘点编号1</td>
-                            <td>盘点类型1</td>
-                            <td>状态1</td>
-                            <td>制单人1</td>
-                            <td>创建时间1</td>
-                            <td><a id="UpdatePD" href="#"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a>&nbsp;&nbsp;&nbsp;<a id="PCD" href="#"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>&nbsp;&nbsp;&nbsp;<a href="#"><span class="glyphicon glyphicon-thumbs-down"></span></a></td>
-                        </tr>*@
                     </tbody>
                 </table>
             </div>
@@ -84,72 +76,6 @@
         </div>
     </div>
 
-    @*修改盘点*@
-    <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
-            <div class="modal-content">
-                <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">编辑盘点单</h4>
-                </div>
-                <div class="container" style="height:300px;">
-
-                    <div style="border:0px solid #d4cdcd;width:855px;height:160px;margin:0px auto;margin-top:5px;border-radius:10px;">
-                        <div class="row" style="margin-top:10px;">
-                            <div class="col-md-3">
-                                <label class="control-label">盘点编号</label><input type="text" class="form-control" disabled="disabled" />
-                            </div>
-                            <div class="col-md-3">
-                                <label class="control-label">盘点类型</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
-                            </div>
-                            <div class="col-md-3">
-                                <label class="control-label">制单人</label><input type="date" class="form-control" value="administrator" />
-                            </div>
-                            <div class="col-md-3">
-                                <label class="control-label">制单时间</label><input type="date" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top:10px;">
-                            <div class="col-md-12">
-                                <label class="control-label">备注</label><input type="text" class="form-control" />
-                            </div>                          
-                        </div>
-                      
-                    </div>
-                    <div class="row" style="margin-top:3px;">
-                        <table class="table table-bordered table-hover table-responsive">
-                            <thead>
-                                <tr style="font-weight:bold;">
-                                    <td>产品编号</td>
-                                    <td>产品名称</td>
-                                    <td>产品条码</td>
-                                    <td>规格</td>
-                                    <td>类别</td>
-                                    <td>操作</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>产品编号1</td>
-                                    <td>产品名称1</td>
-                                    <td>产品条码1</td>
-                                    <td>规格1</td>
-                                    <td>类别1</td>
-                                    <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">确定</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
     @*查看报损单详情*@
     <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
@@ -220,15 +146,79 @@
         </div>
     </div>
 
+    @*修改盘点*@
+    <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
+            <div class="modal-content" id="div2">
+                <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">编辑盘点单</h4>
+                </div>
+                <div class="container" style="height:180px;">
+
+                    <div style="border:0px solid #d4cdcd;width:855px;height:160px;margin:0px auto;margin-top:5px;border-radius:10px;">
+                        <div class="row" style="margin-top:10px;">
+                               <input id="Iid" name="Iid" type="hidden" class="form-control" disabled="disabled" />
+                            <div class="col-md-3">
+                                <label class="control-label">盘点编号</label><input id="CheckIds" name="CheckId" type="text" class="form-control" disabled="disabled" />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">制单时间</label><input name="PreparedTime" type="date" class="form-control"  />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">产品名称</label>@Html.DropDownList("Cps", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">产品类别</label>@Html.DropDownList("Lbs", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-12">
+                                <label class="control-label">备注</label><input name="Remark" type="text" class="form-control" />
+                            </div>
+                        </div>
+
+                    </div>
+                    @*<div class="row" style="margin-top:3px;">
+                        <table class="table table-bordered table-hover table-responsive">
+                            <thead>
+                                <tr style="font-weight:bold;">
+                                    <td>产品编号</td>
+                                    <td>产品名称</td>
+                                    <td>产品条码</td>
+                                    <td>规格</td>
+                                    <td>类别</td>
+                                    <td>操作</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>产品编号1</td>
+                                    <td>产品名称1</td>
+                                    <td>产品条码1</td>
+                                    <td>规格1</td>
+                                    <td>类别1</td>
+                                    <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>*@
+
+                </div>
+
+                <div class="modal-footer">
+                    <button id="Upbtn" type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
    <script type="text/javascript">
        var pageIndexValue = 1;
        var ztValue = 0;
        var ZhuanTai = null;
-
-       $("#UpdatePD").click(function () {
-           $("#myModal").modal();
-       })
+   
        //打开盘差单详细
        $("#PCD").click(function () {
            $("#myModal2").modal();
@@ -276,8 +266,51 @@
            })
            //模糊查询
            $("#btnadd").click(BindData);
+           //修改
+           $("#Upbtn").click(UpdateIneventory2);
 
        })
+
+       function UpdateIneventory() {
+           $("#myModal").modal();
+           $("#div2").show();
+           $.ajax({
+               url:"@Url.Action("QueryUpdateIneventory")",
+               data: { Iid: ZhuanTai },
+               dataType:"json",
+               type:"get",
+               success: function (UpResult) {
+                   $.each(UpResult.UpIneventory, function (index, value) {
+                       $("#Iid").val(value.Iid);
+                       $("#CheckIds").val(value.CheckId);
+                       $("[name=PreparedTime]").val(value.PreparedTime);
+                       $("[name=Cps]").find("option:selected").text(value.Standby3);
+                       $("[name=Lbs]").find("option:selected").text(value.Standby4);
+                       $("[name=Remark]").val(value.Remark);
+                       
+                   })
+               }
+           })
+       }
+       //修改
+       function UpdateIneventory2() {
+           var CheckIdsValue = $("#CheckIds").val();
+           var PreparedTimeValue = $("[name=PreparedTime]").val();
+           var CpsValue = $("[name=Cps]").find("option:selected").text();
+           var LbsValue = $("[name=Lbs]").find("option:selected").text();
+           var RemarkValue = $("[name=Remark]").val();
+          var IidValue= $("#Iid").val();
+           $.ajax({
+               url:"@Url.Action("UpdateIneventory")",
+               data: { Iid: IidValue, CheckId: CheckIdsValue, PreparedTime: PreparedTimeValue, Standby3: CpsValue, Standby4: LbsValue, Remark: RemarkValue },
+               dataType:"json",
+               type:"post",
+               success: function (UpResult) {
+                   alert(UpResult.Msg);
+               }
+           })
+       }
+
 
        //加载数据方法
        function BindData() {
@@ -292,7 +325,7 @@
            dataType: "json",
            type: "get",
            success: function (result) {
-               $("#txtLabel").html("当前第" + result.PageIndex + "页 / 共计" + result.PageCount + " 页 共计" + result.Count + " 条");
+               $("#txtLabel").html("当前第" + result.PageIndex + "页 / 共计" + result.Count + " 页 共计" + result.PageCount + " 条");
                $("#textPageIndex").val(result.PageIndex);
                pageIndexValue = result.PageIndex;
                $("table tr:gt(0)").remove();
@@ -305,6 +338,7 @@
                        CheckType = "产品盘点";
                    }
                    str += "<td>" + CheckType + "</td>";
+                   str+="<td>"+value.Standby3+"</td>";
                    if (value.CheckAuditState == 1) {
                        CheckAuditState = "待审核";
                    } else if (value.CheckAuditState == 2) {
@@ -316,11 +350,11 @@
                    str += "<td>" + value.PreparedMan + "</td>";
                    str += "<td>" + value.CreationTime + "</td>";
                    if (value.CheckAuditState == 2) {
-                       str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                       str += "<td><a onclick=\"UpdateIneventory()\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"IneventoryStateUp2()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                    } else if (value.CheckAuditState == 3) {
-                       str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                       str += "<td><a onclick=\"UpdateIneventory()\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"IneventoryStateUp1()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a></td>";
                    } else {
-                       str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"IneventoryStateUp1()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"IneventoryStateUp2()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                       str += "<td><a onclick=\"UpdateIneventory()\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"IneventoryStateUp1()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"IneventoryStateUp2()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                    }               
                    str += "</tr>";
                    $("table tbody").append(str);

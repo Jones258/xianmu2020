@@ -119,7 +119,7 @@
                             </div>
                             <div class=" col-md-3 form-inline">
                                 <label class="control-label">客户名称</label>@Html.DropDownList("ClientType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
-                            </div>
+                        </div>
                         </div>
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-3">
@@ -147,7 +147,7 @@
                     </div>
 
 
-                </div>
+                    </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="BingUpdate()">确定</button>
@@ -323,7 +323,7 @@
                         ZhuanTai = value.Rid;
                         var str = "<tr>";
                         str += "<td><input type=\"checkbox\" /></td>";
-                        str += "<td>" + value.RefundId + "</td>"; 
+                        str += "<td>" + value.RefundId + "</td>";
                        
                         if (value.Standby1 == 7) {
                             RefundTypes = "销售退货";
@@ -380,32 +380,32 @@
             $.ajax({
                 url: "@Url.Action("RefundUpSHZT")",
                 data: { Rid: ZhuanTai, RefundAuditStates: 2 },
-                dataType: "json",
-                type: "post",
-                success: function () {
-                    if (confirm("确认审核通过吗？")) {
-                        BindData();
-                        alert("审核成功！");
-                        return true;
-                    }
+            dataType: "json",
+            type: "post",
+            success: function () {
+                if (confirm("确认审核通过吗？")) {
+                    BindData();
+                    alert("审核成功！");
+                    return true;
                 }
-            })
+            }
+        })
         }
         //审核不通过
         function RefundAuditStateUp2() {
             $.ajax({
                 url: "@Url.Action("RefundUpSHZT")",
                 data: { Rid: ZhuanTai, RefundAuditStates: 3 },
-                dataType: "json",
-                type: "post",
-                success: function () {
-                    if (confirm("确认审核不通过吗？")) {
-                        BindData();
-                        alert("审核成功！");
-                        return true;
-                    }
+            dataType: "json",
+            type: "post",
+            success: function () {
+                if (confirm("确认审核不通过吗？")) {
+                    BindData();
+                    alert("审核成功！");
+                    return true;
                 }
-            })
+            }
+        })
         }
 
     </script>

@@ -147,24 +147,24 @@
                 pageIndexValue = 999999;
                 BingStorageData();
             })
-
+          
             $("#div1").hide();
-            $("#BtnGJ").click(function () {
-                $("#div1").show();
-            })
-            $("#BtnSq").click(function () {
-                $("#div1").hide();
-            })
-            $("#UpdateRuKu").click(function () {
-                $("#myModal").modal();
-            })
-            $("#SelectRK").click(function () {
-                $("#myModal2").modal();
-            })
-            $("#BtnSelect").click(BingStorageData);
-            $("#btnTwo").click(BingStorageData);
-            BingStorageData();
-
+                $("#BtnGJ").click(function () {
+                    $("#div1").show();
+                })
+                $("#BtnSq").click(function () {
+                    $("#div1").hide();
+                })
+                $("#UpdateRuKu").click(function () {
+                    $("#myModal").modal();
+                })
+                $("#SelectRK").click(function () {
+                    $("#myModal2").modal();
+                })
+                $("#BtnSelect").click(BingStorageData);
+                $("#btnTwo").click(BingStorageData);
+                BingStorageData();
+            
         })
 
         //删除
@@ -203,7 +203,7 @@
                 }
             })
         }
-
+        
         //审核不通过API2
         function UpStStorageState3() {
             $.ajax({
@@ -211,14 +211,14 @@
                 data: { Stoid: deleteid, StStorageStates: 3 },
                 dataType: "json",
                 type: "post",
-                success: function () {
-                    if (confirm("确认审核不通过吗？")) {
-                        BingStorageData()
-                        alert("审核成功！");
-                        return true;
-                    }
+            success: function () {
+                if (confirm("确认审核不通过吗？")) {
+                    BingStorageData()
+                    alert("审核成功！");
+                    return true;
                 }
-            })
+            }
+        })
         }
         //修改
         function BingUpdate() {
@@ -333,13 +333,13 @@
                             str += "<td><a id=\"UpdateRuKu\" onclick=\"Upda()\" href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
                         } else {
                             str += "<td><a id=\"UpdateRuKu\" onclick=\"Upda()\" href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState2()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState3()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
-                        }
+                        }                      
                         str += "</tr>";
                         $("table tbody").append(str);
                     })
                 }
-            })
-        }
+           })
+       }
     </script>
 
     @*修改入库单*@
@@ -350,51 +350,51 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">编辑入库单</h4>
                 </div>
-                <div class="container" style="height:300px;">
+                    <div class="container" style="height:300px;">
 
-                    <div style="border:0px solid #d4cdcd;width:855px;height:230px;margin:0px auto;margin-top:5px;border-radius:10px;">
-                        <div class="row" style="margin-top:10px;">
-                            <div class="col-md-3">
+                        <div style="border:0px solid #d4cdcd;width:855px;height:230px;margin:0px auto;margin-top:5px;border-radius:10px;">
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-md-3">
                                 <label class="control-label">编号</label><input type="text" class="form-control" id="Stid" />
                             </div>
                             <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:90px;">
                                 <label class="control-label">入库单编号</label><input type="text" class="form-control" placeholder="可不填,自动生成" id="bh" />
-                            </div>
+                                </div>
                             <div class=" col-md-2 form-inline" style="margin-top:13px;">
                                 <label class="control-label">入库单类型</label> @Html.DropDownList("StStorageDJType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
-                            </div>
+                                </div>
                             <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:70px;">
                                 <label class="control-label">选择入库产品</label> @Html.DropDownList("ProductGLType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
-                            </div>
+                                </div>
                             <div class=" col-md-2 form-inline" style="margin-top:13px;">
                                 <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" id="zdr" />
-                            </div>
+                                </div>
                             <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:70px;">
                                 <label class="control-label">选择供应商</label> @Html.DropDownList("SupplierType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
                             </div>
-                        </div>
+                                </div>
                         <div class="row">
                             <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:90px;">
                                 <label class="control-label">供应商联系人</label><input type="text" class="form-control" id="lxr" />
-                            </div>
+                                </div>
                             <div class=" col-md-2 form-inline" style="margin-top:13px;">
                                 <label class="control-label">供应商联系方式</label><input type="text" class="form-control" id="lxfs" />
-                            </div>
+                                </div>
                             <div class=" col-md-2 form-inline" style="margin-top:13px;">
                                 <label class="control-label">入库数</label><input type="text" class="form-control" id="rks" />
-                            </div>
+                                </div>
                             <div class=" col-md-2 form-inline" style="margin-top:13px;">
                                 <label class="control-label">总金额</label><input type="text" class="form-control" id="zje" />
                             </div>
                             <div class=" col-md-2 form-inline" style="margin-top:13px;">
                                 <label class="control-label">制单时间</label><input type="date" class="form-control" id="sj" />
-                            </div>
+                                </div>
                             <div class=" col-md-4 form-inline" style="margin-top:13px;">
                                 <label class="control-label">备注</label><input type="text" class="form-control" id="bz" />
                             </div>
                         </div>
+                        </div>
                     </div>
-                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="BingUpdate()">确定</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
@@ -402,7 +402,7 @@
             </div>
         </div>
     </div>
-
+    
 
 </body>
 </html>
