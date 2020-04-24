@@ -919,6 +919,7 @@ namespace xianmu2020.Controllers
                 CheckId = item.CheckId,
                 CheckType = item.CheckType,
                 Standby3 = item.Standby3,
+                Standby4 = item.Standby4,
                 PreparedTime = Convert.ToDateTime(item.PreparedTime).ToString("yyyy-MM-dd"),
                 PreparedMan = item.PreparedMan,
                 CheckAuditState = item.CheckAuditState,
