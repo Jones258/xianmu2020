@@ -326,6 +326,7 @@ namespace xianmu2020.Controllers
             ViewBag.StStorageDJType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
             //测试 
             ViewBag.Type = new SelectList("");
+
             return View();
         }
 
@@ -452,7 +453,7 @@ namespace xianmu2020.Controllers
         }
 
         //修改先查看
-        public ActionResult UpQueryDelivery(int ) {
+        public ActionResult UpQueryDelivery(int Cid) {
             return View();
         }
 
