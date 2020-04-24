@@ -26,73 +26,49 @@
                 <div style="border:0px solid black; width:1100px;margin:0px auto;height:230px;margin-top:15px;background-color:#f5f8f8;">
                     <div class="row">
                         <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:30px;">
-                            <label class="control-label">退货编号</label><input name="RefundId" type="tel" class="form-control" placeholder="可不填,自动生成" />
+                            <label class="control-label">退货编号</label><input name="RefundId" type="tel" class="form-control" placeholder="可不填,自动生成" id="bh"/>
                         </div>
                         <div class=" col-md-2 form-inline" style="margin-top:13px;">
                             <label class="control-label">退货类型</label> @Html.DropDownList("RefundTHType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
                         </div>
+                        
                         <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                            <label class="control-label">制单日期</label><input name="PreparedTime" type="date" class="form-control" />
+                            <label class="control-label">制单日期</label><input name="PreparedTime" type="date" class="form-control" id="sj"/>
+                        </div>
+                        <div class=" col-md-2 form-inline">
+                            <label class="control-label">选择退货产品</label> @Html.DropDownList("ProductGLType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
                         </div>
                         <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                            <label class="control-label">客户编号</label>@Html.DropDownList("ClientModel", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
+                            <label class="control-label">客户名称</label>@Html.DropDownList("ClientType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
                         </div>
-                        <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                            <label class="control-label">客户名称</label><input id="ClientName" name="ClientName" type="text" class="form-control"  />
-                        </div>
+                        
                     </div>
                     <div class="row">
+                        <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                            <label class="control-label">客户编号</label><input id="khbh" name="ClientName" type="text" class="form-control" />
+                        </div>
                         <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:30px;">
-                            <label class="control-label">客户地址</label><input id="ClientSite" name="ClientSite" type="text" class="form-control"  />
+                            <label class="control-label">客户地址</label><input id="dz" name="ClientSite" type="text" class="form-control" />
                         </div>
                         <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                            <label class="control-label">客户联系方式</label><input id="ClientContactWay" name="ClientContactWay" type="text" class="form-control"  />
+                            <label class="control-label">客户联系方式</label><input id="lxfs" name="ClientContactWay" type="text" class="form-control" />
                         </div>
                         <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                            <label class="control-label">联系人</label><input id="ContactMan" name="ContactMan" type="text" class="form-control" />
+                            <label class="control-label">联系人</label><input id="lxr" name="ContactMan" type="text" class="form-control" />
                         </div>
                         <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                            <label class="control-label">制单人</label><input name="PreparedMan" type="text" class="form-control" value="administrator" />
+                            <label class="control-label">制单人</label><input name="PreparedMan" type="text" class="form-control" value="administrator" id="zdr"/>
                         </div>
                         <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                            <label class="control-label">退货数量</label><input name="RefundCount" type="text" class="form-control" />
+                            <label class="control-label">退货数量</label><input name="RefundCount" type="text" class="form-control" id="sl"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class=" col-md-4 form-inline" style="margin-top:13px;margin-left:30px;">
-                            <label class="control-label">备注</label><input name="Remark" type="text" class="form-control" />
+                            <label class="control-label">备注</label><input name="Remark" type="text" class="form-control" id="bz"/>
                         </div>
                     </div>
                 </div>
-
-                @*<div class="row" style="margin-top:22px;">
-                    <table class="table table-bordered table-hover table-responsive" style=" width:1100px;margin:0px auto; border:1px solid #e07a7a">
-                        <thead>
-                            <tr style="font-weight:bold;">
-                                <td>产品编号</td>
-                                <td>产品名称</td>
-                                <td>产品条码</td>
-                                <td>批次</td>
-                                <td>库位名称</td>
-                                <td>出库数量</td>
-                                <td>退货数量</td>
-                                <td>操作</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>产品编号11</td>
-                                <td>产品名称1</td>
-                                <td>产品条码1</td>
-                                <td>批次1</td>
-                                <td>库位名称1</td>
-                                <td>出库数量1</td>
-                                <td>退货数量1</td>
-                                <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>*@
                 <div class="row" style="border:0px solid black;width:1100px;height:90px; margin-left:14px;margin-top:20px;background-color:#f5f8f8;">
                     <div class="col-md-5 form-group form-inline" style="margin-top:25px;">
                         <button id="btnAdd" type="button" class="btn btn-info">保存</button>
@@ -103,51 +79,74 @@
         </div>
 
     </form>
-  
-    <script type="text/javascript">
-        $(function () {
-            $("#btnAdd").click(AddBindData);
 
-                @*//下拉框选中事件
-                $("#ClientModel").change(function () {
-                    var ClientModelValue = $(this).val();
-                    $.ajax({
-                        url:"@Url.Action("QueryRefundThAdd")",
-                        data: { Typeid: ClientModelValue },
-                    dataType:"json",
-                    type:"get",
+    <script type="text/javascript">
+
+        $(function () {
+            $("#btnAdd").click(function () {
+                BingUpdate();
+            });
+            //下拉框选中事件
+            $("#ClientType").change(function () {
+                var SupplierValue = $(this).val();
+                name == $(this).find("option:selected").text();
+                id = $(this).val();
+                $.ajax({
+                    url: "@Url.Action("QueryKH")",
+                    data: { id: SupplierValue },
+                    dataType: "json",
+                    type: "get",
                     success: function (result) {
-                        $("#ClientName").html("");
-                        $("#ClientName").html(result.ClientName);
-                        $("#ClientSite").html(result.ClientSite);
-                        $("#ClientContactWay").html(result.ClientContactWay);
-                        $("#ContactMan").html(result.ContactMan);
+                        $.each(result.data, function (index, value) {
+                            $("#lxr").val(value.Standby4);
+                            $("#lxfs").val(value.Phone);
+                            $("#khbh").val(value.ClientId);
+                            $("#dz").val(value.Standby3);
+                        })
                     }
                 })
-            })*@
-           
+            });
+            function BingUpdate() {
+                var sRefundId = $("#bh").val();//退货编号
+                var sStandby1 = $("#RefundTHType").val();//退货类型
+                var sStandby4 = $("#ProductGLType").find("option:selected").text();//退货产品
+                var sPreparedMan = $("#zdr").val();//制单人
+                var sClientName = $("#ClientType").find("option:selected").text();//客户
+                var sClientId = $("#khbh").val();//客户编号
+                var sContactMan = $("#lxr").val();//联系人
+                var sClientSite = $("#dz").val();//地址
+                var sClientContactWay = $("#lxfs").val();//联系方式
+                var sPreparedTime = $("#sj").val();//制单时间
+                var sRefundCount = $("#sl").val();//退货数
+                var sRemark = $("#bz").val();//备注
+                $.ajax({
+                    url: "@Url.Action("THProduct")",
+                    data: {
+                        RefundId: sRefundId,
+                        RefundCount: sRefundCount,
+                        ClientId: sClientId,
+                        ClientName: sClientName,
+                        ClientSite: sClientSite,
+                        ClientContactWay: sClientContactWay,
+                        ContactMan: sContactMan,
+                        PreparedMan: sPreparedMan,
+                        Remark: sRemark,
+                        PreparedTime: sPreparedTime,
+                        Standby1: sStandby1,
+                        Standby4: sStandby4
+                    },
+                    dataType: "json",
+                    type: "post",
+                    success: function (result) {
+                        alert(result.Msg);
+                    }
+                })
+            }
         })
-        
-      
 
 
-        //添加方法
-       function AddBindData() {
-            var formValue = $("form").serializeArray();
-            var objJson = {};
-            $.each(formValue, function (index,value) {
-                objJson[value.name] = value.value;
-            })
-            $.ajax({
-                url:"@Url.Action("THProduct")",
-                data: objJson,
-                dataType:"json",
-                type:"post",
-                success: function (AddResult) {
-                    alert(AddResult.Msg);
-                }
-            })
-        }
+
+
 
     </script>
 

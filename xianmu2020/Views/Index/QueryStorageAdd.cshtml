@@ -23,273 +23,106 @@
         </div>
         <div class="row" style="border:1px dotted black;width:1118px;height:550px; margin-left:-89px;">
             <div style="border:0px solid black; width:1100px;margin:0px auto;height:170px;margin-top:15px;background-color:#f5f8f8;">
-                <div class="row">
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:90px;">
-                        <label class="control-label">入库单编号</label><input type="text" class="form-control" disabled="disabled" placeholder="可不填,自动生成" />
-                    </div>
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">入库单类型</label> @Html.DropDownList("StStorageDJType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
-                    </div>
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" />
-                    </div>
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">供应商编号</label><input type="text" ondblclick="GongYinShang()"  class="form-control" placeholder="输入关键字搜索或者双击选择" />
-                    </div>
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">供应商名称</label><input type="text" class="form-control" />
-                    </div>
+                <div class="col-md-3">
+                    <label class="control-label">入库编号</label><input type="text" class="form-control" id="bh" />
                 </div>
-                <div class="row">
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:90px;">
-                        <label class="control-label">供应商联系人</label><input type="text" class="form-control" />
-                    </div>
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">供应商联系方式</label><input type="text" class="form-control" />
-                    </div>
-                    <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                        <label class="control-label">制单时间</label><input type="date" class="form-control" />
-                    </div>
-                    <div class=" col-md-4 form-inline" style="margin-top:13px;">
-                        <label class="control-label">备注</label><input type="text" class="form-control" />
-                    </div>
+                <div class=" col-md-2 form-inline">
+                    <label class="control-label">选择入库产品</label> @Html.DropDownList("ProductGLType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
+                </div>
+                <div class=" col-md-2 form-inline" style="margin-left:20px;">
+                    <label class="control-label">入库类型</label> @Html.DropDownList("StStorageDJType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label">入库数量</label><input type="text" class="form-control" id="rks" />
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label">制单日期</label><input type="date" class="form-control" value="administrator" id="sj" />
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label">入库商品金额</label><input type="text" class="form-control" id="zje" />
+                </div>
+                <div class=" col-md-3 form-inline" style="margin-top:20px;">
+                    <label class="control-label">供应商名称</label>@Html.DropDownList("SupplierType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
                 </div>
             </div>
+            <div class="row" style="margin-top:10px;">
+                <div class="col-md-3">
+                    <label class="control-label">供应商编号</label><input type="text" class="form-control" id="gysbh" />
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label">供应商联系方式</label><input type="text" class="form-control" id="lxfs" />
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label">联系人</label><input type="text" class="form-control" id="lxr" />
+                </div>
+            </div>
+            <div class="row" style="margin-top:10px;">
+                <div class="col-md-3">
+                    <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" id="zdr" />
+                </div>
+                <div class="col-md-9">
+                    <label class="control-label">备注</label><input type="text" class="form-control" id="bz" />
+                </div>
 
-            @*<div class="row" style="margin-top:22px;">
-                <table class="table table-bordered table-hover table-responsive" style=" width:1100px;margin:0px auto; border:1px solid #e07a7a">
-                    <thead>
-                        <tr style="font-weight:bold;">
-                            <td>产品名称</td>
-                            <td>产品条码</td>
-                            <td>规格</td>
-                            <td>批次</td>
-                            <td>单价</td>
-                            <td>入库数</td>
-                            <td>库位</td>
-                            <td>操作</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>挖土机</td>
-                            <td>0019</td>
-                            <td>规格1</td>
-                            <td>90</td>
-                            <td>800</td>
-                            <td>100</td>
-                            <td>哪个库位</td>
-                            <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>*@
+            </div>
             <div class="row" style="border:0px solid black;width:1100px;height:90px; margin-left:14px;margin-top:20px;background-color:#f5f8f8;">
                 <div class="col-md-5 form-group form-inline" style="margin-top:25px;">
-                    <button id="btnAdd" type="button" class="btn btn-info">新增产品</button>
-                    <button type="button" class="btn btn-info">保存</button>
-                    @*<button type="button" class="btn btn-danger">取消</button>*@
+                    <button type="button" class="btn btn-info" onclick="GYS()">保存</button>
                     <a href="@Url.Action("QueryStorage")" class="btn btn-danger">取消</a>
                 </div>
             </div>
         </div>
+
+       
     </div>
-
-
-
-
-    @*入库产品模态框*@
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="color:white; background-color:#37435c;">
-                    <button  type="button" class="close" data-dismiss="modal" aria-label="Close"><span  aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">入库产品</h4>
-                </div>
-                <div class="modal-body" id="cnt">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label class="control-label">产品编号</label><input id="ProductID" ondblclick="Chanping()" type="text" class="form-control" placeholder="输入关键字搜索或双击选择" />
-                        </div>
-                        <div class="col-md-4">
-                            <label class="control-label">产品名称</label><input type="text" class="form-control" />
-                        </div>
-                        <div class="col-md-4">
-                            <label class="control-label">产品规格</label><input type="text" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top:20px;">
-                        <div class="col-md-4">
-                            <label class="control-label">产品单价</label><input type="text" class="form-control" />
-                        </div>
-                        <div class="col-md-4">
-                            <label class="control-label">入库库位</label>@Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
-                        </div>
-                        <div class="col-md-4">
-                            <label class="control-label">入库数量</label><input type="text" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top:20px;">
-                        <div class="col-md-4">
-                            <label class="control-label">产品批次</label><input type="text" class="form-control" />
-                        </div>
-                        
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">确定</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    @*搜索供应商模态框*@
-    <div class="modal fade" id="myModal3" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document" style="margin:0px auto; width:800px;height:300px;">
-            <div class="modal-content">
-                <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">选择客户</h4>
-                </div>
-                <div class="modal-body" id="cnt" style="border:1px solid pink;height:55px;  ">
-                    <div class="row form-group form-inline" style="margin-top:-5px;">
-                        <div class="col-md-3" style="margin-left:-7px;">
-                            <label class="control-label">供应商编号/名称：</label>
-                        </div>
-                        <div class="col-md-4" style="margin-left:-70px;margin-top:-6px;">
-                            <input type="text" class="form-control" />
-                        </div>
-                        <div class="col-md-5" style="margin-top:-6px;">
-                            <button class="btn btn-info">搜索</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="width:778px;margin:0px auto;height:200px;">
-                    <table id="table1" class="table table-bordered table-responsive">
-                        <thead>
-                            <tr style="font-weight:bold;">
-                                <td><input type="checkbox" style="width:15px;height:15px;" /></td>
-                                <td>供应商编号</td>
-                                <td>供应商名称</td>
-                                <td>联系方式</td>
-                                <td>联系人</td>
-                                <td>Email</td>
-                                <td>传真</td>
-                                <td>地址</td>
-                            </tr>
-                        </thead>
-                        <tbody id="tbodys">
-                                               
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">确定</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    @*入库产品编号双击选择产品*@
-    <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document"  style="margin:0px auto; width:800px;height:300px;">
-            <div class="modal-content">
-                <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">选择产品</h4>
-                </div>
-                <div class="modal-body" id="cnt" style="border:1px solid pink;height:55px;  ">
-                    <div class="row form-group form-inline" style="margin-top:-5px;">
-                        <div class="col-md-2" style="margin-left:-7px;">
-                            <label class="control-label">名称：</label>
-                        </div>
-                        <div class="col-md-3"    style="margin-left:-90px;margin-top:-6px;">
-                            <input type="text" class="form-control" />
-                        </div>
-                        <div class="col-md-1">
-                            <label class="control-label">类别</label>
-                        </div>
-                        <div class="col-md-5" style="margin-top:-6px; margin-left:-20px;">
-                            @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })&nbsp;&nbsp;<button class="btn btn-info">搜索</button>
-                        </div>
-                    </div>                  
-                </div>
-                <div class="row" style="width:778px;margin:0px auto;height:200px;">
-                    <table class="table table-bordered table-responsive">
-                        <thead>
-                            <tr>
-                                <td><input type="checkbox" style="width:15px;height:15px;" /></td>
-                                <td>产品编号</td>
-                                <td>产品名称</td>
-                                <td>类别</td>
-                                <td>单位</td>
-                                <td>单价</td>
-                                <td>规格</td>
-                                <td>描述</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><input type="checkbox" style="width:15px;height:15px;" /></td>
-                                <td>产品编号1</td>
-                                <td>产品名称1</td>
-                                <td>类别1</td>
-                                <td>单位1</td>
-                                <td>单价1</td>
-                                <td>规格1</td>
-                                <td>描述1</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">确定</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    //供应商查询
     <script type="text/javascript">
-
-    $("#btnAdd").click(function () {
-        $("#myModal").modal();
-    })
-        //点击产品编号弹出产品选择框
-    function Chanping() {
-            $("#myModal2").modal();
-    }
-    function GongYinShang() {
-        $("#myModal3").modal();
-    }
-        //供应商查询
-    function GYS() {
-        $.ajax({
-            url:"@Url.Action("QueryGYS")",
-            data: null,
-            dataType:"json",
-            type:"get",
-            success: function (result) {
-                $.each(result.supplierAction, function (index, value) {
-                   // $("table tr:gt(0)").remove();
-                    var str = "<tr>";
-                    str += "<td><input type=\"checkbox\" style=\"width:15px;height:15px;\" /></td>";
-                    str += "<td>" + value.SupplierId + "</td>";
-                    str += "<td>" + value.SupplierName + "</td>";
-                    str += "<td>" + value.Phone + "</td>";
-                    str += "<td>" + value.Contacts + "</td>";
-                    str += "<td>" + value.Email + "</td>";
-                    str += "<td>" + value.Fax + "</td>";
-                    str += "<td>" + value.Site + "</td>";
-                    $("table tbody").append(str);
-                })
-            }
-        })
-    }
+        var id = null;
+        var name = null;
+        $("#SupplierType").change(function () {
+            var SupplierValue = $(this).val();
+            name == $(this).find("option:selected").text();
+            id = $(this).val();
+            $.ajax({
+                url: "@Url.Action("QueryGys")",
+                data: { id: SupplierValue },
+                dataType: "json",
+                type: "get",
+                success: function (result) {
+                    $.each(result.data, function (index, value) {
+                        $("#lxr").val(value.Contacts);
+                        $("#lxfs").val(value.Phone);
+                        $("#gysbh").val(value.SupplierId);
+                        //$("#dz").val(value.Site);
+                    })
+                }
+            })
+        });
+        //新增
+        function GYS() {
+            var bhValue = $("#bh").val();//入库编号
+            var StStorageDJTypeValue = $("#StStorageDJType").val();//入库类型
+            var ProductGLTypeValue = $("#ProductGLType").val();//入库产品
+            var zdrValue = $("#zdr").val();//制单人
+            var SupplierTypeValue = $("#SupplierType").find("option:selected").text();//供应商
+            var lxrValue = $("#lxr").val();//联系人
+            var lxfsValue = $("#lxfs").val();//联系方式
+            var sjValue = $("#sj").val();//制单时间
+            var rksValue = $("#rks").val();//入库数
+            var zjeValue = $("#zje").val();//总金额
+            var gysbhValue = $("#gysbh").val();//供应商编号
+            //var dz= $("#dz").val();//地址
+            var bzValue = $("#bz").val();//备注
+            $.ajax({
+                url: "@Url.Action("QueryRkAdd")",//SuppliersId
+                data: { StoOrderId: bhValue, StoType: StStorageDJTypeValue, GoodsTotal: rksValue, TotalMoney: zjeValue, MakingSingle: zdrValue, SuppliersType: gysbhValue, SuppliersName: SupplierTypeValue, SuppliersPeople: lxrValue, SuppliersContact: lxfsValue, OrdersTime: sjValue, CreateTime: sjValue, Remark: bzValue, Standby4: ProductGLTypeValue },
+                dataType: "json",
+                type: "post",
+                success: function (ActionResult) {
+                    alert(ActionResult.msg);
+                }
+            })
+        }
 
 
     </script>

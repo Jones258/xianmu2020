@@ -146,10 +146,11 @@
 </body>
 </html>
 <script type="text/javascript">
-    var ClientTypevalue = null;
-    var ProductGLType = null;
+    
     var pageIndexValue = 1;
     var id = null;
+    var ClientTypevalue = null;
+    var ProductGLType = null;
     $(function () {
 
         var at = null;
@@ -193,7 +194,7 @@
         $("#ss").click(function () {
             SSData();
         })
-
+        
         $("#ClientType").change(function () {
             ClientTypevalue = $(this).find("option:selected").text();
         });
@@ -216,14 +217,14 @@
         var zdr = $("#zdr").val();
         $.ajax({
             url: "@Url.Action("UpdateBreakagePage")",
-            data: {BGLid:BGLidValue, Standby3: dj, BreakageType: StStorageDJType, PreparedMan: ClientTypevalue, Standby4: ProductGLType, PreparedCount: sl, CreationMan: zdr, CreationTime: sj },
-        dataType: "json",
-        type: "post",
-        success: function (result) {
-            alert(result.Msg);
-            BingData();
-        }
-    })
+            data: { BGLid: BGLidValue, Standby3: dj, BreakageType: StStorageDJType, PreparedMan: ClientTypevalue, Standby4: ProductGLType, PreparedCount: sl, CreationMan: zdr, CreationTime: sj },
+            dataType: "json",
+            type: "post",
+            success: function (result) {
+                alert(result.Msg);
+                BingData();
+            }
+        })
     }
     //修改查询
     function UpdateData() {
@@ -232,23 +233,23 @@
         $.ajax({
             url: "@Url.Action("Data")",
             data: { BGLid: id },
-        dataType: "json",
-        type: "get",
-        success: function (result) {
-            $.each(result.data, function (index, value) {
-                $("#BGLid").val(value.BGLid);
-                $("#dj").val(value.Standby3);
-                $("#StStorageDJType").val(value.BreakageType);
-                $("#sl").val(value.PreparedCount);
-                $("#sj").val(value.CreationTime);
-                $("#zdr").val(value.CreationMan);
-                $("#ClientType").find("option:selected").text(value.PreparedMan);
-                $("#ProductGLType").find("option:selected").text(value.Standby4);
-            }
+            dataType: "json",
+            type: "get",
+            success: function (result) {
+                $.each(result.data, function (index, value) {
+                    $("#BGLid").val(value.BGLid);
+                    $("#dj").val(value.Standby3);
+                    $("#StStorageDJType").val(value.BreakageType);
+                    $("#sl").val(value.PreparedCount);
+                    $("#sj").val(value.CreationTime);
+                    $("#zdr").val(value.CreationMan);
+                    $("#ClientType").find("option:selected").text(value.PreparedMan);
+                    $("#ProductGLType").find("option:selected").text(value.Standby4);
+                }
 
-            )
-        }
-    });
+                )
+            }
+        });
     }
     function SSData() {
 
@@ -277,9 +278,9 @@
                     var str = "<tr id=\"t\">";
                     str += "<td  style=\"display:none\">" + value.BGLid + "</td>";
                     str += "<td>" + value.Standby3 + "</td>";
-                    if (value.BreakageType == 7) {
+                    if (value.BreakageType == 17) {
                         b = "损坏报损";
-                    } else if (value.BreakageType == 8) {
+                    } else if (value.BreakageType == 18) {
                         b = "丢失报损";
                     }
                     str += "<td>" + b + "</td>";
@@ -289,20 +290,20 @@
                     str += "<td>" + value.PreparedCount + "</td>";
 
                     if (value.BreakageGLAduitState == 1) {
-                        a = "通过";
-                    } else if (value.BreakageGLAduitState == 2) {
-                        a = "未通过";
-                    } else if (value.BreakageGLAduitState == 3) {
                         a = "审核中";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        a = "通过";
+                    } else if (value.BreakageGLAduitState == 3) {
+                        a = "未通过";
                     }
                     str += "<td>" + a + "</td>";
                     str += "<td>" + value.CreationMan + "</td>";
                     str += "<td>" + value.CreationTime + "</td>";
-                    if (value.BreakageGLAduitState == 1) {
+                    if (value.BreakageGLAduitState == 2) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" onclick=\"Update()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; <a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
-                    } else if (value.BreakageGLAduitState == 2) {
+                    } else if (value.BreakageGLAduitState == 3) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; &nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;</td>";
-                    } else {
+                    } else if (value.BreakageGLAduitState == 1) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; &nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                     }
                     str += "</tr>";
@@ -329,7 +330,7 @@
     function Update() {
         $.ajax({
             url: "@Url.Action("BreakageUp")",
-            data: { BGLid: id, State: 1 },
+            data: { BGLid: id, State: 2 },
             dataType: "json",
             type: "post",
             success: function () {
@@ -345,7 +346,7 @@
     function Update2() {
         $.ajax({
             url: "@Url.Action("BreakageUp")",
-            data: { BGLid: id, State: 2 },
+            data: { BGLid: id, State: 3 },
             dataType: "json",
             type: "post",
             success: function () {
@@ -379,9 +380,9 @@
                     str += "<td  style=\"display:none\">" + value.BGLid + "</td>";
 
                     str += "<td>" + value.Standby3 + "</td>";
-                    if (value.BreakageType == 7) {
+                    if (value.BreakageType == 17) {
                         b = "损坏报损";
-                    } else if (value.BreakageType == 8) {
+                    } else if (value.BreakageType == 18) {
                         b = "丢失报损";
                     }
                     str += "<td>" + b + "</td>";
@@ -390,20 +391,20 @@
                     str += "<td>" + value.PreparedCount + "</td>";
 
                     if (value.BreakageGLAduitState == 1) {
-                        a = "通过";
-                    } else if (value.BreakageGLAduitState == 2) {
-                        a = "未通过";
-                    } else if (value.BreakageGLAduitState == 3) {
                         a = "审核中";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        a = "通过";
+                    } else if (value.BreakageGLAduitState == 3) {
+                        a = "未通过";
                     }
                     str += "<td>" + a + "</td>";
                     str += "<td>" + value.CreationMan + "</td>";
                     str += "<td>" + value.CreationTime + "</td>";
-                    if (value.BreakageGLAduitState == 1) {
+                    if (value.BreakageGLAduitState == 2) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; <a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
-                    } else if (value.BreakageGLAduitState == 2) {
+                    } else if (value.BreakageGLAduitState == 3) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; &nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;</td>";
-                    } else {
+                    } else if (value.BreakageGLAduitState == 1) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; &nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                     }
                     str += "</tr>";
@@ -430,9 +431,9 @@
                     pageIndexValue = result.PageIndex; var str = "<tr id=\"t\">"; str += "<td  style=\"display:none\">" + value.BGLid + "</td>";
 
                     str += "<td>" + value.Standby3 + "</td>";
-                    if (value.BreakageType == 7) {
+                    if (value.BreakageType == 17) {
                         b = "损坏报损";
-                    } else if (value.BreakageType == 8) {
+                    } else if (value.BreakageType == 18) {
                         b = "丢失报损";
                     }
                     str += "<td>" + b + "</td>";
@@ -441,20 +442,20 @@
                     str += "<td>" + value.PreparedCount + "</td>";
 
                     if (value.BreakageGLAduitState == 1) {
-                        a = "通过";
-                    } else if (value.BreakageGLAduitState == 2) {
-                        a = "未通过";
-                    } else if (value.BreakageGLAduitState == 3) {
                         a = "审核中";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        a = "通过";
+                    } else if (value.BreakageGLAduitState == 3) {
+                        a = "未通过";
                     }
                     str += "<td>" + a + "</td>";
                     str += "<td>" + value.CreationMan + "</td>";
                     str += "<td>" + value.CreationTime + "</td>";
-                    if (value.BreakageGLAduitState == 1) {
+                    if (value.BreakageGLAduitState == 2) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; <a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
-                    } else if (value.BreakageGLAduitState == 2) {
+                    } else if (value.BreakageGLAduitState == 3) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; &nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;</td>";
-                    } else {
+                    } else if (value.BreakageGLAduitState == 1) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; &nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                     }
                     str += "</tr>";
@@ -481,9 +482,9 @@
                     pageIndexValue = result.PageIndex; var str = "<tr id=\"t\">"; str += "<td  style=\"display:none\">" + value.BGLid + "</td>";
 
                     str += "<td>" + value.Standby3 + "</td>";
-                    if (value.BreakageType == 7) {
+                    if (value.BreakageType == 17) {
                         b = "损坏报损";
-                    } else if (value.BreakageType == 8) {
+                    } else if (value.BreakageType == 18) {
                         b = "丢失报损";
                     }
                     str += "<td>" + b + "</td>";
@@ -492,20 +493,20 @@
                     str += "<td>" + value.PreparedCount + "</td>";
 
                     if (value.BreakageGLAduitState == 1) {
-                        a = "通过";
-                    } else if (value.BreakageGLAduitState == 2) {
-                        a = "未通过";
-                    } else if (value.BreakageGLAduitState == 3) {
                         a = "审核中";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        a = "通过";
+                    } else if (value.BreakageGLAduitState == 3) {
+                        a = "未通过";
                     }
                     str += "<td>" + a + "</td>";
                     str += "<td>" + value.CreationMan + "</td>";
                     str += "<td>" + value.CreationTime + "</td>";
-                    if (value.BreakageGLAduitState == 1) {
+                    if (value.BreakageGLAduitState == 2) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; <a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
-                    } else if (value.BreakageGLAduitState == 2) {
+                    } else if (value.BreakageGLAduitState == 3) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; &nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;</td>";
-                    } else {
+                    } else if (value.BreakageGLAduitState == 1) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; &nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                     }
                     str += "</tr>";
@@ -538,9 +539,9 @@
                     id = value.BGLid; at = value.BreakageGLAduitState;
 
                     str += "<td>" + value.Standby3 + "</td>";
-                    if (value.BreakageType == 7) {
+                    if (value.BreakageType == 17) {
                         b = "损坏报损";
-                    } else if (value.BreakageType == 8) {
+                    } else if (value.BreakageType == 18) {
                         b = "丢失报损";
                     }
                     str += "<td>" + b + "</td>";
@@ -549,20 +550,20 @@
                     str += "<td>" + value.PreparedCount + "</td>";
 
                     if (value.BreakageGLAduitState == 1) {
-                        a = "通过";
-                    } else if (value.BreakageGLAduitState == 2) {
-                        a = "未通过";
-                    } else if (value.BreakageGLAduitState == 3) {
                         a = "审核中";
+                    } else if (value.BreakageGLAduitState == 2) {
+                        a = "通过";
+                    } else if (value.BreakageGLAduitState == 3) {
+                        a = "未通过";
                     }
                     str += "<td>" + a + "</td>";
                     str += "<td>" + value.CreationMan + "</td>";
                     str += "<td>" + value.CreationTime + "</td>";
-                    if (value.BreakageGLAduitState == 1) {
+                    if (value.BreakageGLAduitState == 2) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; <a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
-                    } else if (value.BreakageGLAduitState == 2) {
-                        str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; &nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;</td>";
                     } else if (value.BreakageGLAduitState == 3) {
+                        str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; &nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;</td>";
+                    } else if (value.BreakageGLAduitState == 1) {
                         str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; &nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                     }
                     str += "</tr>";

@@ -53,6 +53,7 @@
                             <td><input type="checkbox" /></td>
                             <td>退货单号</td>
                             <td>退货类型</td>
+                            <td>退货产品</td>
                             <td>退货数量</td>
                             <td>状态</td>
                             <td>制单人</td>
@@ -89,7 +90,7 @@
     @*修改*@
     <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
-            <div class="modal-content">
+            <div class="modal-content" id="div2">
                 <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">编辑退货单</h4>
@@ -99,156 +100,57 @@
                     <div style="border:0px solid #d4cdcd;width:855px;height:230px;margin:0px auto;margin-top:5px;border-radius:10px;">
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-3">
-                                <label class="control-label">退货编号</label><input type="text" class="form-control" />
+                                <label class="control-label">id</label><input type="text" class="form-control" id="id" />
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">退货类型</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
+                                <label class="control-label">退货编号</label><input type="text" class="form-control" id="bh"/>
+                            </div>
+                            <div class=" col-md-2 form-inline">
+                                <label class="control-label">选择退货产品</label> @Html.DropDownList("ProductGLType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
+                            </div>
+                            <div class=" col-md-2 form-inline" style="margin-left:20px;">
+                                <label class="control-label">退货类型</label> @Html.DropDownList("RefundTHType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">制单日期</label><input type="date" class="form-control" value="administrator" />
+                                <label class="control-label">退货数量</label><input type="text" class="form-control" id="sl" />
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">客户编号</label><input type="text" class="form-control" />
+                                <label class="control-label">制单日期</label><input type="date" class="form-control" value="administrator" id="sj"/>
+                            </div>
+                            <div class=" col-md-3 form-inline">
+                                <label class="control-label">客户名称</label>@Html.DropDownList("ClientType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
+                        </div>
+                        </div>
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-3">
+                                <label class="control-label">客户编号</label><input type="text" class="form-control" id="khbh"/>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">客户地址</label><input type="text" class="form-control" id="dz"/>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">客户联系方式</label><input type="text" class="form-control" id="lxfs"/>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">联系人</label><input type="text" class="form-control" id="lxr"/>
                             </div>
                         </div>
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-3">
-                                <label class="control-label">客户名称</label><input type="text" class="form-control" />
-                            </div>
-                            <div class="col-md-3">
-                                <label class="control-label">客户地址</label><input type="text" class="form-control" />
-                            </div>
-                            <div class="col-md-3">
-                                <label class="control-label">客户联系方式</label><input type="text" class="form-control" />
-                            </div>
-                            <div class="col-md-3">
-                                <label class="control-label">联系人</label><input type="text" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top:10px;">
-                            <div class="col-md-3">
-                                <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" />
+                                <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" id="zdr"/>
                             </div>
                             <div class="col-md-9">
-                                <label class="control-label">备注</label><input type="text" class="form-control" />
+                                <label class="control-label">备注</label><input type="text" class="form-control" id="bz"/>
                             </div>
 
                         </div>
                     </div>
-                    <div class="row" style="margin-top:3px;">
-                        <table class="table table-bordered table-hover table-responsive">
-                            <thead>
-                                <tr style="font-weight:bold;">
-                                    <td><input type="checkbox" style="width:15px;height:15px;" /></td>
-                                    <td>产品编号</td>
-                                    <td>产品名称</td>
-                                    <td>产品条码</td>
-                                    <td>批次</td>
-                                    <td>库位名称</td>
-                                    <td>出库数量</td>
-                                    <td>退货数量</td>
-                                    <td>操作</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="checkbox" style="width:15px;height:15px;" /></td>
-                                    <td>产品编号</td>
-                                    <td>产品名称1</td>
-                                    <td>产品条码1</td>
-                                    <td>批次1</td>
-                                    <td>库位名称1</td>
-                                    <td>出库数量1</td>
-                                    <td>退货数量1</td>
-                                    <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
 
-                </div>
+
+                    </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">确定</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @*查看报损单详情*@
-    <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
-            <div class="modal-content">
-                <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">退货单详细</h4>
-                </div>
-                <div class="container" style="height:300px;">
-                    @*退货单*@
-                    <div class="row" style="margin-top:10px;">
-                        <table class="table table-bordered table-hover table-responsive">
-                            <thead>
-                                <tr style="font-weight:bold;">
-                                    <td>退货单编号</td>
-                                    <td>退货类型</td>
-                                    <td>退货数量</td>
-                                    <td>客户编号</td>
-                                    <td>客户名称</td>
-                                    <td>客户地址</td>
-                                    <td>联系人</td>
-                                    <td>制单人</td>
-                                    <td>状态</td>
-                                    <td>备注</td>
-                                    <td>制单时间</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>退货单编号1</td>
-                                    <td>退货类型1</td>
-                                    <td>退货数量1</td>
-                                    <td>客户编号1</td>
-                                    <td>客户名称1</td>
-                                    <td>客户地址1</td>
-                                    <td>联系人1</td>
-                                    <td>制单人1</td>
-                                    <td>状态1</td>
-                                    <td>备注1</td>
-                                    <td>制单时间1</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    @*报损单下的产品*@
-                    <div class="row" style="margin-top:20px;">
-                        <label class="control-label" style="margin-left:5px;">退货单下的产品</label>
-                        <table class="table table-bordered table-hover table-responsive">
-                            <thead>
-                                <tr style="font-weight:bold;">
-                                    <td>产品编号</td>
-                                    <td>产品名称</td>
-                                    <td>产品条码</td>
-                                    <td>批次</td>
-                                    <td>报损库位</td>
-                                    <td>报损数量</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>产品编号1</td>
-                                    <td>产品名称1</td>
-                                    <td>产品条码1</td>
-                                    <td>批次1</td>
-                                    <td>报损库位1</td>
-                                    <td>报损数量1</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="BingUpdate()">确定</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
                 </div>
             </div>
@@ -269,6 +171,25 @@
         var ZhuanTai = null;
         $(function () {
 
+            $("#ClientType").change(function () {
+                var SupplierValue = $(this).val();
+                name == $(this).find("option:selected").text();
+                id = $(this).val();
+                $.ajax({
+                    url: "@Url.Action("QueryKH")",
+                    data: { id: SupplierValue },
+                    dataType: "json",
+                    type: "get",
+                    success: function (result) {
+                        $.each(result.data, function (index, value) {
+                            $("#lxr").val(value.Standby4);
+                            $("#lxfs").val(value.Phone);
+                            $("#khbh").val(value.ClientId);
+                            $("#dz").val(value.Standby3);
+                        })
+                    }
+                })
+            });
             //状态切换
             $("[name=sy]").click(function () {
                 ztValue = 0;
@@ -312,6 +233,75 @@
             $("#btn").click(BindData);
         })
 
+        //传值
+        function Upda() {
+            $("#myModal").modal();
+            $("#div2").show();
+            $.ajax({
+                url: "@Url.Action("RefundData")",
+                data: { id: ZhuanTai },
+                dataType: "json",
+                type: "get",
+                success: function (result) {
+                    $.each(result.data, function (index, value) {
+                        $("#id").val(ZhuanTai);//编号
+                        $("#bh").val(value.RefundId);//退货编号
+                        $("#RefundTHType").val(value.Standby1);//退货类型
+                        $("#ProductGLType").find("option:selected").text(value.Standby4);//退货产品
+                        $("#zdr").val(value.PreparedMan);//制单人
+                        $("#ClientType").find("option:selected").text(value.ClientName);//客户
+                        $("#khbh").val(value.ClientId);//客户编号
+                        $("#lxr").val(value.ContactMan);//联系人
+                        $("#dz").val(value.ClientSite);//地址
+                        $("#lxfs").val(value.ClientContactWay);//联系方式
+                        $("#sj").val(value.PreparedTime);//制单时间
+                        $("#sl").val(value.RefundCount);//退货数
+                        $("#bz").val(value.Remark);//备注
+                    }
+
+                    )
+                }
+            });
+        }
+        //修改
+        function BingUpdate() {
+            var sRefundId= $("#bh").val();//退货编号
+            var sStandby1 = $("#RefundTHType").val();//退货类型
+            var sStandby4= $("#ProductGLType").find("option:selected").text();//退货产品
+            var sPreparedMan= $("#zdr").val();//制单人
+            var sClientName= $("#ClientType").find("option:selected").text();//客户
+            var sClientId= $("#khbh").val();//客户编号
+            var sContactMan= $("#lxr").val();//联系人
+            var sClientSite= $("#dz").val();//地址
+            var sClientContactWay= $("#lxfs").val();//联系方式
+            var sPreparedTime= $("#sj").val();//制单时间
+            var sRefundCount= $("#sl").val();//退货数
+            var sRemark = $("#bz").val();//备注
+            $.ajax({
+                url: "@Url.Action("UpdateRefund")",
+                data: {
+                    Rid: ZhuanTai,
+                    RefundId: sRefundId,
+                    RefundCount: sRefundCount,
+                    ClientId: sClientId,
+                    ClientName:  sClientName,
+                    ClientSite:  sClientSite,
+                    ClientContactWay:  sClientContactWay,
+                    ContactMan:  sContactMan,
+                    PreparedMan:  sPreparedMan,
+                    Remark:  sRemark,
+                    PreparedTime:  sPreparedTime,
+                    Standby1: sStandby1,
+                    Standby4: sStandby4
+                },
+                dataType: "json",
+                type: "post",
+                success: function (result) {
+                    alert(result.Msg);
+                    BingStorageData();
+                }
+            })
+        }
         //加载数据方法
         function BindData() {
             var RefundTypes = null;
@@ -334,12 +324,14 @@
                         var str = "<tr>";
                         str += "<td><input type=\"checkbox\" /></td>";
                         str += "<td>" + value.RefundId + "</td>";
+                       
                         if (value.Standby1 == 7) {
                             RefundTypes = "销售退货";
                         } else if (value.Standby1 == 8) {
                             RefundTypes = "采购退货";
                         }
                         str += "<td>" + RefundTypes + "</td>";
+                        str += "<td>" + value.Standby4 + "</td>";
                         str += "<td>" + value.RefundCount + "</td>";
                         if (value.RefundAuditState == 1) {
                             RefundState = "待审核";
@@ -352,11 +344,11 @@
                         str += "<td>" + value.PreparedMan + "</td>";
                         str += "<td>" + value.PreparedTime + "</td>";
                         if (value.RefundAuditState == 2) {
-                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"RefundAuditStateUp2()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                            str += "<td><a id=\"UpdateRuKu\"  onclick=\"Upda()\"href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
                         } else if (value.RefundAuditState == 3) {
-                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"RefundAuditStateUp1()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a></td>";
+                            str += "<td><a id=\"UpdateRuKu\"  onclick=\"Upda()\"href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
                         } else {
-                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"RefundAuditStateUp1()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"RefundAuditStateUp2()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                            str += "<td><a id=\"UpdateRuKu\"  onclick=\"Upda()\"href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"deleteState()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"RefundAuditStateUp1()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"RefundAuditStateUp2()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                         }
                         str += "</tr>";
                         $("table tbody").append(str);
@@ -387,7 +379,7 @@
         function RefundAuditStateUp1() {
             $.ajax({
                 url: "@Url.Action("RefundUpSHZT")",
-                data: { Rid: ZhuanTai, RefundAuditStates:2 },
+                data: { Rid: ZhuanTai, RefundAuditStates: 2 },
             dataType: "json",
             type: "post",
             success: function () {
@@ -403,7 +395,7 @@
         function RefundAuditStateUp2() {
             $.ajax({
                 url: "@Url.Action("RefundUpSHZT")",
-                data: { Rid: ZhuanTai, RefundAuditStates:3 },
+                data: { Rid: ZhuanTai, RefundAuditStates: 3 },
             dataType: "json",
             type: "post",
             success: function () {

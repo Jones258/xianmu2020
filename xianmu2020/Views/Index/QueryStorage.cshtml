@@ -40,7 +40,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3 form-group form-inline " style="margin-top:83px;margin-left:-470px;">
-                    <input type="text" class="form-control"name="StoOrderId" placeholder="请输入入库单号" />
+                    <input type="text" class="form-control" name="StoOrderId" placeholder="请输入入库单号" />
                 </div>
                 <div class="col-md-7 form-group form-inline" style="margin-top:19px;">
                     <label class="control-label" style="margin-left:-20px;">时间</label> &nbsp;<input name="Start" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" type="date" class="form-control" style="width:150px;" />&nbsp;-&nbsp;<input name="End" value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" type="date" class="form-control" style="width:150px;" />&nbsp;&nbsp;<button id="BtnSelect" type="button" class="btn btn-info">搜索</button>&nbsp;<button type="button" id="BtnGJ" class="btn btn-info">高级搜索</button>&nbsp;<button type="button" id="BtnSq" class="btn btn-info">收起</button>
@@ -73,8 +73,7 @@
                             <td>操作</td>
                         </tr>
                     </thead>
-                    <tbody>                       
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
             <div class="row form-inline form-group text-center" style="margin-top:30px;margin-right:30px;">
@@ -93,7 +92,23 @@
         var ztValue = 0;
         var deleteid = null;
         $(function () {
-
+            $("#SupplierType").change(function () {
+                var SupplierValue = $(this).val();
+                name == $(this).find("option:selected").text();
+                id = $(this).val();
+                $.ajax({
+                    url: "@Url.Action("QueryGys")",
+                    data: { id: SupplierValue },
+                    dataType: "json",
+                    type: "get",
+                    success: function (result) {
+                        $.each(result.data, function (index, value) {
+                            $("#lxr").val(value.Contacts);
+                            $("#lxfs").val(value.Phone);
+                        })
+                    }
+                })
+            });
             //状态切换
             $("[name=sy]").click(function () {
                 ztValue = 0;
@@ -155,10 +170,10 @@
         //删除
         function Delete() {
             $.ajax({
-                url:"@Url.Action("GetDeleteRK")",
+                url: "@Url.Action("GetDeleteRK")",
                 data: { id: deleteid },
-                dataType:"json",
-                type:"post",
+                dataType: "json",
+                type: "post",
                 success: function () {
                     if (confirm("确认删除吗？")) {
                         BingStorageData()
@@ -175,10 +190,10 @@
         //审核通过API1
         function UpStStorageState2() {
             $.ajax({
-                url:"@Url.Action("StStorageUpSH")",
+                url: "@Url.Action("StStorageUpSH")",
                 data: { Stoid: deleteid, StStorageStates: 2 },
-                dataType:"json",
-                type:"post",
+                dataType: "json",
+                type: "post",
                 success: function () {
                     if (confirm("确认审核通过吗？")) {
                         BingStorageData()
@@ -192,10 +207,10 @@
         //审核不通过API2
         function UpStStorageState3() {
             $.ajax({
-                url:"@Url.Action("StStorageUpSH")",
+                url: "@Url.Action("StStorageUpSH")",
                 data: { Stoid: deleteid, StStorageStates: 3 },
-            dataType:"json",
-            type:"post",
+                dataType: "json",
+                type: "post",
             success: function () {
                 if (confirm("确认审核不通过吗？")) {
                     BingStorageData()
@@ -205,9 +220,59 @@
             }
         })
         }
+        //修改
+        function BingUpdate() {
+            var bhValue = $("#bh").val();//入库编号
+            var StStorageDJTypeValue = $("#StStorageDJType").val();//入库类型
+            var ProductGLTypeValue = $("#ProductGLType").val();//入库产品
+            var zdrValue = $("#zdr").val();//制单人
+            var SupplierTypeValue = $("#SupplierType").find("option:selected").text();//供应商
+            var lxrValue = $("#lxr").val();//联系人
+            var lxfsValue = $("#lxfs").val();//联系方式
+            var sjValue = $("#sj").val();//制单时间
+            var rksValue = $("#rks").val();//入库数
+            var zjeValue = $("#zje").val();//总金额
+            var bzValue = $("#bz").val();//备注
+            $.ajax({
+                url: "@Url.Action("QueryRkUpdate")",
+                data: { Stoid: deleteid, StoOrderId: bhValue, StoType: StStorageDJTypeValue, GoodsTotal: rksValue, TotalMoney: zjeValue, MakingSingle: zdrValue, SuppliersName: SupplierTypeValue, SuppliersPeople: lxrValue, SuppliersContact: lxfsValue, OrdersTime: sjValue, CreateTime: sjValue, Remark: bzValue, Standby4: ProductGLTypeValue },
+                dataType: "json",
+                type: "post",
+                success: function (result) {
+                    alert(result.Msg);
+                    BingStorageData();
+                }
+            })
+        }
 
+        function Upda() {
+            $("#myModal").modal();
+            $("#div2").show();
+            $.ajax({
+                url: "@Url.Action("QueUpt")",
+                data: { id: deleteid },
+                dataType: "json",
+                type: "get",
+                success: function (result) {
+                    $.each(result.Storage, function (index, value) {
+                        $("#Stid").val(deleteid);//编号
+                        $("#bh").val(value.StoOrderId);//入库编号
+                        $("#StStorageDJType").val(value.StoType);//入库类型
+                        $("#ProductGLType").val(value.Standby4);//入库产品
+                        $("#zdr").val(value.MakingSingle);//制单人
+                        $("#SupplierType").find("option:selected").text(value.SuppliersName);//供应商
+                        $("#lxr").val(value.SuppliersPeople);//联系人
+                        $("#lxfs").val(value.SuppliersContact);//联系方式
+                        $("#sj").val(value.OrdersTime);//制单时间
+                        $("#rks").val(value.GoodsTotal);//入库数
+                        $("#zje").val(value.TotalMoney);//总金额
+                        $("#bz").val(value.Remark);//备注
+                    }
 
-
+                    )
+                }
+            });
+        }
 
 
         //入库单加载数据
@@ -222,10 +287,10 @@
             var StoType = null;
             var StStorageState = null;
             $.ajax({
-                url:"@Url.Action("GetStorage")",
-                data: { zt: ztValue, StoOrderId: StoOrderIdValue, Start: StartValue, End: EndValue, pageIndex: pageIndexValue, StoType: StStorageDJTypeValue, SuppliersType:SuppliersTypeValue },
-                dataType:"json",
-                type:"get",
+                url: "@Url.Action("GetStorage")",
+                data: { zt: ztValue, StoOrderId: StoOrderIdValue, Start: StartValue, End: EndValue, pageIndex: pageIndexValue, StoType: StStorageDJTypeValue, SuppliersType: SuppliersTypeValue },
+                dataType: "json",
+                type: "get",
                 success: function (result) {
                     $("#txtLabel").html("当前第" + result.PageIndex + "页 / 共计" + result.PageCount + " 页 共计" + result.Count + " 条");
                     $("#textPageIndex").val(result.PageIndex);
@@ -235,7 +300,7 @@
                         deleteid = value.Stoid;
                         var str = "<tr>";
                         str += "<td>" + value.StoOrderId + "</td>";
-                        if (value.StoType==1) {
+                        if (value.StoType == 1) {
                             StoType = "采购收货入库";
                         } else if (value.StoType == 2) {
                             StoType = "销售退货入库";
@@ -252,22 +317,22 @@
                         str += "<td>" + value.SuppliersType + "</td>";
                         str += "<td>" + value.GoodsTotal + "</td>";
                         str += "<td>" + value.TotalMoney + "</td>";
-                        if (value.StStorageState==1) {
+                        if (value.StStorageState == 1) {
                             StStorageState = "待审核";
-                        } else if (value.StStorageState==2) {
+                        } else if (value.StStorageState == 2) {
                             StStorageState = "审核通过";
-                        } else if (value.StStorageState==3) {
+                        } else if (value.StStorageState == 3) {
                             StStorageState = "审核失败";
                         }
                         str += "<td>" + StStorageState + "</td>";
                         str += "<td>" + value.MakingSingle + "</td>";
                         str += "<td>" + value.CreateTime + "</td>";
                         if (value.StStorageState == 2) {
-                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState3()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                            str += "<td><a id=\"UpdateRuKu\" onclick=\"Upda()\" href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
                         } else if (value.StStorageState == 3) {
-                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState2()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a></td>";
+                            str += "<td><a id=\"UpdateRuKu\" onclick=\"Upda()\" href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
                         } else {
-                            str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState2()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState3()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                            str += "<td><a id=\"UpdateRuKu\" onclick=\"Upda()\" href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState2()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpStStorageState3()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                         }                      
                         str += "</tr>";
                         $("table tbody").append(str);
@@ -280,7 +345,7 @@
     @*修改入库单*@
     <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
-            <div class="modal-content">
+            <div class="modal-content" id="div2">
                 <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">编辑入库单</h4>
@@ -290,155 +355,54 @@
                         <div style="border:0px solid #d4cdcd;width:855px;height:230px;margin:0px auto;margin-top:5px;border-radius:10px;">
                             <div class="row" style="margin-top:10px;">
                                 <div class="col-md-3">
-                                    <label class="control-label">入库单编号</label><input type="text" class="form-control" />
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="control-label">入库单类型</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" />
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="control-label">供应商编号</label><input type="text" class="form-control" />
-                                </div>
+                                <label class="control-label">编号</label><input type="text" class="form-control" id="Stid" />
                             </div>
-                            <div class="row" style="margin-top:10px;">
-                                <div class="col-md-3">
-                                    <label class="control-label">供应商名称</label><input type="text" class="form-control" />
+                            <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:90px;">
+                                <label class="control-label">入库单编号</label><input type="text" class="form-control" placeholder="可不填,自动生成" id="bh" />
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="control-label">供应商联系人</label><input type="text" class="form-control" />
+                            <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                                <label class="control-label">入库单类型</label> @Html.DropDownList("StStorageDJType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="control-label">供应商联系方式</label><input type="text" class="form-control" />
+                            <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:70px;">
+                                <label class="control-label">选择入库产品</label> @Html.DropDownList("ProductGLType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="control-label">制单时间</label><input type="date" class="form-control" />
+                            <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                                <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" id="zdr" />
                                 </div>
+                            <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:70px;">
+                                <label class="control-label">选择供应商</label> @Html.DropDownList("SupplierType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
                             </div>
-                            <div class="row" style="margin-top:10px;">
-                                <div class="col-md-12">
-                                    <label class="control-label">备注</label><input type="text" class="form-control" />
                                 </div>
-
+                        <div class="row">
+                            <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:90px;">
+                                <label class="control-label">供应商联系人</label><input type="text" class="form-control" id="lxr" />
+                                </div>
+                            <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                                <label class="control-label">供应商联系方式</label><input type="text" class="form-control" id="lxfs" />
+                                </div>
+                            <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                                <label class="control-label">入库数</label><input type="text" class="form-control" id="rks" />
+                                </div>
+                            <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                                <label class="control-label">总金额</label><input type="text" class="form-control" id="zje" />
+                            </div>
+                            <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                                <label class="control-label">制单时间</label><input type="date" class="form-control" id="sj" />
+                                </div>
+                            <div class=" col-md-4 form-inline" style="margin-top:13px;">
+                                <label class="control-label">备注</label><input type="text" class="form-control" id="bz" />
                             </div>
                         </div>
-                        <div class="row" style="margin-top:3px;">
-                            <table class="table table-bordered table-hover table-responsive">
-                                <thead>
-                                    <tr style="font-weight:bold;">
-                                        <td>产品名称</td>
-                                        <td>产品条码</td>
-                                        <td>规格</td>
-                                        <td>批次</td>
-                                        <td>单价</td>
-                                        <td>入库数</td>
-                                        <td>库位</td>
-                                        <td>操作</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>挖土机</td>
-                                        <td>0019</td>
-                                        <td>规格1</td>
-                                        <td>90</td>
-                                        <td>800</td>
-                                        <td>100</td>
-                                        <td>哪个库位</td>
-                                        <td><a href="#"><span style="color:red" class="glyphicon glyphicon-trash"></span></a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
-                       
                     </div>
-
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-primary" onclick="BingUpdate()">确定</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
                 </div>
             </div>
         </div>
     </div>
     
-    @*查看入库详情*@
-    <div class="modal fade" id="myModal2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
-            <div class="modal-content">
-                <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">入库单详细</h4>
-                </div>
-                <div class="container" style="height:300px;">
-                    @*入库单*@
-                    <div class="row" style="margin-top:10px;">
-                        <table class="table table-bordered table-hover table-responsive">
-                            <thead>
-                                <tr style="font-weight:bold;">
-                                    <td>入库单号</td>
-                                    <td>类型</td>
-                                    <td>状态</td>
-                                    <td>供应商编号</td>
-                                    <td>供应商名称</td>
-                                    <td>供应商联系人</td>
-                                    <td>创建人</td>
-                                    <td>创建时间</td>
-                                    <td>备注</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>入库单号1</td>
-                                    <td>类型1</td>
-                                    <td>状态1</td>
-                                    <td>供应商编号1</td>
-                                    <td>供应商名称1</td>
-                                    <td>供应商联系人1</td>
-                                    <td>创建人1</td>
-                                    <td>创建时间1</td>
-                                    <td>备注1</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    @*入库的产品*@
-                    <div class="row" style="margin-top:20px;">
-                        <label class="control-label" style="margin-left:5px;">入库单下的产品</label>
-                        <table class="table table-bordered table-hover table-responsive">
-                            <thead>
-                                <tr style="font-weight:bold;">
-                                    <td>产品名称</td>
-                                    <td>产品条码</td>
-                                    <td>规格</td>
-                                    <td>批次</td>
-                                    <td>单价</td>
-                                    <td>入库数</td>
-                                    <td>库位</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>产品名称1</td>
-                                    <td>产品条码1</td>
-                                    <td>规格1</td>
-                                    <td>批次1</td>
-                                    <td>单价1</td>
-                                    <td>入库数1</td>
-                                    <td>库位1</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </body>
 </html>
