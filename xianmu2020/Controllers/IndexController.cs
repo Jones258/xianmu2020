@@ -601,6 +601,10 @@ namespace xianmu2020.Controllers
             return Json(AddResult,JsonRequestBehavior.AllowGet);
         }
 
+        //修改先查看
+        public ActionResult UpQueryDelivery(int ) {
+            return View();
+        }
 
 
         /// <summary>

@@ -118,7 +118,7 @@
                 })
             //点击修改
                 $("#UpdateChuKu").click(function () {
-                    $("#myModal").modal();
+                  
                 })
             //点击出库详情
                 $("#ChuKuXQ").click(function () {
@@ -220,11 +220,11 @@
                     str += "<td>" + value.PreparedBy + "</td>";
                     str += "<td>" + value.CreationTime + "</td>";
                     if (value.DeliveryAuditState == 2) {
-                        str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                        str += "<td><a onclick=\"UpdateDelivery()\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
                     } else if (value.DeliveryAuditState == 3) {
-                        str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
+                        str += "<td><a onclick=\"UpdateDelivery()\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a></td>";
                     } else {
-                        str += "<td><a id=\"UpdateRuKu\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpDeliveryAuditState1()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpDeliveryAuditState2()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                        str += "<td><a onclick=\"UpdateDelivery()\"  href=\"# \"><span  class=\"glyphicon glyphicon-edit \"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"Delete()\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpDeliveryAuditState1()\" href=\"#\"><span  class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a onclick=\"UpDeliveryAuditState2()\" href=\"#\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                     }
                     str += "</tr>";
                     $("table tbody").append(str);
@@ -285,6 +285,11 @@
         })
         }
 
+        //修改查看
+        function UpdateDelivery() {
+            $("#myModal").modal();
+        }
+
         
 
 
@@ -292,7 +297,7 @@
 
    @*修改*@
     <div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document" style="margin:0px auto; width:900px;height:300px;">
+        <div class="modal-dialog" role="document" style="margin:0px auto; width:930px;height:300px;">
             <div class="modal-content">
                 <div class="modal-header" style="color:white; border:0px solid black ;height:50px;background-color:#37435c">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -303,43 +308,49 @@
                     <div style="border:0px solid #d4cdcd;width:855px;height:230px;margin:0px auto;margin-top:5px;border-radius:10px;">
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-3">
-                                <label class="control-label">出库单编号</label><input type="text" class="form-control" />
+                                <label class="control-label">出库单编号</label><input  name="DeliveryId" type="text" class="form-control" />
                             </div>
                             <div class="col-md-3">
                                 <label class="control-label">出库单类型</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">发货日期</label><input type="date" class="form-control" value="administrator" />
+                                <label class="control-label">发货日期</label><input name="DispatchTime" type="date" class="form-control" value="administrator" />
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">客户编号</label><input type="text" class="form-control" />
+                                <label class="control-label">出库产品</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
                             </div>
+                           
                         </div>
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-3">
-                                <label class="control-label">客户名称</label><input type="text" class="form-control" />
+                                <label class="control-label">出库数量</label><input name="TotalCount" type="text" class="form-control" />
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">客户地址</label>@Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
+                                <label class="control-label">客户名称</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">客户联系方式</label><input type="text" class="form-control" />
+                                <label class="control-label">客户编号</label><input name="ClientId" type="text" class="form-control" @*placeholder="输入关键字搜索或者双击选择"*@ />
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">联系人</label><input type="text" class="form-control" />
-                            </div>
-                        </div>
+                                <label class="control-label">客户联系方式</label><input name="ClientContactWay" type="text" class="form-control" />   
+                            </div>                                             
+                    </div>
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-3">
-                                <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" />
+                                <label class="control-label">客户地址</label><input name="ClientSite" type="text" class="form-control" />
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">备注</label><input type="text" class="form-control" />
+                                <label class="control-label">联系人</label><input name="ContactMan" type="text" class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">制单人</label><input name="PreparedBy" type="text" class="form-control" value="adminserin" />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">备注</label><input name="Remark" type="text" class="form-control" />
                             </div>
 
                         </div>
-                    </div>
-                    <div class="row" style="margin-top:3px;">
+                    @*<div class="row" style="margin-top:3px;">
                         <table class="table table-bordered table-hover table-responsive">
                             <thead>
                                 <tr style="font-weight:bold;">
@@ -368,7 +379,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div>*@
 
                 </div>
 
