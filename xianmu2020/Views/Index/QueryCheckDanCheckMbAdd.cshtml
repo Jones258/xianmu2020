@@ -85,8 +85,6 @@
 
 
     <script type="text/javascript">
-        var Cping = null;
-        var CpLbie = null;
 
         $("#btnAdd").click(function () {
             $("#myModal2").modal();
@@ -95,19 +93,13 @@
             //添加
             $("#btnAdd2").click(AddIneventory);
 
-            $("#Cp").change(function () {
-                Cping = $(this).find("option:selected").text();
-            })
-
-            $("#LB").change(function () {
-                CpLbie = $(this).find("option:selected").text();
-            })
         })
 
 
         //添加方法
         function AddIneventory() {
-            alert(111);
+            var Cpings = $("[name=Cps]").find("option:selected").text();
+            var CpLbies = $("[name=Lbs]").find("option:selected").text();
             var CheckIdValue = $("[name=CheckId]").val();
             var PreparedTimeValue = $("[name=PreparedTime]").val();
             var PreparedManValue = $("[name=PreparedMan]").val();
@@ -121,7 +113,7 @@
             //})
             $.ajax({
                 url:"@Url.Action("GetAddIneventory")",
-                data: { CheckId: CheckIdValue, PreparedTime: PreparedTimeValue, PreparedMan: PreparedManValue, Remark: RemarkValue, LB: LBValue, Standby3: Cping, Standby4: CpLbie },
+                data: { CheckId: CheckIdValue, PreparedTime: PreparedTimeValue, PreparedMan: PreparedManValue, Remark: RemarkValue, LB: LBValue, Standby3: Cpings, Standby4: CpLbies },
                // data:objJson,
                 dataType:"json",
                 type:"post",
