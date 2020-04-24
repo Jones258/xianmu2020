@@ -406,6 +406,15 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryAddSingle()
         {
+            //出库单类型
+            var model = new StStorageDJTypeService().GetByWhere(item => item.State == 5);
+            model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择出库单类型" });
+            ViewBag.DeliveryType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
+            //客户
+            var ClientModel = new ClientService().GetByWhere(item=>item.State==1);
+            ClientModel.Insert(0,new Client() {Cid=0,ClientName="请选择客户" });
+            ViewBag.Client = new SelectList(ClientModel,"Cid","ClientName");
+
             //测试 
             ViewBag.Type = new SelectList("");
             return View();
