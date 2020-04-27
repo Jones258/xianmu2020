@@ -48,12 +48,12 @@
             </div>
             <div id="div1" class="row" style="border:1px dotted black; width:1040px;height:90px;margin-top:8px;margin-left:15px;">
                 <div class="col-md-3 form-inline" style="margin-top:10px;">
-                    客户<input type="text" class="form-control" />
+                    客户<input name="ClientNames" type="text" class="form-control" />
                 </div>
-                <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:10px;">
+                <div class=" col-md-2 form-inline" style="margin-top:5px;margin-left:5px;">
                     <label class="control-label">单据类型</label> @Html.DropDownList("DeliveryType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
                 </div>
-                <div class="col-md-2 form-inline" style="margin-top:29px;">
+                <div class="col-md-2 form-inline" style="margin-top:29px;margin-left:40px;">
                     <button id="btnTwo" type="button" class="btn btn-info">搜索</button>
                 </div>
             </div>
@@ -176,12 +176,13 @@
             var StartValue = $("[name=Start]").val();
             var EndValue = $("[name=End]").val();
             var DeliveryTypeValue = $("[name=DeliveryType]").val();
+            var ClientNamesValue = $("[name=ClientNames]").val();
 
             var DeliveryTYpe = null;
             var DeliveryAuditState = null;
             $.ajax({
                 url:"@Url.Action("GetDeliveryData")",
-                data: { zt: ztValue, DeliveryId: DeliveryIdValue, Start: StartValue, End: EndValue, pageIndex: pageIndexValue, DeliveryType: DeliveryTypeValue},
+                data: {ClientNames:ClientNamesValue, zt: ztValue, DeliveryId: DeliveryIdValue, Start: StartValue, End: EndValue, pageIndex: pageIndexValue, DeliveryType: DeliveryTypeValue},
             dataType:"json",
             type:"get",
             success: function (result) {
@@ -288,6 +289,27 @@
         //修改查看
         function UpdateDelivery() {
             $("#myModal").modal();
+            $.ajax({
+                url:"@Url.Action("UpQueryDelivery")",
+                data: { Did: deleteid },
+                dataType:"json",
+                type:"get",
+                success: function (result) {
+                    $.each(result.DeliveryAction, function (index,value) {
+                        $("[name=DeliveryIds]").val(value.DeliveryId);
+                        $("[name=DeliveryTYpe]").val(value.DeliveryTYpe);
+                        $("[name=DispatchTime]").val(value.DispatchTime);
+                        $("[name=Standby3]").find("option:selected").text(value.Standby3);
+                        $("[name=TotalCount]").val(value.TotalCount);
+                        $("[name=Clients]").find("option:selected").text(value.ClientNames);
+                        $("[name=ClientId]").val(value.ClientId);
+                        $("[name=ClientContactWay]").val(value.ClientContactWay);
+                        $("[name=ContactMan]").val(value.ContactMan);
+                        $("[name=PreparedBy]").val(value.PreparedBy);
+                        $("[name=Remark]").val(value.Remark);
+                    })
+                }
+            })
         }
 
         
@@ -308,16 +330,16 @@
                     <div style="border:0px solid #d4cdcd;width:855px;height:230px;margin:0px auto;margin-top:5px;border-radius:10px;">
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-3">
-                                <label class="control-label">出库单编号</label><input  name="DeliveryId" type="text" class="form-control" />
+                                <label class="control-label">出库单编号</label><input  name="DeliveryIds" type="text" class="form-control" />
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">出库单类型</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
+                                <label class="control-label">出库单类型</label> @Html.DropDownList("DeliveryTYpe", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
                             </div>
                             <div class="col-md-3">
                                 <label class="control-label">发货日期</label><input name="DispatchTime" type="date" class="form-control" value="administrator" />
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">出库产品</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
+                                <label class="control-label">出库产品</label> @Html.DropDownList("Standby3", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
                             </div>
                            
                         </div>
@@ -326,7 +348,7 @@
                                 <label class="control-label">出库数量</label><input name="TotalCount" type="text" class="form-control" />
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">客户名称</label> @Html.DropDownList("Type", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
+                                <label class="control-label">客户名称</label> @Html.DropDownList("Clients", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
                             </div>
                             <div class="col-md-3">
                                 <label class="control-label">客户编号</label><input name="ClientId" type="text" class="form-control" @*placeholder="输入关键字搜索或者双击选择"*@ />
@@ -337,13 +359,10 @@
                     </div>
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-3">
-                                <label class="control-label">客户地址</label><input name="ClientSite" type="text" class="form-control" />
-                            </div>
-                            <div class="col-md-3">
                                 <label class="control-label">联系人</label><input name="ContactMan" type="text" class="form-control" />
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">制单人</label><input name="PreparedBy" type="text" class="form-control" value="adminserin" />
+                                <label class="control-label">制单人</label><input name="PreparedBy" type="text" class="form-control" />
                             </div>
                             <div class="col-md-3">
                                 <label class="control-label">备注</label><input name="Remark" type="text" class="form-control" />

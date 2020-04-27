@@ -101,32 +101,32 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">编辑报损单</h4>
                 </div>
-                <div class="container" style="height:300px;">
+                <div class="container" style="height:220px;">
 
-                    <div style="border:1px solid #d4cdcd;width:855px;height:100px;margin:0px auto;margin-top:5px;border-radius:10px;">
+                    <div style="border:0px solid #d4cdcd;width:855px;height:100px;margin:0px auto;margin-top:5px;border-radius:10px;">
                         <div class="row" style="margin-top:10px;">
-                            <div class="col-md-3">
+                            <div class="col-md-3" style="display:none;">
                                 <label class="control-label">id</label><input type="text" class="form-control" id="BGLid" />
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">报损单编号</label><input type="text" class="form-control" id="dj" />
+                                <label class="control-label">报损单编号</label><input disabled="disabled" type="text" class="form-control" id="dj" />
                             </div>
-                            <div class=" col-md-3">
+                            <div class=" col-md-3"style="margin-left:-10px;">
                                 <label class="control-label">报损类型</label> @Html.DropDownList("StStorageDJType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
                             </div>
                             <div class=" col-md-3">
                                 <label class="control-label">选择报损产品</label> @Html.DropDownList("ProductGLType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
                             </div>
-                            <div class=" col-md-2 form-inline">
+                            <div class=" col-md-3 form-inline">
                                 <label class="control-label">报损数量</label><input type="text" class="form-control" id="sl" />
                             </div>
-                            <div class=" col-md-3 form-inline">
-                                <label class="control-label">选择客户名称</label> @Html.DropDownList("ClientType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
+                            <div class=" col-md-3 form-inline" style="margin-top:25px;">
+                                <label class="control-label">选择客户名称</label> @Html.DropDownList("ClientType", null, htmlAttributes: new { @class = "form-control", @style = "width:191px;" })
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3"style="margin-top:25px;margin-left:-9px;width:228px;">
                                 <label class="control-label">制单时间</label><input type="date" class="form-control" value="administrator" id="sj" />
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3"style="margin-top:25px;margin-left:-8px;width:230px;">
                                 <label class="control-label">制单人</label><input type="text" class="form-control" id="zdr" />
                             </div>
                         </div>
@@ -300,11 +300,11 @@
                     str += "<td>" + value.CreationMan + "</td>";
                     str += "<td>" + value.CreationTime + "</td>";
                     if (value.BreakageGLAduitState == 2) {
-                        str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" onclick=\"Update()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; <a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                        str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" onclick=\"Update()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                     } else if (value.BreakageGLAduitState == 3) {
-                        str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; &nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;</td>";
+                        str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a></td>";
                     } else if (value.BreakageGLAduitState == 1) {
-                        str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp; &nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
+                        str += "<td><a id=\"UpdateBaoSun\" onclick=\"UpdateData()\" href=\"#\"><span class=\"glyphicon glyphicon-edit\"></span></a>&nbsp;&nbsp;&nbsp;<a id=\"Dele\" href=\"#\"><span style=\"color:red\" class=\"glyphicon glyphicon-trash\" onclick=\"Dele()\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update()\"><span class=\"glyphicon glyphicon-thumbs-up\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Update2()\"><span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                     }
                     str += "</tr>";
                     $("table tbody").append(str);

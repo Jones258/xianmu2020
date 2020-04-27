@@ -354,42 +354,42 @@
 
                         <div style="border:0px solid #d4cdcd;width:855px;height:230px;margin:0px auto;margin-top:5px;border-radius:10px;">
                             <div class="row" style="margin-top:10px;">
-                                <div class="col-md-3">
+                                <div class="col-md-3" style="display:none;">
                                 <label class="control-label">编号</label><input type="text" class="form-control" id="Stid" />
                             </div>
-                            <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:90px;">
+                            <div class=" col-md-2 form-inline" style="margin-top:8px;margin-left:30px;width:190px;">
                                 <label class="control-label">入库单编号</label><input type="text" class="form-control" placeholder="可不填,自动生成" id="bh" />
                                 </div>
-                            <div class=" col-md-2 form-inline" style="margin-top:13px;">
-                                <label class="control-label">入库单类型</label> @Html.DropDownList("StStorageDJType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
+                            <div class=" col-md-2 form-inline" style="margin-top:8px;margin-left:15px;">
+                                <label class="control-label">入库单类型</label> @Html.DropDownList("StStorageDJType", null, htmlAttributes: new { @class = "form-control", @style = "width:155px;" })
                                 </div>
-                            <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:70px;">
-                                <label class="control-label">选择入库产品</label> @Html.DropDownList("ProductGLType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
+                            <div class=" col-md-2 form-inline" style="margin-top:8px;margin-left:55px;">
+                                <label class="control-label">选择入库产品</label> @Html.DropDownList("ProductGLType", null, htmlAttributes: new { @class = "form-control", @style = "width:155px;" })
                                 </div>
-                            <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                            <div class=" col-md-2 form-inline" style="margin-top:8px;margin-left:55px;width:190px;">
                                 <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" id="zdr" />
                                 </div>
-                            <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:70px;">
-                                <label class="control-label">选择供应商</label> @Html.DropDownList("SupplierType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
-                            </div>
                                 </div>
-                        <div class="row">
-                            <div class=" col-md-2 form-inline" style="margin-top:13px;margin-left:90px;">
+                        <div class="row form-group form-inline">
+                            <div class=" col-md-2 form-inline" style="margin-top:10px;margin-left:30px;">
+                                <label class="control-label">选择供应商</label> @Html.DropDownList("SupplierType", null, htmlAttributes: new { @class = "form-control", @style = "width:159px;" })
+                            </div>
+                            <div class=" col-md-2 form-inline" style="margin-top:10px;margin-left:58px;width:185px;">
                                 <label class="control-label">供应商联系人</label><input type="text" class="form-control" id="lxr" />
                                 </div>
-                            <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                            <div class=" col-md-2 form-inline" style="margin-top:10px;margin-left:18px;width:183px;">
                                 <label class="control-label">供应商联系方式</label><input type="text" class="form-control" id="lxfs" />
                                 </div>
-                            <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                            <div class=" col-md-2 form-inline" style="margin-top:10px;margin-left:18px;width:190px;">
                                 <label class="control-label">入库数</label><input type="text" class="form-control" id="rks" />
                                 </div>
-                            <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                            <div class=" col-md-2 form-inline" style="margin-top:10px;margin-left:30px;width:190px;">
                                 <label class="control-label">总金额</label><input type="text" class="form-control" id="zje" />
                             </div>
-                            <div class=" col-md-2 form-inline" style="margin-top:13px;">
+                            <div class=" col-md-2 form-inline" style="margin-top:10px;margin-left:18px;width:183px;">
                                 <label class="control-label">制单时间</label><input type="date" class="form-control" id="sj" />
                                 </div>
-                            <div class=" col-md-4 form-inline" style="margin-top:13px;">
+                            <div class=" col-md-4 form-inline" style="margin-top:10px;margin-left:18px;width:390px;">
                                 <label class="control-label">备注</label><input type="text" class="form-control" id="bz" />
                             </div>
                         </div>

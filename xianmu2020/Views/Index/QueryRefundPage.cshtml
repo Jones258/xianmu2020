@@ -95,51 +95,51 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">编辑退货单</h4>
                 </div>
-                <div class="container" style="height:350px;">
+                <div class="container" style="height:280px;">
 
                     <div style="border:0px solid #d4cdcd;width:855px;height:230px;margin:0px auto;margin-top:5px;border-radius:10px;">
                         <div class="row" style="margin-top:10px;">
-                            <div class="col-md-3">
+                            <div class="col-md-3" style="display:none;">
                                 <label class="control-label">id</label><input type="text" class="form-control" id="id" />
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3" style="margin-left:20px;width:190px;">
                                 <label class="control-label">退货编号</label><input type="text" class="form-control" id="bh"/>
                             </div>
-                            <div class=" col-md-2 form-inline">
-                                <label class="control-label">选择退货产品</label> @Html.DropDownList("ProductGLType", null, htmlAttributes: new { @class = "form-control", @style = "width:200px;" })
+                            <div class=" col-md-2 form-inline" style="margin-left:10px;">
+                                <label class="control-label">选择退货产品</label> @Html.DropDownList("ProductGLType", null, htmlAttributes: new { @class = "form-control", @style = "width:170px;" })
                             </div>
-                            <div class=" col-md-2 form-inline" style="margin-left:20px;">
-                                <label class="control-label">退货类型</label> @Html.DropDownList("RefundTHType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
+                            <div class=" col-md-2 form-inline" style="margin-left:63px;">
+                                <label class="control-label">退货类型</label> @Html.DropDownList("RefundTHType", null, htmlAttributes: new { @class = "form-control", @style = "width:170px;" })
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3"style="margin-left:65px;width:190px;">
                                 <label class="control-label">退货数量</label><input type="text" class="form-control" id="sl" />
-                            </div>
-                            <div class="col-md-3">
-                                <label class="control-label">制单日期</label><input type="date" class="form-control" value="administrator" id="sj"/>
-                            </div>
-                            <div class=" col-md-3 form-inline">
-                                <label class="control-label">客户名称</label>@Html.DropDownList("ClientType", null, htmlAttributes: new { @class = "form-control", @style = "width:160px;" })
-                        </div>
+                            </div>                          
                         </div>
                         <div class="row" style="margin-top:10px;">
-                            <div class="col-md-3">
+                            <div class="col-md-3"  style="margin-top:10px; margin-left:20px;width:190px;">
+                                <label class="control-label">制单日期</label><input type="date" class="form-control" value="administrator" id="sj" />
+                            </div>
+                            <div class=" col-md-3 form-inline" style="margin-top:10px; margin-left :10px;width:190px;">
+                                <label class="control-label">客户名称</label>@Html.DropDownList("ClientType", null, htmlAttributes: new { @class = "form-control", @style = "width:170px;" })
+                            </div>
+                            <div class="col-md-3"style="margin-top:10px; margin-left:20px;width:200px;">
                                 <label class="control-label">客户编号</label><input type="text" class="form-control" id="khbh"/>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3"style="margin-top:10px; margin-left:15px;width:190px;">
                                 <label class="control-label">客户地址</label><input type="text" class="form-control" id="dz"/>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="control-label">客户联系方式</label><input type="text" class="form-control" id="lxfs"/>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="control-label">联系人</label><input type="text" class="form-control" id="lxr"/>
-                            </div>
+                            </div>                       
                         </div>
                         <div class="row" style="margin-top:10px;">
-                            <div class="col-md-3">
+                            <div class="col-md-3"style="margin-top:10px; margin-left:20px;width:190px;">
+                                <label class="control-label">客户联系方式</label><input type="text" class="form-control" id="lxfs" />
+                            </div>
+                            <div class="col-md-3"style="margin-top:10px; margin-left :10px;width:200px;">
+                                <label class="control-label">联系人</label><input type="text" class="form-control" id="lxr" />
+                            </div>  
+                            <div class="col-md-3"style="margin-top:10px; margin-left:10px;width:200px;">
                                 <label class="control-label">制单人</label><input type="text" class="form-control" value="administrator" id="zdr"/>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-3"style="margin-top:10px; margin-left:15px;width:190px;">
                                 <label class="control-label">备注</label><input type="text" class="form-control" id="bz"/>
                             </div>
 

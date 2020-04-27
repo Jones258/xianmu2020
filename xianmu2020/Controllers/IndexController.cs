@@ -473,19 +473,18 @@ namespace xianmu2020.Controllers
         /// <returns></returns>
         public ActionResult QueryDelivery()
         {
+            //出库单类型
             var model = new StStorageDJTypeService().GetByWhere(item => item.State == 5);
             model.Insert(0, new ChuBaoPanTuiTypes() { CBPTTid = 0, DaBillTYpeName = "请选择出库单类型" });
-            ViewBag.DeliveryType = new SelectList(model, "CBPTTid", "DaBillTYpeName");
-
-            var PService = new ProductGLService();
-            var model2 = PService.GetAll();
-            model2.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择产品" });
-            ViewBag.ProductGLType = new SelectList(model2, "PGLid", "ProductName");
-
-            var ClientService = new ClientService();
-            var model3 = ClientService.GetAll();
-            model3.Insert(0, new Client() { Cid = 0, ClientName = "请选择客户名称" });
-            ViewBag.ClientType = new SelectList(model3, "Cid", "ClientName");
+            ViewBag.DeliveryTYpe = new SelectList(model, "CBPTTid", "DaBillTYpeName");
+            //客户
+            var ClientModel = new ClientService().GetByWhere(item => item.State == 1);
+            ClientModel.Insert(0, new Client() { Cid = 0, ClientName = "请选择客户" });
+            ViewBag.Clients = new SelectList(ClientModel, "Cid", "ClientName");
+            //下拉框产品
+            var ProductGuanLi = new ProductGLService().GetByWhere(item => item.State == 1);
+            ProductGuanLi.Insert(0, new ProductGL() { PGLid = 0, ProductName = "请选择出库产品" });
+            ViewBag.Standby3 = new SelectList(ProductGuanLi, "PGLid", "ProductName");
             //测试 
             ViewBag.Type = new SelectList("");
             return View();
@@ -501,6 +500,10 @@ namespace xianmu2020.Controllers
             if (!string.IsNullOrEmpty(re.DeliveryId))
             {
                 where = where.And(item => item.DeliveryId.IndexOf(re.DeliveryId) != -1);
+            }
+            if (!string.IsNullOrEmpty(re.ClientNames))
+            {
+                where = where.And(item => item.ClientNames.IndexOf(re.ClientNames) != -1);
             }
             if (re.zt != 0)
             {
@@ -602,7 +605,29 @@ namespace xianmu2020.Controllers
         }
 
         //修改先查看
-        public ActionResult UpQueryDelivery(int Cid) {
+        public ActionResult UpQueryDelivery(int Did) {
+            var UpQueryDecimal = new DeliveryService().GetByWhere(item=>item.Did==Did);
+            var newDecimalValue = UpQueryDecimal.Select(item => new {
+                DeliveryId = item.DeliveryId,
+                DeliveryTYpe = item.DeliveryTYpe,
+                DispatchTime = Convert.ToDateTime(item.DispatchTime).ToString("yyyy-MM-dd"),
+                Standby3 = item.Standby3,
+                TotalCount = item.TotalCount,
+                ClientNames = item.ClientNames,
+                ClientId = item.ClientId,
+                ClientContactWay = item.ClientContactWay,
+                ContactMan = item.ContactMan,
+                PreparedBy = item.PreparedBy,
+                Remark = item.Remark
+            });
+            var result = new {
+                DeliveryAction=newDecimalValue
+            };
+            return Json(result,JsonRequestBehavior.AllowGet);
+        }
+
+        //修改方法
+        public ActionResult GetUpDelivery() {
             return View();
         }
 
@@ -1183,7 +1208,7 @@ namespace xianmu2020.Controllers
         }
         public ActionResult GetRefun(RequestDto dto, int zt)
         {
-            Expression<Func<Refund, bool>> where = item => item.State == 1 && item.PreparedTime >= dto.Start && item.PreparedTime <= dto.End;
+            Expression<Func<Refund, bool>> where = item => item.State == 1/* && item.PreparedTime >= dto.Start && item.PreparedTime <= dto.End*/;
             if (!string.IsNullOrEmpty(dto.RefundId))
             {
                 where = where.And(item => item.RefundId.IndexOf(dto.RefundId) != -1);

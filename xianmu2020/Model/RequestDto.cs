@@ -52,6 +52,7 @@ namespace xianmu2020.Model
         //出库
         public string DeliveryId { get; set; }
         public int DeliveryTYpe { get; set; }
+        public string ClientNames { get; set; }
 
     }
 }
