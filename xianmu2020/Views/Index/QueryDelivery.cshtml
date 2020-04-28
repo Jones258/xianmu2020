@@ -166,6 +166,8 @@
                 })
                 $("#btnSelect").click(BingStorageData);
                 $("#btnTwo").click(BingStorageData);
+                 //修改
+                $("#UpBtn").click(Update);
                 BingStorageData();
         })
         
@@ -295,7 +297,8 @@
                 dataType:"json",
                 type:"get",
                 success: function (result) {
-                    $.each(result.DeliveryAction, function (index,value) {
+                    $.each(result.DeliveryAction, function (index, value) {
+                        $("[name=Did]").val(value.Did);
                         $("[name=DeliveryIds]").val(value.DeliveryId);
                         $("[name=DeliveryTYpe]").val(value.DeliveryTYpe);
                         $("[name=DispatchTime]").val(value.DispatchTime);
@@ -310,6 +313,32 @@
                     })
                 }
             })
+        }
+
+        //修改
+        function Update() {
+            var DeliveryIdValue=  $("[name=DeliveryIds]").val();
+            var DeliveryTYpeValue = $("[name=DeliveryTYpe]").val();
+            var DispatchTimeValue = $("[name=DispatchTime]").val();
+            var Standby3Value = $("[name=Standby3]").find("option:selected").text();
+            var TotalCountValue = $("[name=TotalCount]").val();
+            var ClientsValue = $("[name=Clients]").find("option:selected").text();
+            var ClientContactWayValue = $("[name=ClientContactWay]").val();
+            var ContactManValue = $("[name=ContactMan]").val();
+            var PreparedByValue = $("[name=PreparedBy]").val();
+            var RemarkValue = $("[name=Remark]").val();
+            var DidValue = $("[name=Did]").val();
+            $.ajax({
+                url:"@Url.Action("GetUpDelivery")",
+                data: { Did: DidValue, DeliveryId: DeliveryIdValue, DeliveryTYpe: DeliveryTYpeValue, DispatchTime: DispatchTimeValue, Standby3: Standby3Value, TotalCount: TotalCountValue, ClientNames: ClientsValue, ClientContactWay: ClientContactWayValue, ContactMan: ContactManValue, PreparedBy: PreparedByValue, Remark: RemarkValue },
+                dataType:"json",
+                type:"post",
+                success: function (UpResult) {
+                    alert(UpResult.Msg);
+                    BingStorageData();
+                }
+            })
+
         }
 
         
@@ -329,8 +358,11 @@
 
                     <div style="border:0px solid #d4cdcd;width:855px;height:230px;margin:0px auto;margin-top:5px;border-radius:10px;">
                         <div class="row" style="margin-top:10px;">
+                            <div class="col-md-3" style="display:none;" >
+                                <label class="control-label">id</label><input disabled="disabled" name="Did" type="text" class="form-control" />
+                            </div>
                             <div class="col-md-3">
-                                <label class="control-label">出库单编号</label><input  name="DeliveryIds" type="text" class="form-control" />
+                                <label class="control-label">出库单编号</label><input disabled="disabled"  name="DeliveryIds" type="text" class="form-control" />
                             </div>
                             <div class="col-md-3">
                                 <label class="control-label">出库单类型</label> @Html.DropDownList("DeliveryTYpe", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
@@ -351,15 +383,15 @@
                                 <label class="control-label">客户名称</label> @Html.DropDownList("Clients", null, htmlAttributes: new { @class = "form-control", @style = "width:190px;" })
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">客户编号</label><input name="ClientId" type="text" class="form-control" @*placeholder="输入关键字搜索或者双击选择"*@ />
+                                <label class="control-label">客户编号</label><input disabled="disabled"  name="ClientId" type="text" class="form-control" @*placeholder="输入关键字搜索或者双击选择"*@ />
                             </div>
                             <div class="col-md-3">
-                                <label class="control-label">客户联系方式</label><input name="ClientContactWay" type="text" class="form-control" />   
+                                <label class="control-label">客户联系方式</label><input disabled="disabled" name="ClientContactWay" type="text" class="form-control" />   
                             </div>                                             
                     </div>
                         <div class="row" style="margin-top:10px;">
                             <div class="col-md-3">
-                                <label class="control-label">联系人</label><input name="ContactMan" type="text" class="form-control" />
+                                <label class="control-label">联系人</label><input disabled="disabled" name="ContactMan" type="text" class="form-control" />
                             </div>
                             <div class="col-md-3">
                                 <label class="control-label">制单人</label><input name="PreparedBy" type="text" class="form-control" />
@@ -403,7 +435,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">确定</button>
+                    <button id="UpBtn" type="button" class="btn btn-primary">确定</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
                 </div>
             </div>

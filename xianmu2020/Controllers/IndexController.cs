@@ -594,6 +594,7 @@ namespace xianmu2020.Controllers
         public ActionResult GetAddDelivery(Delivery de) {  
             de.OperatingMode = "电脑";
             de.CreationTime = DateTime.Now;
+            de.TotalMoney = 1000;
             de.State = 1;
             de.DeliveryAuditState = 1;
             var DecimalModel = new DeliveryService().Add(de);
@@ -608,6 +609,7 @@ namespace xianmu2020.Controllers
         public ActionResult UpQueryDelivery(int Did) {
             var UpQueryDecimal = new DeliveryService().GetByWhere(item=>item.Did==Did);
             var newDecimalValue = UpQueryDecimal.Select(item => new {
+                Did = item.Did,
                 DeliveryId = item.DeliveryId,
                 DeliveryTYpe = item.DeliveryTYpe,
                 DispatchTime = Convert.ToDateTime(item.DispatchTime).ToString("yyyy-MM-dd"),
@@ -626,9 +628,28 @@ namespace xianmu2020.Controllers
             return Json(result,JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
         //修改方法
-        public ActionResult GetUpDelivery() {
-            return View();
+        public ActionResult GetUpDelivery(Delivery delivery) {
+            var UpdateDelivery = new DeliveryService();
+            var UpModel = UpdateDelivery.GetByWhere(item=>item.Did==delivery.Did).SingleOrDefault();
+            UpModel.DeliveryTYpe = delivery.DeliveryTYpe;
+            UpModel.TotalCount = delivery.TotalCount;
+            UpModel.Standby3 = delivery.Standby3;
+            UpModel.ClientNames = delivery.ClientNames;
+            UpModel.Remark = delivery.Remark;
+            UpModel.DispatchTime = delivery.DispatchTime;
+            UpModel.State = 1;
+            UpModel.Standby1 = 0;
+            UpModel.Standby2 = 0;
+            UpModel.Standby4 = "";
+            UpModel.ClientName = "";
+            var update = UpdateDelivery.Update(UpModel);
+            var UpResult = new {
+                DeliveryAction = update,
+                Msg = update ? "修改成功！" : "修改失败！"
+            };
+            return Json(UpResult,JsonRequestBehavior.AllowGet);
         }
 
 
