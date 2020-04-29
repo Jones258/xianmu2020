@@ -60,6 +60,7 @@
     <Compile Include="ProductGLRepo.cs" />
     <Compile Include="ProductSort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuanXianFPRepo.cs" />
     <Compile Include="RefundReo.cs" />
     <Compile Include="StStorageDJType.cs" />
     <Compile Include="StStorageRepo.cs" />

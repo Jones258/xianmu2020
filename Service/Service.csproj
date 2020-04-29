@@ -54,6 +54,7 @@
     <Compile Include="IneventoryService.cs" />
     <Compile Include="ProductSortService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuanXianFPService.cs" />
     <Compile Include="RefundService.cs" />
     <Compile Include="StStorageDJTypeService.cs" />
     <Compile Include="StStorageService.cs" />

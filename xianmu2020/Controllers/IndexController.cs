@@ -32,6 +32,27 @@ namespace xianmu2020.Controllers
             return View();
         }
 
+        //查询模块功能
+        public ActionResult QxSelectData()
+        {
+            Expression<Func<QuanXianFP, bool>> where = item => /*item.RoleType.Equals("1") && */item.State == 1;
+
+            var QuanXianFPService = new QuanXianFPService().GetByWhere(where);
+            var newQuanXianFP = QuanXianFPService.Select(item => new
+            {
+                QxFpid = item.QxFpid,
+                SysFunctionId = item.SysFunctionId,
+                RoleType = item.RoleType,
+                Standby1 = item.Standby1,
+                Standby2 = item.Standby2
+            });
+            var result = new
+            {
+                Action = newQuanXianFP
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>
         /// 首页
         /// </summary>
@@ -113,6 +134,8 @@ namespace xianmu2020.Controllers
         //权限
         public ActionResult Qx()
         {
+
+
             return View();
         }
         #endregion

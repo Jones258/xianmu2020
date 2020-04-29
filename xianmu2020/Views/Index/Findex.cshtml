@@ -51,7 +51,7 @@
         </div>
         <div class="layui-side layui-bg-black x-side">
             <div class="layui-side-scroll">
-                <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
+                <ul id="ul1" class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
                     <li class="layui-nav-item">
                         <a class="javascript:;" href="javascript:;">
                             <i class="layui-icon" style="top: 3px;">&#xe607;</i><cite>系统设置</cite>
@@ -82,11 +82,11 @@
                                     <cite>权限分配</cite>
                                 </a>
                             </dd>
-                            @*<dd class="">
+                            <dd class="">
                                 <a href="javascript:;" _href="./question-del.html">
                                     <cite>标识符管理</cite>
                                 </a>
-                            </dd>*@
+                            </dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -147,11 +147,6 @@
                                     <cite>报损管理</cite>
                                 </a>
                             </dd>
-                            @*<dd class="">
-                                <a href="javascript:;" _href="./banner-list.html">
-                                    <cite>移库管理</cite>
-                                </a>
-                            </dd>*@
                             <dd class="">
                                 <a href="javascript:;" _href="@Url.Action("QueryCheckPage")">
                                     <cite>盘点管理</cite>
@@ -268,5 +263,49 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
+
+   @*<script type="text/javascript">
+
+       $(function () {
+           BingData();
+       })
+
+       //加载右边数据
+       function BingData() {
+           //取值
+           $.ajax({
+               url: "@Url.Action("QxSelectData")",
+               data: null,
+           dataType: "json",
+           type: "get",
+           success: function (result) {
+               $("#ul1 li:gt(0)").remove();
+               $.each(result.Action, function (index, value) {
+                   var str=" <li class='layui-nav-item'>";
+                   str += "  <a class='javascript:;' href='javascript:;'>";
+                   if (value.SysFunctionId=="") {                      
+                   } else {
+                       str += "  <i class='layui-icon' style='top: 3px;'>&#xe607;</i><cite>" + value.SysFunctionId + "</cite>";
+                   }
+                   str+="</a>";
+                   str+="<dl class='layui-nav-child'>";
+                   str+="  <dd class=''>";
+                   str += "<a href='javascript:;' _href='#'>";
+                   if (value.Standby2=="") {                      
+                   } else {
+                       str += " <cite>" + value.Standby2 + "</cite>";
+                   }
+                   str+="</a>";
+                   str+="</dd>";
+                   str+="</dl>";
+                   str += "</li>";    
+                   $("#ul1").append(str);
+               })
+           }
+       })
+       }
+
+   </script>*@
+
 </body>
 </html>
